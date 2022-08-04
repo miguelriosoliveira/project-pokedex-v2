@@ -70,7 +70,8 @@
 				"cases": {
 					"camelCase": true,
 					"pascalCase": true
-				}
+				},
+				"ignore": ["vite-env.d.ts"]
 			}
 		],
 		"unicorn/no-array-for-each": "off",
