@@ -1,9 +1,10 @@
-const Generation = require('../models/Generation');
-const Pokemon = require('../models/Pokemon');
-const { generationNames } = require('../utils/Utils');
+import { Request, Response } from 'express';
 
-module.exports = {
-	async getAll(request, response) {
+import { GENERATION_NAMES } from '../config/constants';
+import { Generation, Pokemon } from '../models';
+
+export const GenerationController = {
+	async getAll(request: Request, response: Response) {
 		const genList = await Generation.find({}, 'name starters').sort('number');
 		const starters = await Pokemon.find(
 			{ number: { $in: genList.flatMap(gen => gen.starters) } },
@@ -15,7 +16,7 @@ module.exports = {
 				const iniPos = index * 3;
 				return {
 					name,
-					displayName: generationNames[name].arabic,
+					displayName: GENERATION_NAMES[name].arabic,
 					starters: starters.slice(iniPos, iniPos + 3),
 				};
 			}),

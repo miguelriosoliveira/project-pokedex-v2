@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-module.exports = mongoose.model(
+export const Generation = mongoose.model(
 	'Generation',
 	new mongoose.Schema({
 		name: String,

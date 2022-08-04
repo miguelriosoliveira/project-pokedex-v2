@@ -1,23 +1,40 @@
-const { Joi, Segments } = require('celebrate');
+import { Joi, Segments } from 'celebrate';
+import { Request, Response } from 'express';
 
-const Pokemon = require('../models/Pokemon');
-const Type = require('../models/Type');
-const { generations, totalItemsHeader } = require('../utils/Utils');
+import { DEFAULT_PAGE_SIZE, GENERATIONS, TOTAL_ITEMS_HEADER } from '../config/constants';
+import { Pokemon, Type } from '../models';
 
-module.exports = {
+interface GetAllRequestQuery {
+	generation: string;
+	page: number;
+	pageSize: number;
+	search: string;
+	types: string[];
+}
+
+interface Query {
+	generation?: string;
+	name?: { $regex: string; $options: 'i' };
+	number?: number;
+	types?: { $in: string[] };
+}
+
+export const PokemonController = {
 	getAllSchema: {
 		[Segments.QUERY]: {
-			generation: Joi.string().valid(...Object.values(generations)),
+			generation: Joi.string().valid(...Object.values(GENERATIONS)),
 			search: Joi.string().default(''),
 			types: Joi.array().default([]),
 			page: Joi.number().min(1).default(1),
+			pageSize: Joi.number().min(1).default(DEFAULT_PAGE_SIZE),
 		},
 	},
-	async getAll(request, response) {
-		const { generation, search, types, page } = request.query;
-		const query = {};
 
-		// checks for query construction
+	async getAll(request: Request<null, null, null, GetAllRequestQuery>, response: Response) {
+		const { generation, search, types, page, pageSize } = request.query;
+		const query = {} as Query;
+
+		// checks needed for query construction
 		if (generation) {
 			query.generation = generation;
 		}
@@ -25,22 +42,23 @@ module.exports = {
 			if (Number.isNaN(search)) {
 				query.name = { $regex: search, $options: 'i' };
 			} else {
-				query.number = search;
+				query.number = Number(search);
 			}
 		}
-		if (types.length) {
+		if (types.length > 0) {
 			query.types = { $in: types };
 		}
 
 		// do query
-		const itemsPerPage = 20;
+		// eslint-disable-next-line unicorn/no-array-callback-reference
 		const totalItems = await Pokemon.find(query).countDocuments();
+		// eslint-disable-next-line unicorn/no-array-method-this-argument, unicorn/no-array-callback-reference
 		const pokemons = await Pokemon.find(query, 'displayName number types')
 			.sort('number')
-			.skip((page - 1) * itemsPerPage)
-			.limit(itemsPerPage);
+			.skip((page - 1) * pageSize)
+			.limit(pageSize);
 
-		return response.header(totalItemsHeader, totalItems).json(pokemons);
+		return response.header(TOTAL_ITEMS_HEADER, String(totalItems)).json(pokemons);
 	},
 
 	getOneSchema: {
@@ -48,7 +66,8 @@ module.exports = {
 			number: Joi.number().min(1).required(),
 		},
 	},
-	async getOne(request, response) {
+
+	async getOne(request: Request, response: Response) {
 		const { number } = request.params;
 
 		let pokemon = null;
@@ -86,11 +105,11 @@ module.exports = {
 				'displayName number types',
 			).sort('number');
 		} else {
-			for (const evolution of pokemon.evolutionChain) {
-				evolutionChain.common.push(
-					await Pokemon.findOne({ name: evolution }, 'displayName number types'),
-				);
-			}
+			const evolutionChainPokemons = await Pokemon.find(
+				{ name: { $in: pokemon.evolutionChain } },
+				'displayName number types',
+			);
+			evolutionChain.common = [evolutionChain.common, ...evolutionChainPokemons];
 		}
 
 		return response.json({
@@ -98,13 +117,15 @@ module.exports = {
 			name: pokemon.displayName,
 			types: pokemon.types,
 			description: pokemon.description,
-			weaknesses: Array.from(
-				new Set(
-					types.flatMap(type =>
-						type.doubleDamageFrom.concat(type.halfDamageTo).concat(type.noDamageTo),
-					),
+			weaknesses: [
+				...new Set(
+					types.flatMap(type => [
+						...type.doubleDamageFrom,
+						...type.halfDamageTo,
+						...type.noDamageTo,
+					]),
 				),
-			).sort(),
+			].sort(),
 			evolutionChain,
 		});
 	},

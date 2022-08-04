@@ -1,17 +1,17 @@
-const { celebrate } = require('celebrate');
-const express = require('express');
+import { celebrate } from 'celebrate';
+import { Router } from 'express';
 
-const GenerationController = require('./controllers/GenerationController');
-const PokemonController = require('./controllers/PokemonController');
-const TypeController = require('./controllers/TypeController');
+import { TypeController, GenerationController, PokemonController } from './controllers';
 
-const routes = express.Router();
+const routes = Router();
 
 routes.use((request, response, next) => {
 	const { method, url } = request;
 	const requestLog = `[${method}] ${url}`;
+	// eslint-disable-next-line no-console
 	console.time(requestLog);
 	next();
+	// eslint-disable-next-line no-console
 	console.timeEnd(requestLog);
 });
 
@@ -21,4 +21,4 @@ routes.get('/pokemon/', celebrate(PokemonController.getAllSchema), PokemonContro
 routes.get('/pokemon/:number', celebrate(PokemonController.getOneSchema), PokemonController.getOne);
 routes.get('/types', TypeController.getAll);
 
-module.exports = routes;
+export default routes;

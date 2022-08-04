@@ -74,22 +74,16 @@
 			}
 		],
 		"unicorn/no-array-for-each": "off",
+		"unicorn/no-array-reduce": "off",
 		"unicorn/no-nested-ternary": "off",
 		"unicorn/no-null": "off",
-		"unicorn/prevent-abbreviations": [
-			"error",
-			{
-				"replacements": {
-					"ref": false,
-					"refs": false,
-					"prop": false,
-					"props": false
-				},
-				"allowList": {
-					"props": true,
-					"params": true
-				}
+		"unicorn/prevent-abbreviations": "off"
+	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
 			}
-		]
+		}
 	}
 }

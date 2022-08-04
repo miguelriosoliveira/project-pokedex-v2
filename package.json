@@ -10,8 +10,8 @@
 		]
 	},
 	"scripts": {
-		"backend": "cd packages/backend && yarn dev",
-		"frontend": "cd packages/frontend && yarn dev"
+		"server": "cd packages/server && yarn dev",
+		"web": "cd packages/web && yarn dev"
 	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^5.32.0",
@@ -25,6 +25,7 @@
 		"eslint-plugin-react": "^7.30.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-unicorn": "^43.0.2",
-		"prettier": "^2.7.1"
+		"prettier": "^2.7.1",
+		"typescript": "^4.7.4"
 	}
 }
