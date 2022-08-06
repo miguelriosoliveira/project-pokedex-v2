@@ -43,6 +43,8 @@ export function PokemonList() {
 
 	const loadPokemonList = useCallback(
 		async ({ search_, types_, page_ = 1, reset = false } = {} as LoadPokemonListParams) => {
+			console.log({ generation, search_, types_, page_, reset });
+
 			setPage(page_);
 			setLoading(true);
 			try {

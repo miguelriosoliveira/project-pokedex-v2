@@ -23,7 +23,7 @@ export const PokemonController = {
 	getAllSchema: {
 		[Segments.QUERY]: {
 			generation: Joi.string().valid(...Object.values(GENERATIONS)),
-			search: Joi.string().default(''),
+			search: Joi.string().allow('').default(''),
 			types: Joi.array().default([]),
 			page: Joi.number().min(1).default(1),
 			pageSize: Joi.number().min(1).default(DEFAULT_PAGE_SIZE),
@@ -33,6 +33,8 @@ export const PokemonController = {
 	async getAll(request: Request<null, null, null, GetAllRequestQuery>, response: Response) {
 		const { generation, search, types, page, pageSize } = request.query;
 		const query = {} as Query;
+
+		console.log({ generation, search, types, page, pageSize });
 
 		// checks needed for query construction
 		if (generation) {
@@ -48,6 +50,8 @@ export const PokemonController = {
 		if (types.length > 0) {
 			query.types = { $in: types };
 		}
+
+		console.log({ query });
 
 		// do query
 		// eslint-disable-next-line unicorn/no-array-callback-reference
@@ -109,7 +113,7 @@ export const PokemonController = {
 				{ name: { $in: pokemon.evolutionChain } },
 				'displayName number types',
 			);
-			evolutionChain.common = [evolutionChain.common, ...evolutionChainPokemons];
+			evolutionChain.common = [...evolutionChain.common, ...evolutionChainPokemons];
 		}
 
 		return response.json({
