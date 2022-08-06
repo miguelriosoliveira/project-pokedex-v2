@@ -1,0 +1,155 @@
+.pokemon-details-component {
+	// background-image: url('../../img/bg-flipped.png');
+	filter: FlipH;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 800px;
+	margin: auto;
+	padding: 10px;
+	> :not(:last-child) {
+		margin-bottom: 20px;
+	}
+
+	.header {
+		width: 100%;
+	}
+
+	.main {
+		display: flex;
+		align-items: flex-start;
+		height: 380px;
+		@media only screen and (max-width: 768px) {
+			display: grid;
+			grid-template-rows: 300px 1fr;
+			margin: 0;
+			height: auto;
+		}
+
+		.sprite {
+			border: 2px solid black;
+			border-radius: 200px;
+			margin-right: 10px;
+			padding: 10px;
+			background-color: white;
+			height: calc(100% - 7px);
+			img {
+				height: 100%;
+			}
+			@media only screen and (max-width: 768px) {
+				height: 100%;
+				width: fit-content;
+				display: flex;
+				justify-self: center;
+			}
+		}
+
+		.infos {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+
+			.name {
+				font-weight: bold;
+				text-shadow: 1px 1px white;
+			}
+
+			.description {
+				text-align: justify;
+				margin: 15px 0 20px;
+				text-shadow: 1px 1px white;
+			}
+
+			.types {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				column-gap: 10px;
+
+				.own {
+					border: 3px solid black;
+					border-radius: 10px;
+					padding: 10px 10px 15px 10px;
+					background-color: white;
+					.title {
+						display: flex;
+						align-items: center;
+						justify-content: space-evenly;
+						margin-bottom: 10px;
+					}
+					.list {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						> :not(:last-child) {
+							margin-right: 5px;
+						}
+					}
+				}
+
+				.weaknesses {
+					width: fit-content;
+					border: 3px solid black;
+					border-radius: 10px;
+					padding: 10px 10px 15px 10px;
+					background-color: white;
+					.title {
+						display: flex;
+						align-items: center;
+						justify-content: space-evenly;
+						margin-bottom: 10px;
+					}
+					.list {
+						display: grid;
+						grid-template-columns: repeat(3, 1fr);
+						gap: 10px 20px;
+						@media only screen and (max-width: 768px) {
+							gap: 10px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.evolution-chain {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		img {
+			width: 100px;
+		}
+
+		.title {
+			margin-bottom: 10px;
+		}
+
+		.list {
+			display: flex;
+			align-items: center;
+
+			.common {
+				display: flex;
+				align-items: center;
+				.pokemon-form {
+					display: flex;
+					align-items: center;
+				}
+			}
+
+			.variant {
+				border-radius: 20px;
+				.half {
+					display: flex;
+					&:not(:last-of-type) {
+						margin-bottom: 10px;
+					}
+					> :not(:last-child) {
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+	}
+}
