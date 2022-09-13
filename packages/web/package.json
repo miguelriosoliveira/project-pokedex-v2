@@ -17,7 +17,7 @@
 		"@sentry/react": "^7.12.1",
 		"@sentry/tracing": "^7.12.1",
 		"axios": "^0.27.2",
-		"classnames": "^2.3.1",
+		"classnames": "^2.3.2",
 		"pino": "^8.5.0",
 		"pino-pretty": "^9.1.0",
 		"react": "^18.2.0",
