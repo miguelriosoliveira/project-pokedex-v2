@@ -16,7 +16,7 @@
 		"@mui/material": "^5.10.8",
 		"@sentry/react": "^7.14.1",
 		"@sentry/tracing": "^7.14.1",
-		"axios": "^0.27.2",
+		"axios": "^1.1.2",
 		"classnames": "^2.3.2",
 		"pino": "^8.6.1",
 		"pino-pretty": "^9.1.0",

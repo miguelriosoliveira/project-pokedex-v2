@@ -8,7 +8,7 @@
 		"lint": "eslint --ext .ts,.tsx src --fix"
 	},
 	"dependencies": {
-		"axios": "^0.27.2",
+		"axios": "^1.1.2",
 		"celebrate": "^15.0.1",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
