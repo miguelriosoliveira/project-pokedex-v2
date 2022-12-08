@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import { AddressInfo } from 'node:net';
 
-import { errors } from 'celebrate';
+import celebrate from 'celebrate';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
+import morgan from 'morgan';
 
 import { TOTAL_ITEMS_HEADER } from './config/constants';
 import routes from './routes';
@@ -19,8 +20,9 @@ const server = express();
 server.disable('x-powered-by');
 
 server.use(cors({ exposedHeaders: TOTAL_ITEMS_HEADER }));
+server.use(morgan('dev'));
 server.use(routes);
-server.use(errors());
+server.use(celebrate.errors());
 
 const listener = server.listen(PORT, () => {
 	const { address, port } = listener.address() as AddressInfo;

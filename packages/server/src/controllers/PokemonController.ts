@@ -34,8 +34,6 @@ export const PokemonController = {
 		const { generation, search, types, page, pageSize } = request.query;
 		const query = {} as Query;
 
-		console.log({ generation, search, types, page, pageSize });
-
 		// checks needed for query construction
 		if (generation) {
 			query.generation = generation;
@@ -50,8 +48,6 @@ export const PokemonController = {
 		if (types.length > 0) {
 			query.types = { $in: types };
 		}
-
-		console.log({ query });
 
 		// do query
 		// eslint-disable-next-line unicorn/no-array-callback-reference
