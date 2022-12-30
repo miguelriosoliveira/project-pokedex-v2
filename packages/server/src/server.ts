@@ -4,28 +4,33 @@ import { AddressInfo } from 'node:net';
 import celebrate from 'celebrate';
 import cors from 'cors';
 import express from 'express';
-import mongoose from 'mongoose';
 import morgan from 'morgan';
 
 import { TOTAL_ITEMS_HEADER } from './config/constants';
-import routes from './routes';
+import { ENV } from './config/env';
+import { db } from './database';
+import { routes } from './routes';
 import { logger } from './utils';
 
-const { MONGO_URL, PORT } = process.env;
+const app = express();
+app.disable('x-powered-by');
+app.use(cors({ exposedHeaders: TOTAL_ITEMS_HEADER }));
+app.use(morgan('dev'));
+app.use(routes);
+app.use(celebrate.errors());
 
-mongoose.connect(MONGO_URL);
-
-const server = express();
-
-server.disable('x-powered-by');
-
-server.use(cors({ exposedHeaders: TOTAL_ITEMS_HEADER }));
-server.use(morgan('dev'));
-server.use(routes);
-server.use(celebrate.errors());
-
-const listener = server.listen(PORT, () => {
-	const { address, port } = listener.address() as AddressInfo;
+const server = app.listen(ENV.PORT, async () => {
+	await db.connect();
+	const { address, port } = server.address() as AddressInfo;
 	const addressFixed = address === '::' ? 'localhost' : address;
 	logger.info(`🚀 Server running on http://${addressFixed}:${port}`);
 });
+
+async function shutdown() {
+	await db.disconnect();
+	server.close(() => logger.info('👋 Server closed'));
+}
+
+process
+	.on('SIGINT', shutdown) // Ctrl+C
+	.on('SIGTERM', shutdown); // App killed

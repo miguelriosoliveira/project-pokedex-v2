@@ -1,71 +1,36 @@
 /* eslint-disable no-console */
 import 'dotenv/config';
-import mongoose from 'mongoose';
-import { MainClient } from 'pokenode-ts';
+import { ChainLink, EvolutionChain, MainClient } from 'pokenode-ts';
 
-import { STARTERS_BY_GENERATION } from '../config/constants';
-import { Generation, Pokemon, Type } from '../models';
+import { db } from '../database';
+import { Pokemon } from '../models';
 import { getIdFromUrl } from '../utils';
 
 const P = new MainClient();
 
-mongoose.connect(process.env.MONGO_URL);
-
-async function insertGenerations(genList) {
-	console.log('Truncating Generation table...');
-	await Generation.deleteMany();
-
-	console.log('Saving generations...');
-	await Generation.insertMany(
-		genList.map(g => ({
-			name: g.name,
-			number: getIdFromUrl(g.url),
-			starters: STARTERS_BY_GENERATION[g.name],
-		})),
-	);
-	console.log('Generations saved!');
+interface PokemonToSave {
+	forms: string[];
+	types: string[];
+	sprite: string;
+	evolution_chain: string[];
+	number: number;
+	name: string;
+	display_name: string;
+	generation: string;
+	description: string;
 }
 
-async function insertTypes(types) {
-	console.log('Truncating Type table...');
-	await Type.deleteMany();
-	console.log('Saving types...');
-	await Type.insertMany(
-		types.map(type => ({
-			name: type.name,
-
-			doubleDamageFrom: type.damage_relations.double_damage_from.map(type => type.name),
-			doubleDamageTo: type.damage_relations.double_damage_to.map(type => type.name),
-
-			halfDamageFrom: type.damage_relations.half_damage_from.map(type => type.name),
-			halfDamageTo: type.damage_relations.half_damage_to.map(type => type.name),
-
-			noDamageFrom: type.damage_relations.no_damage_from.map(type => type.name),
-			noDamageTo: type.damage_relations.no_damage_to.map(type => type.name),
-		})),
-	);
-	console.log('Types saved!');
-}
-
-async function insertPokemons(pokemons) {
+async function insertPokemons(pokemons: PokemonToSave[]) {
 	console.log('Truncating Pokemon table...');
+
 	await Pokemon.deleteMany();
 	console.log('Saving pokemons...');
-	await Pokemon.insertMany(
-		pokemons.map(pokemon => ({
-			name: pokemon.name,
-			displayName: pokemon.names.find(name => name.language.name === 'en').name,
-			number: pokemon.id,
-			types: pokemon.types.map(type => type.type.name),
-			generation: pokemon.generation.name,
-			evolutionChain: pokemon.evolutionChain,
-			description: pokemon.flavor_text_entries.find(fte => fte.language.name === 'en').flavor_text,
-		})),
-	);
+
+	await Pokemon.insertMany(pokemons);
 	console.log('Pokemons saved!');
 }
 
-function getEvolutionChainList(chainData, resultChain = []) {
+function parseEvolutionChain(chainData: ChainLink, resultChain: string[] = []): string[] {
 	const resultChainTmp = [...resultChain, chainData.species.name];
 	const { evolves_to } = chainData;
 
@@ -74,84 +39,82 @@ function getEvolutionChainList(chainData, resultChain = []) {
 	}
 
 	if (evolves_to.length === 1) {
-		return getEvolutionChainList(evolves_to[0], resultChainTmp);
+		return parseEvolutionChain(evolves_to[0], resultChainTmp);
 	}
 
-	return evolves_to.map(et => getEvolutionChainList(et, resultChainTmp));
+	return evolves_to.flatMap(et => parseEvolutionChain(et, resultChainTmp));
 }
 
-async function getPokemonsList() {
-	let generations = [];
-	let types = [];
-	let pokemons = [];
+async function getPokemons() {
+	const { results: speciesList } = await P.pokemon.listPokemonSpecies(890);
+	// console.log(speciesList);
 
-	console.log('Getting generations...');
-	try {
-		generations = await P.game.listGenerations();
-		generations = generations.results.sort((a, b) => getIdFromUrl(a.url) - getIdFromUrl(b.url));
-	} catch (error) {
-		console.error(error, 'Failed getting generations');
-		throw error;
-	}
+	const species = await Promise.all(
+		speciesList.map(sp => P.pokemon.getPokemonSpeciesByName(sp.name)),
+	);
+	// console.log(species);
 
-	console.log('Getting types...');
-	try {
-		types = await P.pokemon.listTypes();
-		types = types.results
-			.filter(type => !['shadow', 'unknown'].includes(type.name))
-			.map(type => type.name);
-		types = await Promise.all(types.map(type => P.pokemon.getTypeByName(type)));
-	} catch (error) {
-		console.error(error, 'Failed getting types');
-		throw error;
-	}
+	const speciesPartiallyMapped = species.map(
+		({ id, name, names, generation, flavor_text_entries, evolution_chain }) => ({
+			number: id,
+			name,
+			display_name: names.find(displayName => displayName.language.name === 'en')?.name,
+			generation: generation.name,
+			description: flavor_text_entries.find(description => description.language.name === 'en')
+				?.flavor_text,
+			evolution_chain_id: evolution_chain ? getIdFromUrl(evolution_chain.url) : null,
+		}),
+	);
+	// console.log(speciesMappedToDb);
 
-	console.log('Getting pokemons of these generations...');
-	try {
-		const generationList = await Promise.all(
-			generations.map(g => P.game.getGenerationByName(g.name)),
-		);
-		const pokemonIds = generationList.flatMap(gen =>
-			gen.pokemon_species.map(species => getIdFromUrl(species.url)),
-		);
+	const evolutionChains = await Promise.all<EvolutionChain>(
+		speciesPartiallyMapped.map(sp =>
+			sp.evolution_chain_id
+				? P.evolution.getEvolutionChainById(sp.evolution_chain_id)
+				: new Promise(resolve => {
+						resolve({
+							id: -1,
+							baby_trigger_item: null,
+							chain: {
+								evolution_details: [],
+								evolves_to: [],
+								is_baby: false,
+								species: {
+									name: sp.name,
+									url: `https://pokeapi.co/api/v2/pokemon-species/${sp.number}/`,
+								},
+							},
+						});
+				  }),
+		),
+	);
+	// console.log(evolutionChains);
 
-		console.log('Getting each pokémon by ID...');
-		const pokemonSpecies = await Promise.all(
-			pokemonIds.map(pokemonId => P.pokemon.getPokemonById(pokemonId)),
-		);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const speciesMappedToDb = speciesPartiallyMapped.map(({ evolution_chain_id, ...sp }, i) => ({
+		...sp,
+		evolution_chain: parseEvolutionChain(evolutionChains[i].chain),
+	}));
+	// console.log(speciesMappedToDb);
 
-		console.log('Getting each pokémon by species...');
-		pokemons = await Promise.all(
-			pokemonSpecies.map(pokemon => P.pokemon.getPokemonSpeciesById(pokemon.id)),
-		);
+	const pokemons = await Promise.all(
+		speciesMappedToDb.map(sp => P.pokemon.getPokemonById(sp.number)),
+	);
+	// console.log(pokemons);
 
-		console.log('Getting evolution chains...');
-		const evolutionChainIds = pokemons
-			.filter(pokemon => !!pokemon.evolution_chain)
-			.map(pokemon => getIdFromUrl(pokemon.evolution_chain.url));
-		const evolutionChains = await Promise.all(
-			evolutionChainIds.map(evolutionChainId =>
-				P.evolution.getEvolutionChainById(evolutionChainId),
-			),
-		);
+	const pokemonsMappedToDb = pokemons.map(({ types, forms, sprites }) => ({
+		forms: forms.map(form => form.name),
+		types: types.map(type => type.type.name),
+		sprite: sprites.other?.['official-artwork'].front_default,
+	}));
+	// console.log(pokemonsMappedToDb);
 
-		console.log('Updating each pokémon with its evolution chain...');
-		pokemons = pokemons.map((pokemon, index) => ({
-			...pokemon,
-			types: pokemonSpecies[index].types,
-			evolutionChain: evolutionChains[index]
-				? getEvolutionChainList(evolutionChains[index].chain)
-				: [],
-		}));
-	} catch (error) {
-		console.error(error, 'Failed getting pokemons of each generation');
-		throw error;
-	}
+	const dataToSave = speciesMappedToDb.map((sp, i) => ({ ...sp, ...pokemonsMappedToDb[i] }));
+	console.log(dataToSave);
 
-	console.log('Updating pokémon data on database...');
-	await insertGenerations(generations);
-	await insertTypes(types);
-	await insertPokemons(pokemons);
+	await insertPokemons(dataToSave);
 }
 
-getPokemonsList().then(() => process.exit());
+db.connect()
+	.then(() => getPokemons())
+	.then(() => db.disconnect());

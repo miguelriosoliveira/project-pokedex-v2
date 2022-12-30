@@ -10,5 +10,7 @@ export const Pokemon = mongoose.model(
 		evolutionChain: [Object],
 		description: String,
 		types: [String],
+		forms: [String],
+		sprite: String,
 	}),
 );
