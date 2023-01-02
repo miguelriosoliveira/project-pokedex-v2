@@ -115,8 +115,11 @@ async function mapPokemonsToDb(apiPokemonData: ApiPokemonData[]) {
 
 async function populateDb() {
 	const apiPokemonData = await getPokemons();
-	const pokemons = await mapPokemonsToDb(apiPokemonData);
-	await savePokemons(pokemons);
+
+	console.log(apiPokemonData);
+
+	// const pokemons = await mapPokemonsToDb(apiPokemonData);
+	// await savePokemons(pokemons);
 }
 
 db.connect()
