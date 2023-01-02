@@ -1,8 +1,21 @@
-import { model, Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-export const Type = model(
+export interface TypeSchema {
+	name: string;
+
+	doubleDamageFrom: string[];
+	doubleDamageTo: string[];
+
+	halfDamageFrom: string[];
+	halfDamageTo: string[];
+
+	noDamageFrom: string[];
+	noDamageTo: string[];
+}
+
+export const Type = mongoose.model(
 	'Type',
-	new Schema({
+	new mongoose.Schema<TypeSchema>({
 		name: String,
 
 		doubleDamageFrom: [String],

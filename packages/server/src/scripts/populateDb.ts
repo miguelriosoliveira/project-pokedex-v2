@@ -1,32 +1,45 @@
 /* eslint-disable no-console */
 import 'dotenv/config';
-import { ChainLink, EvolutionChain, MainClient } from 'pokenode-ts';
+import { ChainLink, EvolutionChain, MainClient, Pokemon, PokemonSpecies } from 'pokenode-ts';
 
 import { db } from '../database';
-import { Pokemon } from '../models';
-import { getIdFromUrl } from '../utils';
+import {
+	Generation,
+	GenerationSchema,
+	Type,
+	TypeSchema,
+	Pokemon as PokemonModel,
+	PokemonSchema,
+} from '../models';
+import { createFakeEvolutionChain, getIdFromUrl } from '../utils';
+import { Replace } from '../utils/types';
 
 const P = new MainClient();
 
-interface PokemonToSave {
-	forms: string[];
-	types: string[];
-	sprite: string;
-	evolution_chain: string[];
-	number: number;
-	name: string;
-	display_name: string;
-	generation: string;
-	description: string;
+async function saveGenerations(generations: GenerationSchema[]) {
+	console.log('Truncating Generation table...');
+	await Generation.deleteMany();
+
+	console.log('Saving generations...');
+	await Generation.insertMany(generations);
+	console.log('Generations saved!');
 }
 
-async function insertPokemons(pokemons: PokemonToSave[]) {
+async function saveTypes(types: TypeSchema[]) {
+	console.log('Truncating Type table...');
+	await Type.deleteMany();
+
+	console.log('Saving types...');
+	await Type.insertMany(types);
+	console.log('Types saved!');
+}
+
+async function savePokemons(pokemons: PokemonSchema[]) {
 	console.log('Truncating Pokemon table...');
+	await PokemonModel.deleteMany();
 
-	await Pokemon.deleteMany();
 	console.log('Saving pokemons...');
-
-	await Pokemon.insertMany(pokemons);
+	await PokemonModel.insertMany(pokemons);
 	console.log('Pokemons saved!');
 }
 
@@ -47,74 +60,65 @@ function parseEvolutionChain(chainData: ChainLink, resultChain: string[] = []): 
 
 async function getPokemons() {
 	const { results: speciesList } = await P.pokemon.listPokemonSpecies(890);
-	// console.log(speciesList);
 
-	const species = await Promise.all(
+	const speciesMissingEvolutionChain = await Promise.all(
 		speciesList.map(sp => P.pokemon.getPokemonSpeciesByName(sp.name)),
 	);
-	// console.log(species);
-
-	const speciesPartiallyMapped = species.map(
-		({ id, name, names, generation, flavor_text_entries, evolution_chain }) => ({
-			number: id,
-			name,
-			display_name: names.find(displayName => displayName.language.name === 'en')?.name,
-			generation: generation.name,
-			description: flavor_text_entries.find(description => description.language.name === 'en')
-				?.flavor_text,
-			evolution_chain_id: evolution_chain ? getIdFromUrl(evolution_chain.url) : null,
-		}),
-	);
-	// console.log(speciesMappedToDb);
 
 	const evolutionChains = await Promise.all<EvolutionChain>(
-		speciesPartiallyMapped.map(sp =>
-			sp.evolution_chain_id
-				? P.evolution.getEvolutionChainById(sp.evolution_chain_id)
-				: new Promise(resolve => {
-						resolve({
-							id: -1,
-							baby_trigger_item: null,
-							chain: {
-								evolution_details: [],
-								evolves_to: [],
-								is_baby: false,
-								species: {
-									name: sp.name,
-									url: `https://pokeapi.co/api/v2/pokemon-species/${sp.number}/`,
-								},
-							},
-						});
-				  }),
+		speciesMissingEvolutionChain.map(({ name, id, evolution_chain }) =>
+			evolution_chain
+				? P.evolution.getEvolutionChainById(getIdFromUrl(evolution_chain.url))
+				: new Promise(resolve => resolve(createFakeEvolutionChain({ name, number: id }))),
 		),
 	);
-	// console.log(evolutionChains);
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const speciesMappedToDb = speciesPartiallyMapped.map(({ evolution_chain_id, ...sp }, i) => ({
+	const species = speciesMissingEvolutionChain.map((sp, i) => ({
 		...sp,
-		evolution_chain: parseEvolutionChain(evolutionChains[i].chain),
+		evolution_chain: evolutionChains[i],
 	}));
-	// console.log(speciesMappedToDb);
 
-	const pokemons = await Promise.all(
-		speciesMappedToDb.map(sp => P.pokemon.getPokemonById(sp.number)),
+	const pokemons = await Promise.all(species.map(sp => P.pokemon.getPokemonById(sp.id)));
+
+	return species.map((sp, i) => ({ ...sp, ...pokemons[i] }));
+}
+
+type ApiPokemonData = Pokemon & Replace<PokemonSpecies, { evolution_chain: EvolutionChain }>;
+
+async function mapPokemonsToDb(apiPokemonData: ApiPokemonData[]) {
+	return apiPokemonData.map(
+		({
+			id,
+			name,
+			names,
+			generation,
+			flavor_text_entries,
+			evolution_chain,
+			types,
+			forms,
+			sprites,
+		}) => ({
+			number: id,
+			name,
+			display_name: names.find(displayName => displayName.language.name === 'en')?.name || name,
+			generation: generation.name,
+			description:
+				flavor_text_entries.find(description => description.language.name === 'en')?.flavor_text ||
+				'',
+			evolution_chain: parseEvolutionChain(evolution_chain.chain),
+			forms: forms.map(form => form.name),
+			types: types.map(type => type.type.name),
+			sprite: sprites.other?.['official-artwork'].front_default || '',
+		}),
 	);
-	// console.log(pokemons);
+}
 
-	const pokemonsMappedToDb = pokemons.map(({ types, forms, sprites }) => ({
-		forms: forms.map(form => form.name),
-		types: types.map(type => type.type.name),
-		sprite: sprites.other?.['official-artwork'].front_default,
-	}));
-	// console.log(pokemonsMappedToDb);
-
-	const dataToSave = speciesMappedToDb.map((sp, i) => ({ ...sp, ...pokemonsMappedToDb[i] }));
-	console.log(dataToSave);
-
-	await insertPokemons(dataToSave);
+async function populateDb() {
+	const apiPokemonData = await getPokemons();
+	const pokemons = await mapPokemonsToDb(apiPokemonData);
+	await savePokemons(pokemons);
 }
 
 db.connect()
-	.then(() => getPokemons())
+	.then(() => populateDb())
 	.then(() => db.disconnect());
