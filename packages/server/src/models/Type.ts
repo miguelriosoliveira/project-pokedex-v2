@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 export interface TypeSchema {
 	name: string;
 
-	doubleDamageFrom: string[];
-	doubleDamageTo: string[];
+	double_damage_from: string[];
+	double_damage_to: string[];
 
-	halfDamageFrom: string[];
-	halfDamageTo: string[];
+	half_damage_from: string[];
+	half_damage_to: string[];
 
-	noDamageFrom: string[];
-	noDamageTo: string[];
+	no_damage_from: string[];
+	no_damage_to: string[];
 }
 
 export const Type = mongoose.model(
@@ -18,13 +18,13 @@ export const Type = mongoose.model(
 	new mongoose.Schema<TypeSchema>({
 		name: String,
 
-		doubleDamageFrom: [String],
-		doubleDamageTo: [String],
+		double_damage_from: [String],
+		double_damage_to: [String],
 
-		halfDamageFrom: [String],
-		halfDamageTo: [String],
+		half_damage_from: [String],
+		half_damage_to: [String],
 
-		noDamageFrom: [String],
-		noDamageTo: [String],
+		no_damage_from: [String],
+		no_damage_to: [String],
 	}),
 );

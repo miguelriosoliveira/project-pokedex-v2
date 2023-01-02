@@ -24,7 +24,7 @@ export const GENERATION_NAMES = {
 	[GENERATIONS.GEN9]: { roman: 'Generation IX', arabic: 'Generation 9' },
 };
 
-export const STARTERS_BY_GENERATION = {
+export const STARTERS_BY_GENERATION: { [key: string]: [number, number, number] } = {
 	[GENERATIONS.GEN1]: [1, 4, 7],
 	[GENERATIONS.GEN2]: [152, 155, 158],
 	[GENERATIONS.GEN3]: [252, 255, 258],
