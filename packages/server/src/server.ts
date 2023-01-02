@@ -8,6 +8,7 @@ import morgan from 'morgan';
 
 import { TOTAL_ITEMS_HEADER } from './config/constants';
 import { ENV } from './config/env';
+import { ErrorController } from './controllers';
 import { db } from './database';
 import { routes } from './routes';
 import { logger } from './utils';
@@ -18,6 +19,7 @@ app.use(cors({ exposedHeaders: TOTAL_ITEMS_HEADER }));
 app.use(morgan('dev'));
 app.use(routes);
 app.use(celebrate.errors());
+app.use(ErrorController.handle);
 
 const server = app.listen(ENV.PORT, async () => {
 	await db.connect();

@@ -8,7 +8,7 @@ export const GenerationController = {
 		const genList = await Generation.find({}, 'name starters').sort('number');
 		const starters = await Pokemon.find(
 			{ number: { $in: genList.flatMap(gen => gen.starters) } },
-			'name number',
+			'name number sprite',
 		).sort('number');
 
 		return response.json(

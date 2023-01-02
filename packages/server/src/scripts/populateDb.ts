@@ -83,7 +83,7 @@ async function saveTypes(types: TypeSchema[]) {
 
 // ========================================= POKÉMON DATA =========================================
 
-function parseEvolutionChain(chainData: ChainLink, resultChain: string[] = []): string[] {
+function parseEvolutionChain(chainData: ChainLink, resultChain: string[] = []) {
 	const resultChainTmp = [...resultChain, chainData.species.name];
 	const { evolves_to } = chainData;
 
@@ -95,7 +95,7 @@ function parseEvolutionChain(chainData: ChainLink, resultChain: string[] = []): 
 		return parseEvolutionChain(evolves_to[0], resultChainTmp);
 	}
 
-	return evolves_to.flatMap(et => parseEvolutionChain(et, resultChainTmp));
+	return evolves_to.map(et => parseEvolutionChain(et, resultChainTmp));
 }
 
 type ApiPokemonData = Pokemon & Replace<PokemonSpecies, { evolution_chain: EvolutionChain }>;
@@ -122,7 +122,7 @@ async function getPokemonsPage(offset = 0): Promise<ApiPokemonData[]> {
 
 	const pokemons = await Promise.all(species.map(sp => P.pokemon.getPokemonById(sp.id)));
 
-	return species.map((sp, i) => ({ ...sp, ...pokemons[i] }));
+	return species.map((sp, i) => ({ ...pokemons[i], ...sp }));
 }
 
 async function getPokemons() {

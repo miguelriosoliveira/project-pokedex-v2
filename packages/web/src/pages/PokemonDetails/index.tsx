@@ -38,19 +38,14 @@ export function PokemonDetails() {
 	return (
 		<div className={styles['pokemon-details-component']}>
 			<div className="header">
-				<Button
-					variant="contained"
-					// color="default"
-					startIcon={<ArrowBack />}
-					onClick={() => navigate(-1)}
-				>
+				<Button variant="contained" startIcon={<ArrowBack />} onClick={() => navigate(-1)}>
 					Back
 				</Button>
 			</div>
 
 			<div className="main">
 				<div className="sprite">
-					<Sprite name={pokemon.name} number={pokemon.number} />
+					<Sprite name={pokemon.name} imgSrc={pokemon.sprite} />
 				</div>
 
 				<div className="infos">

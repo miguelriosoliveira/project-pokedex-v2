@@ -6,11 +6,13 @@ export interface Generation {
 	starters: Array<{
 		name: string;
 		number: number;
+		sprite: string;
 	}>;
 }
 
 export interface Pokemon {
 	displayName: string;
+	sprite: string;
 	number: number;
 	types: string[];
 }
@@ -20,6 +22,7 @@ export interface PokemonDetails {
 	number: number;
 	types: string[];
 	description: string;
+	sprite: string;
 	weaknesses: string[];
 	evolutionChain: {
 		common: Pokemon[];

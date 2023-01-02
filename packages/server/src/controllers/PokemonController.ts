@@ -2,7 +2,13 @@ import { Joi, Segments } from 'celebrate';
 import { Request, Response } from 'express';
 
 import { DEFAULT_PAGE_SIZE, GENERATIONS, TOTAL_ITEMS_HEADER } from '../config/constants';
-import { Pokemon, Type } from '../models';
+import { Pokemon, PokemonSchema } from '../models';
+import { PokemonsRepository, TypesRepository } from '../repositories';
+import {
+	GetPokemonByNumberService,
+	GetPokemonsByNamesService,
+	GetTypesByNamesService,
+} from '../services';
 
 interface GetAllRequestQuery {
 	generation: string;
@@ -17,6 +23,10 @@ interface Query {
 	name?: { $regex: string; $options: 'i' };
 	number?: number;
 	types?: { $in: string[] };
+}
+
+interface GetOneParams {
+	number: number;
 }
 
 export const PokemonController = {
@@ -53,7 +63,7 @@ export const PokemonController = {
 		// eslint-disable-next-line unicorn/no-array-callback-reference
 		const totalItems = await Pokemon.find(query).countDocuments();
 		// eslint-disable-next-line unicorn/no-array-method-this-argument, unicorn/no-array-callback-reference
-		const pokemons = await Pokemon.find(query, 'displayName number types')
+		const pokemons = await Pokemon.find(query, 'displayName number types sprite')
 			.sort('number')
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);
@@ -67,66 +77,74 @@ export const PokemonController = {
 		},
 	},
 
-	async getOne(request: Request, response: Response) {
+	async getOne(request: Request<GetOneParams>, response: Response) {
 		const { number } = request.params;
 
-		let pokemon = null;
-		let types = null;
+		const pokemonsRepository = new PokemonsRepository();
+		const getPokemonByNumberService = new GetPokemonByNumberService(pokemonsRepository);
+		const getPokemonsByNamesService = new GetPokemonsByNamesService(pokemonsRepository);
+		const pokemon = await getPokemonByNumberService.execute(number);
 
-		try {
-			pokemon = await Pokemon.findOne({ number });
-			types = await Type.find({ name: { $in: pokemon.types } });
-		} catch (error) {
-			let status = 500;
-			if (error.response) {
-				status = error.response.status;
-			}
-			return response.status(status).json(error);
-		}
+		const typesRepository = new TypesRepository();
+		const getTypesByNamesService = new GetTypesByNamesService(typesRepository);
+		const types = await getTypesByNamesService.execute(pokemon.types);
 
-		const evolutionChain = { common: [], variant: [] };
+		let commonEvolutionChain: PokemonSchema[] = [];
+		let variantEvolutionChain: PokemonSchema[] = [];
 
-		if (Array.isArray(pokemon.evolutionChain[0])) {
-			const intersection = pokemon.evolutionChain.reduce((intersec, chain) =>
-				intersec.filter(form => chain.includes(form)),
+		if (pokemon.evolution_chain.length > 1) {
+			const intersection = pokemon.evolution_chain.reduce(
+				(intersec, chain) => intersec.filter(form => chain.includes(form)),
+				[],
 			);
-			const difference = pokemon.evolutionChain.reduce(
+			const difference = pokemon.evolution_chain.reduce(
 				(diff, chain) => [...diff, ...chain.filter(form => !intersection.includes(form))],
 				[],
 			);
 
-			evolutionChain.common = await Pokemon.find(
-				{ name: { $in: intersection } },
-				'displayName number types',
-			).sort('number');
+			// evolutionChain.common = await Pokemon.find(
+			// 	{ name: { $in: intersection } },
+			// 	'displayName number types',
+			// ).sort('number');
 
-			evolutionChain.variant = await Pokemon.find(
-				{ name: { $in: difference } },
-				'displayName number types',
-			).sort('number');
+			// evolutionChain.variant = await Pokemon.find(
+			// 	{ name: { $in: difference } },
+			// 	'displayName number types',
+			// ).sort('number');
+			[commonEvolutionChain, variantEvolutionChain] = await Promise.all([
+				getPokemonsByNamesService.execute(intersection),
+				getPokemonsByNamesService.execute(difference),
+			]);
 		} else {
-			const evolutionChainPokemons = await Pokemon.find(
-				{ name: { $in: pokemon.evolutionChain } },
-				'displayName number types',
+			// const evolutionChainPokemons = await Pokemon.find(
+			// 	{ name: { $in: pokemon.evolution_chain } },
+			// 	'displayName number types',
+			// );
+			const evolutionChainPokemons = await getPokemonsByNamesService.execute(
+				pokemon.evolution_chain[0],
 			);
-			evolutionChain.common = [...evolutionChain.common, ...evolutionChainPokemons];
+			commonEvolutionChain = [...commonEvolutionChain, ...evolutionChainPokemons];
 		}
 
 		return response.json({
 			number: pokemon.number,
-			name: pokemon.displayName,
+			name: pokemon.display_name,
 			types: pokemon.types,
 			description: pokemon.description,
+			sprite: pokemon.sprite,
+			evolutionChain: {
+				common: commonEvolutionChain,
+				variant: variantEvolutionChain,
+			},
 			weaknesses: [
 				...new Set(
 					types.flatMap(type => [
-						...type.doubleDamageFrom,
-						...type.halfDamageTo,
-						...type.noDamageTo,
+						...type.double_damage_from,
+						...type.half_damage_to,
+						...type.no_damage_to,
 					]),
 				),
 			].sort(),
-			evolutionChain,
 		});
 	},
 };

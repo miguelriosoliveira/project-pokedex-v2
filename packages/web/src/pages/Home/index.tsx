@@ -68,7 +68,7 @@ export function Home() {
 									<div className="starters">
 										{gen.starters.map((starter, index, array) => (
 											<Fragment key={starter.name}>
-												<Sprite name={starter.name} number={starter.number} />
+												<Sprite name={starter.name} imgSrc={starter.sprite} />
 												{index < array.length - 1 && <Divider orientation="vertical" flexItem />}
 											</Fragment>
 										))}

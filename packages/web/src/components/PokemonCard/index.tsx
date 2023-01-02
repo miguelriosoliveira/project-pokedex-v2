@@ -25,7 +25,7 @@ export function PokemonCard({ pokemon, ...props }: PokemonCardProps) {
 				{pokemon.displayName} #{pokemon.number}
 			</Typography>
 
-			<Sprite className="sprite" name={pokemon.displayName} number={pokemon.number} />
+			<Sprite className="sprite" name={pokemon.displayName} imgSrc={pokemon.sprite} />
 
 			<div className={`types type--${pokemon.types[0]}`}>
 				{pokemon.types.map(type => (

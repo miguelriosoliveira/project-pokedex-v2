@@ -22,9 +22,12 @@
 	"plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "unicorn"],
 	"rules": {
 		"camelcase": "off",
+		"class-methods-use-this": "off",
 		"no-case-declarations": "off",
+		"no-empty-function": ["error", { "allow": ["constructors"] }],
 		"no-promise-executor-return": "off",
 		"no-unused-vars": "off",
+		"no-useless-constructor": "off",
 
 		"@typescript-eslint/explicit-module-boundary-types": "off",
 		"@typescript-eslint/no-unused-vars": "error",
