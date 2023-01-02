@@ -2,6 +2,7 @@
 import 'dotenv/config';
 import { ChainLink, EvolutionChain, MainClient, Pokemon, PokemonSpecies } from 'pokenode-ts';
 
+import { DEFAULT_PAGE_SIZE } from '../config/constants';
 import { db } from '../database';
 import {
 	Generation,
@@ -11,8 +12,7 @@ import {
 	Pokemon as PokemonModel,
 	PokemonSchema,
 } from '../models';
-import { createFakeEvolutionChain, getIdFromUrl } from '../utils';
-import { Replace } from '../utils/types';
+import { createFakeEvolutionChain, getIdFromUrl, createRange, Replace } from '../utils';
 
 const P = new MainClient();
 
@@ -38,7 +38,7 @@ async function savePokemons(pokemons: PokemonSchema[]) {
 	console.log('Truncating Pokemon table...');
 	await PokemonModel.deleteMany();
 
-	console.log('Saving pokemons...');
+	console.log(`Saving ${pokemons.length} pokemons...`);
 	await PokemonModel.insertMany(pokemons);
 	console.log('Pokemons saved!');
 }
@@ -58,8 +58,10 @@ function parseEvolutionChain(chainData: ChainLink, resultChain: string[] = []): 
 	return evolves_to.flatMap(et => parseEvolutionChain(et, resultChainTmp));
 }
 
-async function getPokemons() {
-	const { results: speciesList } = await P.pokemon.listPokemonSpecies(890);
+type ApiPokemonData = Pokemon & Replace<PokemonSpecies, { evolution_chain: EvolutionChain }>;
+
+async function getPokemonsPage(offset = 0): Promise<ApiPokemonData[]> {
+	const { results: speciesList } = await P.pokemon.listPokemonSpecies(offset);
 
 	const speciesMissingEvolutionChain = await Promise.all(
 		speciesList.map(sp => P.pokemon.getPokemonSpeciesByName(sp.name)),
@@ -83,7 +85,14 @@ async function getPokemons() {
 	return species.map((sp, i) => ({ ...sp, ...pokemons[i] }));
 }
 
-type ApiPokemonData = Pokemon & Replace<PokemonSpecies, { evolution_chain: EvolutionChain }>;
+async function getPokemons() {
+	const { count: total } = await P.pokemon.listPokemonSpecies();
+	console.log(`Getting ${total} Pokémon from API...`);
+	const range = createRange(total, DEFAULT_PAGE_SIZE);
+	const results = await Promise.all(range.map(offset => getPokemonsPage(offset)));
+	console.log('Done!');
+	return results.flat();
+}
 
 async function mapPokemonsToDb(apiPokemonData: ApiPokemonData[]) {
 	return apiPokemonData.map(
@@ -115,11 +124,8 @@ async function mapPokemonsToDb(apiPokemonData: ApiPokemonData[]) {
 
 async function populateDb() {
 	const apiPokemonData = await getPokemons();
-
-	console.log(apiPokemonData);
-
-	// const pokemons = await mapPokemonsToDb(apiPokemonData);
-	// await savePokemons(pokemons);
+	const pokemons = await mapPokemonsToDb(apiPokemonData);
+	await savePokemons(pokemons);
 }
 
 db.connect()
