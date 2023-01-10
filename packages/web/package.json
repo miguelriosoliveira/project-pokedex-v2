@@ -13,7 +13,7 @@
 		"@emotion/react": "^11.10.5",
 		"@emotion/styled": "^11.10.5",
 		"@mui/icons-material": "^5.11.0",
-		"@mui/material": "^5.11.3",
+		"@mui/material": "^5.11.4",
 		"@sentry/react": "^7.29.0",
 		"@sentry/tracing": "^7.29.0",
 		"axios": "^1.2.2",
@@ -22,7 +22,7 @@
 		"pino-pretty": "^9.1.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.6.1",
+		"react-router-dom": "^6.6.2",
 		"sass": "^1.57.1"
 	},
 	"devDependencies": {
