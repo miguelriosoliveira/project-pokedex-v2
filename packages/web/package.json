@@ -15,7 +15,7 @@
 		"@mui/icons-material": "^5.11.0",
 		"@mui/material": "^5.11.4",
 		"@sentry/react": "^7.29.0",
-		"@sentry/tracing": "^7.29.0",
+		"@sentry/tracing": "^7.30.0",
 		"axios": "^1.2.2",
 		"classnames": "^2.3.2",
 		"pino": "^8.8.0",
