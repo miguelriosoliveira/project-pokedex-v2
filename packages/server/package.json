@@ -18,7 +18,7 @@
 		"morgan": "^1.10.0",
 		"pino": "^8.11.0",
 		"pino-pretty": "^10.0.0",
-		"pokenode-ts": "^1.17.0",
+		"pokenode-ts": "^1.18.2",
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
