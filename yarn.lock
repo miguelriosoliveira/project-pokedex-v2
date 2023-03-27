@@ -3398,10 +3398,10 @@ pluralize@^8.0.0:
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-8.0.0.tgz#1a6fa16a38d12a1901e0320fa017051c539ce3b1"
   integrity sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
 
-pokenode-ts@^1.18.2:
-  version "1.18.2"
-  resolved "https://registry.yarnpkg.com/pokenode-ts/-/pokenode-ts-1.18.2.tgz#ebb2661a5195865ebc162c8b3d871df66e93d7e6"
-  integrity sha512-LMKFnWl76ybMvWhtiGTcQ/3J3FtaGo/5sFsm+68wxXbVpHXGzWfKdtmVThpZDP7lkK8CrnNK5bTMv6Shtnh4VQ==
+pokenode-ts@^1.18.3:
+  version "1.18.3"
+  resolved "https://registry.yarnpkg.com/pokenode-ts/-/pokenode-ts-1.18.3.tgz#732bc7600a9b9e1497ee1c87247cc16f81a06cbb"
+  integrity sha512-sRVrcdIpoIS1LRckma+tIUOBI595eDTYhCXm1n/dhZQHKZQ0f+dZwf+Mi2OrwvGHZD8orReMl7CiS6R7+ZUuVw==
 
 postcss@^8.4.21:
   version "8.4.21"
