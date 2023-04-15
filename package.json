@@ -15,17 +15,10 @@
 		"dev": "concurrently \"yarn:server\" \"yarn:web\""
 	},
 	"devDependencies": {
-<<<<<<< HEAD
 		"@typescript-eslint/eslint-plugin": "^5.58.0",
 		"@typescript-eslint/parser": "^5.58.0",
 		"concurrently": "^8.0.1",
 		"eslint": "^8.38.0",
-=======
-		"@typescript-eslint/eslint-plugin": "^5.57.1",
-		"@typescript-eslint/parser": "^5.57.1",
-		"concurrently": "^8.0.1",
-		"eslint": "^8.37.0",
->>>>>>> 8a1c5ebf1a019ed9a1050e802f24f72f65de3d5d
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-import": "^2.27.5",
@@ -35,10 +28,6 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-unicorn": "^46.0.0",
 		"prettier": "^2.8.7",
-<<<<<<< HEAD
 		"typescript": "^5.0.4"
-=======
-		"typescript": "^5.0.3"
->>>>>>> 8a1c5ebf1a019ed9a1050e802f24f72f65de3d5d
 	}
 }

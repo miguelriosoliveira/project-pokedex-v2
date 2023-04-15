@@ -12,26 +12,17 @@
 	"dependencies": {
 		"@emotion/react": "^11.10.6",
 		"@emotion/styled": "^11.10.6",
-<<<<<<< HEAD
 		"@mui/icons-material": "^5.11.16",
 		"@mui/material": "^5.12.0",
 		"@sentry/react": "^7.48.0",
 		"@sentry/tracing": "^7.48.0",
 		"axios": "^1.3.5",
-=======
-		"@mui/icons-material": "^5.11.11",
-		"@mui/material": "^5.11.15",
-		"@sentry/react": "^7.46.0",
-		"@sentry/tracing": "^7.46.0",
-		"axios": "^1.3.4",
->>>>>>> 8a1c5ebf1a019ed9a1050e802f24f72f65de3d5d
 		"classnames": "^2.3.2",
 		"pino": "^8.11.0",
 		"pino-pretty": "^10.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.10.0",
-<<<<<<< HEAD
 		"sass": "^1.62.0"
 	},
 	"devDependencies": {
@@ -39,15 +30,6 @@
 		"@types/react-dom": "^18.0.11",
 		"@vitejs/plugin-react": "^3.1.0",
 		"typescript": "^5.0.4",
-=======
-		"sass": "^1.60.0"
-	},
-	"devDependencies": {
-		"@types/react": "^18.0.33",
-		"@types/react-dom": "^18.0.11",
-		"@vitejs/plugin-react": "^3.1.0",
-		"typescript": "^5.0.3",
->>>>>>> 8a1c5ebf1a019ed9a1050e802f24f72f65de3d5d
 		"vite": "^4.2.1"
 	}
 }
