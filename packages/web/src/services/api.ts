@@ -37,6 +37,29 @@ interface GetPokemonListParams {
 	page?: number;
 }
 
+const TYPES = [
+	'bug',
+	'dark',
+	'dragon',
+	'electric',
+	'fairy',
+	'fighting',
+	'fire',
+	'flying',
+	'ghost',
+	'grass',
+	'ground',
+	'ice',
+	'normal',
+	'poison',
+	'psychic',
+	'rock',
+	'steel',
+	'water',
+] as const;
+
+export type Type = (typeof TYPES)[number];
+
 const { VITE_BACKEND_URL: BACKEND_URL } = import.meta.env;
 
 const apiBase = axios.create({ baseURL: BACKEND_URL });
@@ -48,7 +71,7 @@ export const api = {
 	},
 
 	async getTypes() {
-		const { data } = await apiBase.get<string[]>('/types');
+		const { data } = await apiBase.get<Type[]>('/types');
 		return data;
 	},
 

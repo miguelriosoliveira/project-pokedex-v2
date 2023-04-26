@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Sprite } from '../../components';
+import { Button, Sprite } from '../../components';
 import { routes } from '../../config';
 import { api, Generation } from '../../services';
 import { logger } from '../../utils';
@@ -35,7 +35,7 @@ export function Home() {
 	}, []);
 
 	return (
-		<div className="bg-[url('/images/bg.png')] bg-cover h-screen overflow-auto flex flex-col gap-5 items-center p-5">
+		<div className="flex flex-col items-center gap-5 overflow-auto">
 			<img src="images/pokemon-logo.png" alt="Pokémon logo" className="w-80" />
 
 			{loading ? (
@@ -44,13 +44,7 @@ export function Home() {
 				<h6 className="p-6 bg-white border-2 border-black rounded-lg">{errorMsg}</h6>
 			) : (
 				<>
-					<button
-						type="button"
-						onClick={() => navigate(routes.search())}
-						className="px-3 py-2 text-sm font-medium text-white transition bg-blue-700 rounded-md shadow hover:shadow-lg hover:bg-blue-800"
-					>
-						SEARCH ALL
-					</button>
+					<Button onClick={() => navigate(routes.search())}>SEARCH ALL</Button>
 
 					<div className="grid grid-cols-3 gap-6">
 						{generations.map(gen => (

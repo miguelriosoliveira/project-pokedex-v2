@@ -3,9 +3,30 @@ import { ChangeEvent, FormEvent, UIEvent, useCallback, useEffect, useState } fro
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { PokemonCard } from '../../components';
-import { api, Pokemon } from '../../services/api';
+import { Button, PokemonCard } from '../../components';
+import { api, Pokemon, Type } from '../../services/api';
 import { logger } from '../../utils';
+
+const TYPES_STYLE_MAP: { [type in Type]: string } = {
+	bug: 'bg-type--bug',
+	dark: 'bg-type--dark',
+	dragon: 'bg-type--dragon',
+	electric: 'bg-type--electric text-gray-800',
+	fairy: 'bg-type--fairy text-gray-800',
+	fighting: 'bg-type--fighting',
+	fire: 'bg-type--fire',
+	flying: 'bg-type--flying text-gray-800',
+	ghost: 'bg-type--ghost',
+	grass: 'bg-type--grass text-gray-800',
+	ground: 'bg-type--ground text-gray-800',
+	ice: 'bg-type--ice text-gray-800',
+	normal: 'bg-type--normal text-gray-800',
+	poison: 'bg-type--poison',
+	psychic: 'bg-type--psychic',
+	rock: 'bg-type--rock',
+	steel: 'bg-type--steel text-gray-800',
+	water: 'bg-type--water',
+};
 
 interface LoadPokemonListParams {
 	search_: string;
@@ -22,7 +43,7 @@ export function PokemonList() {
 
 	const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
 	const [search, setSearch] = useState('');
-	const [types, setTypes] = useState<string[]>([]);
+	const [types, setTypes] = useState<Type[]>([]);
 	const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(true);
@@ -65,7 +86,7 @@ export function PokemonList() {
 		loadPokemonList();
 	}, [loadPokemonList, loadTypes]);
 
-	function onSubmit(event: FormEvent) {
+	function handleSubmit(event: FormEvent) {
 		event.preventDefault();
 		clearTimeout(typingTimeout);
 		loadPokemonList({ search_: search, types_: selectedTypes, reset: true });
@@ -93,7 +114,7 @@ export function PokemonList() {
 		loadPokemonList({ search_: search, types_: newSelectedTypes, reset: true });
 	}
 
-	function onScroll({ currentTarget: element }: UIEvent<HTMLElement>) {
+	function handleScroll({ currentTarget: element }: UIEvent<HTMLElement>) {
 		if (loading) {
 			return;
 		}
@@ -103,39 +124,50 @@ export function PokemonList() {
 	}
 
 	return (
-		<div className="pokemon-list-component">
-			<button type="button" className="back-button" onClick={() => navigate(-1)}>
-				<FiArrowLeft />
-				Back
-			</button>
+		<div className="grid gap-2">
+			<Button
+				className="flex items-center gap-2 !text-black justify-self-start bg-zinc-300"
+				onClick={() => navigate(-1)}
+			>
+				<FiArrowLeft size={20} />
+				BACK
+			</Button>
 
-			<div className="search">
-				<form onSubmit={onSubmit}>
-					<FiSearch style={{ color: 'gray' }} />
-					<input placeholder="Name or Number" value={search} onChange={onChangeSearch} />
+			<div className="grid gap-3 grid-cols-[1fr_2fr]">
+				<form onSubmit={handleSubmit} className="flex flex-col gap-1">
+					<div className="flex items-center gap-4 px-3 py-4 transition-colors border rounded border-black/25 hover:border-black/90">
+						<FiSearch size={20} className="text-gray-500 stroke-[3px]" />
+						<input
+							placeholder="Name or Number"
+							value={search}
+							onChange={onChangeSearch}
+							className="w-full bg-transparent"
+						/>
+					</div>
+
 					<p>
-						<span>Total pokémon found</span>
+						<span>Total pokémon found </span>
 						<strong>{totalPokemons}</strong>
 					</p>
 				</form>
 
-				<div className="types-menu">
+				<div className="grid grid-cols-6 gap-x-2 gap-y-1">
 					{types.map(type => (
-						<button
-							type="button"
+						<Button
 							key={type}
-							className={classnames(`type type--${type}`, {
-								'type--selected': selectedTypes.includes(type),
-							})}
+							className={classnames(
+								`${TYPES_STYLE_MAP[type]} uppercase text-xs !font-bold border-2 border-gray-500`,
+								{ 'type--selected': selectedTypes.includes(type) },
+							)}
 							onClick={() => selectType(type)}
 						>
-							<p key={type}>{type}</p>
-						</button>
+							{type}
+						</Button>
 					))}
 				</div>
 			</div>
 
-			<div className="list" onScroll={onScroll}>
+			<div className="list" onScroll={handleScroll}>
 				{pokemonList.map(pokemon => (
 					<PokemonCard key={pokemon.number} pokemon={pokemon} />
 				))}
