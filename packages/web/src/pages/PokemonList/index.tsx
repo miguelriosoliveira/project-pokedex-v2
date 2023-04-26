@@ -1,14 +1,11 @@
-import { ArrowBack, Search } from '@mui/icons-material';
-import { Button, InputAdornment, TextField, Typography } from '@mui/material';
 import classnames from 'classnames';
 import { ChangeEvent, FormEvent, UIEvent, useCallback, useEffect, useState } from 'react';
+import { FiArrowLeft, FiSearch } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { PokemonCard } from '../../components';
 import { api, Pokemon } from '../../services/api';
 import { logger } from '../../utils';
-
-import styles from './styles.module.scss';
 
 interface LoadPokemonListParams {
 	search_: string;
@@ -27,7 +24,6 @@ export function PokemonList() {
 	const [search, setSearch] = useState('');
 	const [types, setTypes] = useState<string[]>([]);
 	const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-	// const [typingTimeout, setTypingTimeout] = useState();
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [totalPokemons, setTotalPokemons] = useState(0);
@@ -43,8 +39,6 @@ export function PokemonList() {
 
 	const loadPokemonList = useCallback(
 		async ({ search_, types_, page_ = 1, reset = false } = {} as LoadPokemonListParams) => {
-			console.log({ generation, search_, types_, page_, reset });
-
 			setPage(page_);
 			setLoading(true);
 			try {
@@ -109,36 +103,20 @@ export function PokemonList() {
 	}
 
 	return (
-		<div className={styles['pokemon-list-component']}>
-			<Button
-				variant="contained"
-				// color="default"
-				className="back-button"
-				startIcon={<ArrowBack />}
-				onClick={() => navigate(-1)}
-			>
+		<div className="pokemon-list-component">
+			<button type="button" className="back-button" onClick={() => navigate(-1)}>
+				<FiArrowLeft />
 				Back
-			</Button>
+			</button>
 
 			<div className="search">
 				<form onSubmit={onSubmit}>
-					<TextField
-						placeholder="Name or Number"
-						variant="outlined"
-						value={search}
-						onChange={onChangeSearch}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<Search style={{ color: 'gray' }} />
-								</InputAdornment>
-							),
-						}}
-					/>
-					<Typography>
+					<FiSearch style={{ color: 'gray' }} />
+					<input placeholder="Name or Number" value={search} onChange={onChangeSearch} />
+					<p>
 						<span>Total pokémon found</span>
 						<strong>{totalPokemons}</strong>
-					</Typography>
+					</p>
 				</form>
 
 				<div className="types-menu">
@@ -151,9 +129,7 @@ export function PokemonList() {
 							})}
 							onClick={() => selectType(type)}
 						>
-							<Typography key={type} variant="overline">
-								{type}
-							</Typography>
+							<p key={type}>{type}</p>
 						</button>
 					))}
 				</div>

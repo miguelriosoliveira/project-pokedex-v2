@@ -1,11 +1,8 @@
-import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { routes } from '../../config';
 import { Pokemon } from '../../services';
 import { Sprite } from '../Sprite';
-
-import styles from './styles.module.scss';
 
 interface PokemonCardProps {
 	pokemon: Pokemon;
@@ -17,21 +14,21 @@ export function PokemonCard({ pokemon, ...props }: PokemonCardProps) {
 	return (
 		<button
 			type="button"
-			className={styles['pokemon-card-component']}
+			className="pokemon-card-component"
 			onClick={() => navigate(routes.pokemonDetails(pokemon.number))}
 			{...props}
 		>
-			<Typography noWrap className="name">
+			<p>
 				{pokemon.displayName} #{pokemon.number}
-			</Typography>
+			</p>
 
 			<Sprite className="sprite" name={pokemon.displayName} imgSrc={pokemon.sprite} />
 
 			<div className={`types type--${pokemon.types[0]}`}>
 				{pokemon.types.map(type => (
-					<Typography key={type} variant="overline" className={`type type--${type}`}>
+					<p key={type} className={`type type--${type}`}>
 						{type}
-					</Typography>
+					</p>
 				))}
 			</div>
 		</button>

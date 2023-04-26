@@ -1,11 +1,5 @@
 import { ReactNode } from 'react';
 
-import styles from './App.module.scss';
-
-interface AppProps {
-	children: ReactNode;
-}
-
-export function App({ children }: AppProps) {
-	return <main className={styles['app-component']}>{children}</main>;
+export function App({ children }: { children: ReactNode }) {
+	return <main className="h-screen overflow-auto">{children}</main>;
 }

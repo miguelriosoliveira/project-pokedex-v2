@@ -1,13 +1,10 @@
-import { ArrowBack, ArrowRight, ReportProblem } from '@mui/icons-material';
-import { Button, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { FiAlertTriangle, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { PokemonCard, Sprite } from '../../components';
 import { api, PokemonDetails as PokemonData } from '../../services';
 import { logger } from '../../utils';
-
-import styles from './styles.module.scss';
 
 export function PokemonDetails() {
 	const navigate = useNavigate();
@@ -36,12 +33,13 @@ export function PokemonDetails() {
 	const { common: commonEvolutions, variant: variantEvolutions } = pokemon.evolutionChain;
 
 	return (
-		<div className={styles['pokemon-details-component']}>
-			<div className="header">
-				<Button variant="contained" startIcon={<ArrowBack />} onClick={() => navigate(-1)}>
+		<div className="pokemon-details-component">
+			<header>
+				<button type="button" onClick={() => navigate(-1)}>
+					<FiArrowLeft scale={25} />
 					Back
-				</Button>
-			</div>
+				</button>
+			</header>
 
 			<div className="main">
 				<div className="sprite">
@@ -49,55 +47,39 @@ export function PokemonDetails() {
 				</div>
 
 				<div className="infos">
-					<Typography variant="h4" className="name">
+					<h4 className="name">
 						{pokemon.name} #{pokemon.number}
-					</Typography>
+					</h4>
 
 					<div className="description">
-						<Typography variant="body1" className="text--bold">
-							{pokemon.description}
-						</Typography>
+						<p className="text--bold">{pokemon.description}</p>
 					</div>
 
 					<div className="types">
 						<div className="own">
 							<div className="title">
-								<Typography variant="body1" className="text--bold">
-									{pokemon.types.length === 1 ? 'TYPE' : 'TYPES'}
-								</Typography>
+								<p className="text--bold">{pokemon.types.length === 1 ? 'TYPE' : 'TYPES'}</p>
 							</div>
 							<div className="list">
 								{pokemon.types.map(type => (
-									<Typography
-										key={type}
-										align="center"
-										variant="overline"
-										className={`type type--${type}`}
-									>
+									<p key={type} className={`type type--${type}`}>
 										{type}
-									</Typography>
+									</p>
 								))}
 							</div>
 						</div>
 
 						<div className="weaknesses">
 							<div className="title">
-								<ReportProblem />
-								<Typography variant="body1" className="text--bold">
-									WEAKNESSES
-								</Typography>
-								<ReportProblem />
+								<FiAlertTriangle />
+								<p className="text--bold">WEAKNESSES</p>
+								<FiAlertTriangle />
 							</div>
 							<div className="list">
 								{pokemon.weaknesses.map(weakness => (
-									<Typography
-										key={weakness}
-										align="center"
-										variant="overline"
-										className={`type type--${weakness}`}
-									>
+									<p key={weakness} className={`type type--${weakness}`}>
 										{weakness}
-									</Typography>
+									</p>
 								))}
 							</div>
 						</div>
@@ -106,9 +88,7 @@ export function PokemonDetails() {
 			</div>
 
 			<div className="evolution-chain">
-				<Typography variant="body1" className="title text--bold">
-					EVOLUTION CHAIN
-				</Typography>
+				<p className="title text--bold">EVOLUTION CHAIN</p>
 
 				<div className="list">
 					<div className="common">
@@ -118,7 +98,7 @@ export function PokemonDetails() {
 									<PokemonCard key={poke.number} pokemon={poke} />
 									{index === commonEvolutions.length - 1 &&
 									variantEvolutions.length === 0 ? null : (
-										<ArrowRight />
+										<FiArrowRight />
 									)}
 								</div>
 							);

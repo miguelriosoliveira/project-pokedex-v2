@@ -1,9 +1,11 @@
+import { BrowserTracing } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { Router } from './Router';
+
+import './index.css';
 
 const { VITE_SENTRY_DSN: SENTRY_DSN } = import.meta.env;
 
