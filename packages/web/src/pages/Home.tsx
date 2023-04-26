@@ -2,10 +2,10 @@ import { AxiosError } from 'axios';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Sprite } from '../../components';
-import { routes } from '../../config';
-import { api, Generation } from '../../services';
-import { logger } from '../../utils';
+import { Button, Sprite } from '../components';
+import { routes } from '../config';
+import { api, Generation } from '../services';
+import { logger } from '../utils';
 
 export function Home() {
 	const navigate = useNavigate();

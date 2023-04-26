@@ -3,9 +3,9 @@ import { ChangeEvent, FormEvent, UIEvent, useCallback, useEffect, useState } fro
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button, PokemonCard } from '../../components';
-import { api, Pokemon, Type } from '../../services/api';
-import { logger } from '../../utils';
+import { Button, PokemonCard } from '../components';
+import { api, Pokemon, Type } from '../services/api';
+import { logger } from '../utils';
 
 const TYPES_STYLE_MAP: { [type in Type]: string } = {
 	bug: 'bg-type--bug',
@@ -124,7 +124,7 @@ export function PokemonList() {
 	}
 
 	return (
-		<div className="grid gap-2">
+		<div className="grid h-full gap-2">
 			<Button
 				className="flex items-center gap-2 !text-black justify-self-start bg-zinc-300"
 				onClick={() => navigate(-1)}
@@ -168,7 +168,10 @@ export function PokemonList() {
 				</div>
 			</div>
 
-			<div className="list" onScroll={handleScroll}>
+			<div
+				className="grid grid-cols-3 gap-3 overflow-y-auto md:grid-cols-4"
+				onScroll={handleScroll}
+			>
 				{pokemonList.map(pokemon => (
 					<PokemonCard key={pokemon.number} pokemon={pokemon} />
 				))}

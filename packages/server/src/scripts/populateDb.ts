@@ -54,7 +54,11 @@ async function saveGenerations(generations: GenerationSchema[]) {
 async function getTypes() {
 	const { results: typesList } = await P.pokemon.listTypes();
 	console.log(`Getting ${typesList.length} types from API...`);
-	return Promise.all(typesList.map(t => P.pokemon.getTypeByName(t.name)));
+	return Promise.all(
+		typesList
+			.filter(t => !['unknown', 'shadow'].includes(t.name))
+			.map(t => P.pokemon.getTypeByName(t.name)),
+	);
 }
 
 async function mapTypesToDb(apiTypesData: Type[]): Promise<TypeSchema[]> {
