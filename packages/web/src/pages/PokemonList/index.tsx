@@ -11,20 +11,20 @@ const TYPES_STYLE_MAP: { [type in Type]: string } = {
 	bug: 'bg-type--bug',
 	dark: 'bg-type--dark',
 	dragon: 'bg-type--dragon',
-	electric: 'bg-type--electric text-gray-800',
-	fairy: 'bg-type--fairy text-gray-800',
+	electric: 'bg-type--electric !text-gray-800',
+	fairy: 'bg-type--fairy !text-gray-800',
 	fighting: 'bg-type--fighting',
 	fire: 'bg-type--fire',
-	flying: 'bg-type--flying text-gray-800',
+	flying: 'bg-type--flying !text-gray-800',
 	ghost: 'bg-type--ghost',
-	grass: 'bg-type--grass text-gray-800',
-	ground: 'bg-type--ground text-gray-800',
-	ice: 'bg-type--ice text-gray-800',
-	normal: 'bg-type--normal text-gray-800',
+	grass: 'bg-type--grass !text-gray-800',
+	ground: 'bg-type--ground !text-gray-800',
+	ice: 'bg-type--ice !text-gray-800',
+	normal: 'bg-type--normal !text-gray-800',
 	poison: 'bg-type--poison',
 	psychic: 'bg-type--psychic',
 	rock: 'bg-type--rock',
-	steel: 'bg-type--steel text-gray-800',
+	steel: 'bg-type--steel !text-gray-800',
 	water: 'bg-type--water',
 };
 
@@ -44,7 +44,7 @@ export function PokemonList() {
 	const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
 	const [search, setSearch] = useState('');
 	const [types, setTypes] = useState<Type[]>([]);
-	const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+	const [selectedTypes, setSelectedTypes] = useState<Type[]>([]);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [totalPokemons, setTotalPokemons] = useState(0);
@@ -103,10 +103,10 @@ export function PokemonList() {
 		setSearch(newSearch);
 	}
 
-	function selectType(type: string) {
+	function selectType(type: Type) {
 		let newSelectedTypes = [...selectedTypes];
 		if (newSelectedTypes.includes(type)) {
-			newSelectedTypes = newSelectedTypes.filter(type_ => type_ !== type);
+			newSelectedTypes = newSelectedTypes.filter(t => t !== type);
 		} else {
 			newSelectedTypes.push(type);
 		}
@@ -156,8 +156,9 @@ export function PokemonList() {
 						<Button
 							key={type}
 							className={classnames(
-								`${TYPES_STYLE_MAP[type]} uppercase text-xs !font-bold border-2 border-gray-500`,
-								{ 'type--selected': selectedTypes.includes(type) },
+								'uppercase text-xs !font-bold border-2 border-gray-500',
+								TYPES_STYLE_MAP[type],
+								{ 'border-red-600': selectedTypes.includes(type) },
 							)}
 							onClick={() => selectType(type)}
 						>
