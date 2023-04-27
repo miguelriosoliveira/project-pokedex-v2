@@ -49,6 +49,7 @@ export function PokemonList() {
 	const [loading, setLoading] = useState(true);
 	const [totalPokemons, setTotalPokemons] = useState(0);
 
+	// TODO: Move it to SSR
 	const loadTypes = useCallback(async () => {
 		try {
 			const response = await api.getTypes();
@@ -81,6 +82,7 @@ export function PokemonList() {
 		[generation],
 	);
 
+	// TODO: Move it to SSR
 	useEffect(() => {
 		loadTypes();
 		loadPokemonList();

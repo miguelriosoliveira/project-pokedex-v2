@@ -10,9 +10,9 @@ export function PokemonDetails() {
 	const navigate = useNavigate();
 	const { pokemonId: id } = useParams();
 	const pokemonId = Number(id);
-
 	const [pokemon, setPokemon] = useState<PokemonData | null>(null);
 
+	// TODO: Move it to SSR
 	useEffect(() => {
 		const loadPokemon = async () => {
 			try {
