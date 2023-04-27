@@ -1,42 +1,5 @@
 import axios from 'axios';
 
-export interface Generation {
-	name: string;
-	displayName: string;
-	starters: Array<{
-		name: string;
-		number: number;
-		sprite: string;
-	}>;
-}
-
-export interface Pokemon {
-	displayName: string;
-	sprite: string;
-	number: number;
-	types: string[];
-}
-
-export interface PokemonDetails {
-	name: string;
-	number: number;
-	types: string[];
-	description: string;
-	sprite: string;
-	weaknesses: string[];
-	evolutionChain: {
-		common: Pokemon[];
-		variant: Pokemon[];
-	};
-}
-
-interface GetPokemonListParams {
-	generation?: string;
-	search?: string;
-	types?: string[];
-	page?: number;
-}
-
 const TYPES = [
 	'bug',
 	'dark',
@@ -59,6 +22,42 @@ const TYPES = [
 ] as const;
 
 export type Type = (typeof TYPES)[number];
+export interface Generation {
+	name: string;
+	displayName: string;
+	starters: Array<{
+		name: string;
+		number: number;
+		sprite: string;
+	}>;
+}
+
+export interface Pokemon {
+	displayName: string;
+	sprite: string;
+	number: number;
+	types: Type[];
+}
+
+export interface PokemonDetails {
+	name: string;
+	number: number;
+	types: string[];
+	description: string;
+	sprite: string;
+	weaknesses: string[];
+	evolutionChain: {
+		common: Pokemon[];
+		variant: Pokemon[];
+	};
+}
+
+interface GetPokemonListParams {
+	generation?: string;
+	search?: string;
+	types?: string[];
+	page?: number;
+}
 
 const { VITE_BACKEND_URL: BACKEND_URL } = import.meta.env;
 
