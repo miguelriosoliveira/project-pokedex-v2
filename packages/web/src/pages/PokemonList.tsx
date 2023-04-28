@@ -135,9 +135,9 @@ export function PokemonList() {
 				BACK
 			</Button>
 
-			<div className="grid gap-3 grid-cols-[1fr_2fr]">
-				<form onSubmit={handleSubmit} className="flex flex-col gap-1">
-					<div className="flex items-center gap-4 px-3 py-4 transition-colors border rounded border-black/25 hover:border-black/90">
+			<div className="grid gap-2 lg:gap-3 lg:grid-cols-[1fr_2fr]">
+				<form onSubmit={handleSubmit} className="flex gap-1 lg:flex-col">
+					<div className="flex items-center flex-1 gap-4 px-3 py-4 transition-colors border rounded bg-gray-100/95 border-black/25 hover:border-black/90">
 						<FiSearch size={20} className="text-gray-500 stroke-[3px]" />
 						<input
 							placeholder="Name or Number"
@@ -147,13 +147,13 @@ export function PokemonList() {
 						/>
 					</div>
 
-					<p>
+					<p className="flex flex-col items-center justify-center p-1 rounded bg-gray-100/75">
 						<span>Total pokémon found </span>
 						<strong>{totalPokemons}</strong>
 					</p>
 				</form>
 
-				<div className="grid grid-cols-6 gap-x-2 gap-y-1">
+				<div className="grid grid-cols-5 gap-1 lg:grid-cols-6 lg:gap-x-2">
 					{types.map(type => (
 						<Button
 							key={type}
@@ -171,7 +171,7 @@ export function PokemonList() {
 			</div>
 
 			<div
-				className="grid grid-cols-3 gap-3 overflow-y-auto md:grid-cols-4"
+				className="grid grid-cols-3 gap-2 overflow-y-auto lg:gap-3 lg:grid-cols-4"
 				onScroll={handleScroll}
 			>
 				{pokemonList.map(pokemon => (

@@ -6,5 +6,5 @@ interface SpriteProps extends HTMLAttributes<HTMLImageElement> {
 }
 
 export function Sprite({ name, imgSrc, ...props }: SpriteProps) {
-	return <img src={imgSrc} alt={name} {...props} />;
+	return <img loading="lazy" src={imgSrc} alt={name} {...props} />;
 }

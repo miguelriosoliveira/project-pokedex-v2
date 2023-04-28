@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
-import { routes } from '../../config';
-import { Pokemon, Type } from '../../services';
-import { Sprite } from '../Sprite';
+import { routes } from '../config';
+import { Pokemon, Type } from '../services';
+
+import { Sprite } from './Sprite';
 
 const TYPES_STYLE_MAP: { [type in Type]: string } = {
 	bug: 'bg-type--bug',
@@ -40,15 +41,15 @@ export function PokemonCard({ pokemon, ...props }: PokemonCardProps) {
 			onClick={() => navigate(routes.pokemonDetails(pokemon.number))}
 			{...props}
 		>
-			<p className="font-bold bg-black">
+			<p className="p-1 font-bold bg-black rounded-t-md">
 				{pokemon.displayName} #{pokemon.number}
 			</p>
 
-			<Sprite className="sprite" name={pokemon.displayName} imgSrc={pokemon.sprite} />
+			<Sprite name={pokemon.displayName} imgSrc={pokemon.sprite} />
 
 			<div
 				className={classNames(
-					'border-t border-black grid grid-flow-col gap-2 py-1 justify-center rounded-b-md',
+					'border-t border-black grid grid-flow-col lg:gap-2 py-1 justify-center rounded-b-md',
 					TYPES_STYLE_MAP[pokemon.types[0]],
 				)}
 			>
