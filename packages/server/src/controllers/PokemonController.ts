@@ -116,14 +116,8 @@ export const PokemonController = {
 				getPokemonsByNamesService.execute(difference),
 			]);
 		} else {
-			// const evolutionChainPokemons = await Pokemon.find(
-			// 	{ name: { $in: pokemon.evolution_chain } },
-			// 	'displayName number types',
-			// );
-			const evolutionChainPokemons = await getPokemonsByNamesService.execute(
-				pokemon.evolution_chain[0],
-			);
-			commonEvolutionChain = [...commonEvolutionChain, ...evolutionChainPokemons];
+			commonEvolutionChain = await getPokemonsByNamesService.execute(pokemon.evolution_chain[0]);
+			// commonEvolutionChain = [...commonEvolutionChain, ...evolutionChainPokemons];
 		}
 
 		return response.json({

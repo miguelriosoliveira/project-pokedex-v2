@@ -1,11 +1,6 @@
-import { Pokemon } from '../models';
+import { PokemonSchema } from '../models';
 
-export class PokemonsRepository {
-	async findByNumber(number: number) {
-		return Pokemon.findOne({ number });
-	}
-
-	async findManyByNames(names: string[]) {
-		return Pokemon.find({ name: { $in: names } });
-	}
+export abstract class PokemonsRepository {
+	abstract findByNumber(number: number): Promise<PokemonSchema | undefined>;
+	abstract findManyByNames(names: string[]): Promise<PokemonSchema[]>;
 }
