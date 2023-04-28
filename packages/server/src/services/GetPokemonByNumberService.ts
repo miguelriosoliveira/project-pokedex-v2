@@ -11,9 +11,9 @@ export class GetPokemonByNumberService {
 		if (!pokemon) {
 			throw new AppError({
 				code: StatusCodes.NOT_FOUND,
-				message: `Pokémon ${number} not found!`,
+				message: `Pokémon #${number} not found!`,
 			});
 		}
-		return pokemon.toJSON();
+		return pokemon;
 	}
 }
