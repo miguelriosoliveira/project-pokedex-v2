@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { Fragment, useEffect, useState } from 'react';
+import { FaCaretRight } from 'react-icons/fa';
+import { FiArrowLeft } from 'react-icons/fi';
 import { GoAlert } from 'react-icons/go';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -35,7 +36,7 @@ export function PokemonDetails() {
 	const warningSign = <GoAlert size={20} />;
 
 	return (
-		<div className="font-medium">
+		<div className="grid gap-4 font-medium">
 			<Button
 				className="flex items-center gap-2 !text-black justify-self-start bg-zinc-300"
 				onClick={() => navigate(-1)}
@@ -44,21 +45,21 @@ export function PokemonDetails() {
 				BACK
 			</Button>
 
-			<div>
+			<div className="grid gap-2 lg:flex lg:gap-6">
 				<div className="max-w-xs bg-white border-2 border-black rounded-full">
 					<Sprite name={pokemon.name} imgSrc={pokemon.sprite} />
 				</div>
 
-				<div>
-					<h1 className="text-3xl font-bold drop-shadow">
-						{pokemon.name} #{pokemon.number}
-					</h1>
+				<div className="grid gap-3">
+					<div>
+						<h1 className="text-3xl font-bold drop-shadow">
+							{pokemon.name} #{pokemon.number}
+						</h1>
+						<p className="drop-shadow">{pokemon.description}</p>
+					</div>
 
-					<p className="drop-shadow">{pokemon.description}</p>
-
-					<div className="rounded-md bg-gray-100/90">
+					<div className="grid gap-4 p-3 rounded-md bg-gray-100/90">
 						<TypesCard title="TYPES" types={pokemon.types} />
-
 						<TypesCard
 							title={
 								<div className="flex items-center gap-1">
@@ -73,33 +74,33 @@ export function PokemonDetails() {
 				</div>
 			</div>
 
-			<div className="evolution-chain">
-				<p className="title text--bold">EVOLUTION CHAIN</p>
+			<div className="flex flex-col items-center gap-2">
+				<p className="font-bold">EVOLUTION CHAIN</p>
 
-				<div className="list">
-					<div className="common">
+				<div>
+					<div className="flex items-center gap-1">
 						{commonEvolutions.map((poke, index) => {
 							return (
-								<div key={poke.displayName} className="pokemon-form">
-									<PokemonCard key={poke.number} pokemon={poke} />
+								<Fragment key={poke.displayName}>
+									<PokemonCard key={poke.number} pokemon={poke} className="max-w-[250px]" />
 									{index === commonEvolutions.length - 1 &&
 									variantEvolutions.length === 0 ? null : (
-										<FiArrowRight />
+										<FaCaretRight />
 									)}
-								</div>
+								</Fragment>
 							);
 						})}
 					</div>
 
 					{variantEvolutions.length > 0 && (
-						<div className="variant">
-							<div className="half">
+						<div className="flex flex-col gap-2">
+							<div className="flex gap-2">
 								{variantEvolutions.slice(0, Math.floor(variantEvolutions.length / 2)).map(poke => (
 									<PokemonCard key={poke.number} pokemon={poke} />
 								))}
 							</div>
 
-							<div className="half">
+							<div className="flex gap-2">
 								{variantEvolutions.slice(Math.ceil(variantEvolutions.length / 2)).map(poke => (
 									<PokemonCard key={poke.number} pokemon={poke} />
 								))}

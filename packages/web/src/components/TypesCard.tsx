@@ -11,12 +11,12 @@ interface Props {
 
 export function TypesCard({ title, types }: Props) {
 	return (
-		<div className="p-3">
+		<div className="grid gap-2">
 			<p className="font-medium">{title}</p>
 
 			<div className="grid grid-cols-4 gap-2 lg:grid-cols-6">
 				{types.map(type => (
-					<TypeButton key={type} className="!font-normal border-0">
+					<TypeButton key={type} className="!font-normal !border-0">
 						{type}
 					</TypeButton>
 				))}

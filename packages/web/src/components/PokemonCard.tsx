@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '../config';
 import { Pokemon, Type } from '../services';
 
+import { ButtonProps } from './Button';
 import { Sprite } from './Sprite';
 
 const TYPES_STYLE_MAP: { [type in Type]: string } = {
@@ -27,17 +28,20 @@ const TYPES_STYLE_MAP: { [type in Type]: string } = {
 	water: 'bg-type--water',
 };
 
-interface PokemonCardProps {
+interface PokemonCardProps extends ButtonProps {
 	pokemon: Pokemon;
 }
 
-export function PokemonCard({ pokemon, ...props }: PokemonCardProps) {
+export function PokemonCard({ pokemon, className, ...props }: PokemonCardProps) {
 	const navigate = useNavigate();
 
 	return (
 		<button
 			type="button"
-			className="text-white transition bg-white border-2 border-black rounded-lg cursor-pointer hover:brightness-105 hover:border-zinc-500"
+			className={classNames(
+				'text-white transition bg-white border-2 border-black rounded-lg cursor-pointer hover:brightness-105 hover:border-zinc-500',
+				className,
+			)}
 			onClick={() => navigate(routes.pokemonDetails(pokemon.number))}
 			{...props}
 		>
