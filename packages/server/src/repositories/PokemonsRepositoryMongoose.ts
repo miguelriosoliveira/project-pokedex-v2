@@ -1,4 +1,5 @@
 import { Pokemon } from '../models';
+
 import { PokemonsRepository } from './PokemonsRepository';
 
 export class PokemonsRepositoryMongoose implements PokemonsRepository {

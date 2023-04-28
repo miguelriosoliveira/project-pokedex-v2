@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import { DEFAULT_PAGE_SIZE, GENERATIONS, TOTAL_ITEMS_HEADER } from '../config/constants';
 import { Pokemon, PokemonSchema } from '../models';
-import { PokemonsRepository, TypesRepository } from '../repositories';
+import { PokemonsRepositoryMongoose, TypesRepository } from '../repositories';
 import {
 	GetPokemonByNumberService,
 	GetPokemonsByNamesService,
@@ -80,7 +80,7 @@ export const PokemonController = {
 	async getOne(request: Request<GetOneParams>, response: Response) {
 		const { number } = request.params;
 
-		const pokemonsRepository = new PokemonsRepository();
+		const pokemonsRepository = new PokemonsRepositoryMongoose();
 		const getPokemonByNumberService = new GetPokemonByNumberService(pokemonsRepository);
 		const getPokemonsByNamesService = new GetPokemonsByNamesService(pokemonsRepository);
 		const pokemon = await getPokemonByNumberService.execute(number);

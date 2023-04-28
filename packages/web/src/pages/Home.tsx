@@ -46,7 +46,7 @@ export function Home() {
 			) : (
 				<>
 					<Button onClick={() => navigate(routes.search())}>SEARCH ALL</Button>
-					<div className="grid grid-cols-2 gap-2 lg:grid-cols-3 lg:gap-6">
+					<div className="grid gap-2 lg:grid-cols-3 lg:gap-6">
 						{generations.map(generation => (
 							<GenerationCard key={generation.name} generation={generation} />
 						))}

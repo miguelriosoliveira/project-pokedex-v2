@@ -1,4 +1,5 @@
 import { PokemonSchema } from '../models';
+
 import { PokemonsRepository } from './PokemonsRepository';
 
 export class PokemonsRepositoryInMemory implements PokemonsRepository {

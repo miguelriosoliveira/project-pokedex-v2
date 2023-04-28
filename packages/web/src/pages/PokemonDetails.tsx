@@ -4,9 +4,9 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { GoAlert } from 'react-icons/go';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button, PokemonCard, Sprite, TypesCard } from '../../components';
-import { PokemonDetails as PokemonData, api } from '../../services';
-import { logger } from '../../utils';
+import { Button, PokemonCard, Sprite, TypesCard } from '../components';
+import { PokemonDetails as PokemonData, api } from '../services';
+import { logger } from '../utils';
 
 export function PokemonDetails() {
 	const navigate = useNavigate();
@@ -45,9 +45,9 @@ export function PokemonDetails() {
 				BACK
 			</Button>
 
-			<div className="grid gap-2 lg:flex lg:gap-6">
+			<div className="grid gap-2 justify-items-center lg:flex lg:gap-6">
 				<div className="max-w-xs bg-white border-2 border-black rounded-full">
-					<Sprite name={pokemon.name} imgSrc={pokemon.sprite} />
+					<Sprite className="scale-110" name={pokemon.name} imgSrc={pokemon.sprite} />
 				</div>
 
 				<div className="grid gap-3">

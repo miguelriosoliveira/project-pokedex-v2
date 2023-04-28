@@ -1,5 +1,6 @@
 import { PokemonsRepositoryInMemory } from '../repositories';
 import { createPokemon } from '../utils/tests/pokemon';
+
 import { GetPokemonsByNamesService } from './GetPokemonsByNamesService';
 
 describe('GetPokemonsByNamesService', () => {
