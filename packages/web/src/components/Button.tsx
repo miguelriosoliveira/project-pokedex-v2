@@ -1,7 +1,9 @@
 import classNames from 'classnames';
 import { HTMLAttributes } from 'react';
 
-export function Button({ children, className, ...props }: HTMLAttributes<HTMLButtonElement>) {
+export type ButtonProps = HTMLAttributes<HTMLButtonElement>;
+
+export function Button({ children, className, ...props }: ButtonProps) {
 	return (
 		<button
 			type="button"

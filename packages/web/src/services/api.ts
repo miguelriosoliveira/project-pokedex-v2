@@ -42,10 +42,10 @@ export interface Pokemon {
 export interface PokemonDetails {
 	name: string;
 	number: number;
-	types: string[];
+	types: Type[];
 	description: string;
 	sprite: string;
-	weaknesses: string[];
+	weaknesses: Type[];
 	evolutionChain: {
 		common: Pokemon[];
 		variant: Pokemon[];

@@ -3,30 +3,9 @@ import { ChangeEvent, FormEvent, UIEvent, useCallback, useEffect, useState } fro
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button, PokemonCard } from '../components';
-import { api, Pokemon, Type } from '../services/api';
+import { Button, PokemonCard, TypeButton } from '../components';
+import { Pokemon, Type, api } from '../services/api';
 import { logger } from '../utils';
-
-const TYPES_STYLE_MAP: { [type in Type]: string } = {
-	bug: 'bg-type--bug',
-	dark: 'bg-type--dark',
-	dragon: 'bg-type--dragon',
-	electric: 'bg-type--electric !text-gray-800',
-	fairy: 'bg-type--fairy !text-gray-800',
-	fighting: 'bg-type--fighting',
-	fire: 'bg-type--fire',
-	flying: 'bg-type--flying !text-gray-800',
-	ghost: 'bg-type--ghost',
-	grass: 'bg-type--grass !text-gray-800',
-	ground: 'bg-type--ground !text-gray-800',
-	ice: 'bg-type--ice !text-gray-800',
-	normal: 'bg-type--normal !text-gray-800',
-	poison: 'bg-type--poison',
-	psychic: 'bg-type--psychic',
-	rock: 'bg-type--rock',
-	steel: 'bg-type--steel !text-gray-800',
-	water: 'bg-type--water',
-};
 
 interface LoadPokemonListParams {
 	search_: string;
@@ -155,17 +134,13 @@ export function PokemonList() {
 
 				<div className="grid grid-cols-5 gap-1 lg:grid-cols-6 lg:gap-x-2">
 					{types.map(type => (
-						<Button
+						<TypeButton
 							key={type}
-							className={classnames(
-								'uppercase text-xs !font-bold border-2 border-gray-500',
-								TYPES_STYLE_MAP[type],
-								{ 'border-red-600': selectedTypes.includes(type) },
-							)}
+							className={classnames({ 'border-red-600': selectedTypes.includes(type) })}
 							onClick={() => selectType(type)}
 						>
 							{type}
-						</Button>
+						</TypeButton>
 					))}
 				</div>
 			</div>

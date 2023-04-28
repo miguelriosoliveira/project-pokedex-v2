@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FiAlertTriangle, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { GoAlert } from 'react-icons/go';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { PokemonCard, Sprite } from '../../components';
-import { api, PokemonDetails as PokemonData } from '../../services';
+import { Button, PokemonCard, Sprite, TypesCard } from '../../components';
+import { PokemonDetails as PokemonData, api } from '../../services';
 import { logger } from '../../utils';
 
 export function PokemonDetails() {
@@ -31,58 +32,43 @@ export function PokemonDetails() {
 	}
 
 	const { common: commonEvolutions, variant: variantEvolutions } = pokemon.evolutionChain;
+	const warningSign = <GoAlert size={20} />;
 
 	return (
-		<div className="pokemon-details-component">
-			<header>
-				<button type="button" onClick={() => navigate(-1)}>
-					<FiArrowLeft scale={25} />
-					Back
-				</button>
-			</header>
+		<div className="font-medium">
+			<Button
+				className="flex items-center gap-2 !text-black justify-self-start bg-zinc-300"
+				onClick={() => navigate(-1)}
+			>
+				<FiArrowLeft size={20} />
+				BACK
+			</Button>
 
-			<div className="main">
-				<div className="sprite">
+			<div>
+				<div className="max-w-xs bg-white border-2 border-black rounded-full">
 					<Sprite name={pokemon.name} imgSrc={pokemon.sprite} />
 				</div>
 
-				<div className="infos">
-					<h4 className="name">
+				<div>
+					<h1 className="text-3xl font-bold drop-shadow">
 						{pokemon.name} #{pokemon.number}
-					</h4>
+					</h1>
 
-					<div className="description">
-						<p className="text--bold">{pokemon.description}</p>
-					</div>
+					<p className="drop-shadow">{pokemon.description}</p>
 
-					<div className="types">
-						<div className="own">
-							<div className="title">
-								<p className="text--bold">{pokemon.types.length === 1 ? 'TYPE' : 'TYPES'}</p>
-							</div>
-							<div className="list">
-								{pokemon.types.map(type => (
-									<p key={type} className={`type type--${type}`}>
-										{type}
-									</p>
-								))}
-							</div>
-						</div>
+					<div className="rounded-md bg-gray-100/90">
+						<TypesCard title="TYPES" types={pokemon.types} />
 
-						<div className="weaknesses">
-							<div className="title">
-								<FiAlertTriangle />
-								<p className="text--bold">WEAKNESSES</p>
-								<FiAlertTriangle />
-							</div>
-							<div className="list">
-								{pokemon.weaknesses.map(weakness => (
-									<p key={weakness} className={`type type--${weakness}`}>
-										{weakness}
-									</p>
-								))}
-							</div>
-						</div>
+						<TypesCard
+							title={
+								<div className="flex items-center gap-1">
+									{warningSign}
+									WEAKNESSES
+									{warningSign}
+								</div>
+							}
+							types={pokemon.weaknesses}
+						/>
 					</div>
 				</div>
 			</div>
