@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 
-import { Type } from '../models';
+import { TypesRepositoryMongoose } from '../repositories';
+import { GetAllTypesService } from '../services';
 
 export const TypeController = {
 	async getAll(request: Request, response: Response) {
-		const types = await Type.find({}, { _id: 0, name: 1 }).sort('name');
-		return response.json(types.map(({ name }) => name));
+		const typesRepository = new TypesRepositoryMongoose();
+		const getAllTypesService = new GetAllTypesService(typesRepository);
+		const types = await getAllTypesService.execute();
+		return response.json(types.map(t => t.name));
 	},
 };
