@@ -1,7 +1,5 @@
-import { Type } from '../models';
+import { TypeSchema } from '../models';
 
-export class TypesRepository {
-	async findManyByNames(types: string[]) {
-		return Type.find({ name: { $in: types } });
-	}
+export abstract class TypesRepository {
+	abstract findManyByNames(types: string[]): Promise<TypeSchema[]>;
 }
