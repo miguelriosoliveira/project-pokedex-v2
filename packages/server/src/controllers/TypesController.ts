@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { TypesRepositoryMongoose } from '../repositories';
 import { GetAllTypesService } from '../services';
 
-export const TypeController = {
+export const TypesController = {
 	async getAll(request: Request, response: Response) {
 		const typesRepository = new TypesRepositoryMongoose();
 		const getAllTypesService = new GetAllTypesService(typesRepository);

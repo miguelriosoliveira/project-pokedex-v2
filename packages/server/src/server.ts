@@ -1,28 +1,13 @@
 import 'dotenv/config';
 import { AddressInfo } from 'node:net';
 
-import celebrate from 'celebrate';
-import cors from 'cors';
-import express from 'express';
-import morgan from 'morgan';
-
-import { TOTAL_ITEMS_HEADER } from './config/constants';
+import { app } from './app';
 import { ENV } from './config/env';
-import { ErrorController } from './controllers';
-import { db } from './database';
-import { routes } from './routes';
+import { db } from './config/database';
 import { logger } from './utils';
 
-const app = express();
-app.disable('x-powered-by');
-app.use(cors({ exposedHeaders: TOTAL_ITEMS_HEADER }));
-app.use(morgan('dev'));
-app.use(routes);
-app.use(celebrate.errors());
-app.use(ErrorController.handle);
-
 const server = app.listen(ENV.PORT, async () => {
-	await db.connect();
+	await db.connect(ENV.MONGO_URL);
 	const { address, port } = server.address() as AddressInfo;
 	const addressFixed = address === '::' ? 'localhost' : address;
 	logger.info(`🚀 Server running on http://${addressFixed}:${port}`);

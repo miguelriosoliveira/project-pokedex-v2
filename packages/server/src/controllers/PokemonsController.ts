@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import { DEFAULT_PAGE_SIZE, GENERATIONS, TOTAL_ITEMS_HEADER } from '../config/constants';
 import { Pokemon, PokemonSchema } from '../models';
-import { PokemonsRepositoryMongoose, TypesRepository } from '../repositories';
+import { PokemonsRepositoryMongoose, TypesRepositoryMongoose } from '../repositories';
 import {
 	GetPokemonByNumberService,
 	GetPokemonsByNamesService,
@@ -85,7 +85,7 @@ export const PokemonController = {
 		const getPokemonsByNamesService = new GetPokemonsByNamesService(pokemonsRepository);
 		const pokemon = await getPokemonByNumberService.execute(number);
 
-		const typesRepository = new TypesRepository();
+		const typesRepository = new TypesRepositoryMongoose();
 		const getTypesByNamesService = new GetTypesByNamesService(typesRepository);
 		const types = await getTypesByNamesService.execute(pokemon.types);
 

@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
-import { ENV } from './config/env';
-import { logger } from './utils';
+import { logger } from '../utils';
 
 export const db = {
-	async connect() {
+	async connect(uri: string) {
 		mongoose.set('strictQuery', true);
-		await mongoose.connect(ENV.MONGO_URL);
+		const dbInstance = await mongoose.connect(uri);
 		logger.info('🌱 Connected to MongoDB');
+		return dbInstance;
 	},
 
 	async disconnect() {

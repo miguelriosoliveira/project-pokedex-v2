@@ -4,6 +4,7 @@ export class GetAllTypesService {
 	constructor(private typesRepository: TypesRepository) {}
 
 	public async execute() {
-		return this.typesRepository.findMany();
+		const types = await this.typesRepository.findMany();
+		return types;
 	}
 }

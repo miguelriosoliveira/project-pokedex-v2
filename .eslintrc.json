@@ -5,6 +5,9 @@
 		"node": true,
 		"jest": true
 	},
+	"globals": {
+		"vi": true
+	},
 	"extends": [
 		"airbnb",
 		"plugin:react/recommended",
@@ -35,10 +38,10 @@
 		"@typescript-eslint/no-use-before-define": "error",
 
 		"import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
-		// "import/no-extraneous-dependencies": [
-		// 	"error",
-		// 	{ "devDependencies": ["!**/*.test.ts", "!**/*.spec.ts"] }
-		// ],
+		"import/no-extraneous-dependencies": [
+			"error",
+			{ "devDependencies": ["!**/*.test.ts", "!**/*.spec.ts"] }
+		],
 		"import/order": [
 			"error",
 			{

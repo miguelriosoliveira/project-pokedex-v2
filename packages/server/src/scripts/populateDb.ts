@@ -11,7 +11,7 @@ import {
 } from 'pokenode-ts';
 
 import { DEFAULT_PAGE_SIZE, STARTERS_BY_GENERATION } from '../config/constants';
-import { db } from '../database';
+import { db } from '../config/database';
 import {
 	Generation as GenerationModel,
 	GenerationSchema,
@@ -21,6 +21,7 @@ import {
 	TypeSchema,
 } from '../models';
 import { createFakeEvolutionChain, createRange, getIdFromUrl, Replace } from '../utils';
+import { ENV } from '../config/env';
 
 const P = new MainClient();
 
@@ -190,6 +191,6 @@ async function populateDb() {
 	await Promise.all([saveGenerations(generations), saveTypes(types), savePokemons(pokemons)]);
 }
 
-db.connect()
+db.connect(ENV.MONGO_URL)
 	.then(() => populateDb())
 	.then(() => db.disconnect());

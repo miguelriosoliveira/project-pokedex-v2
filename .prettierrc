@@ -2,5 +2,8 @@
 	"printWidth": 100,
 	"singleQuote": true,
 	"trailingComma": "all",
-	"arrowParens": "avoid"
+	"arrowParens": "avoid",
+	"plugins": ["prettier-plugin-tailwindcss"],
+	"pluginSearchDirs": false,
+	"tailwindConfig": "./packages/web/tailwind.config.js"
 }
