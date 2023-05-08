@@ -12,10 +12,10 @@ import {
 
 interface GetAllRequestQuery {
 	generation: string;
-	page: number;
-	pageSize: number;
 	search: string;
 	types: string[];
+	page: number;
+	page_size: number;
 }
 
 interface Query {
@@ -36,12 +36,12 @@ export const PokemonController = {
 			search: Joi.string().allow('').default(''),
 			types: Joi.array().default([]),
 			page: Joi.number().min(1).default(1),
-			pageSize: Joi.number().min(1).default(DEFAULT_PAGE_SIZE),
+			page_size: Joi.number().min(1).default(DEFAULT_PAGE_SIZE),
 		},
 	},
 
 	async getAll(request: Request<null, null, null, GetAllRequestQuery>, response: Response) {
-		const { generation, search, types, page, pageSize } = request.query;
+		const { generation, search, types, page, page_size } = request.query;
 		const query = {} as Query;
 
 		// checks needed for query construction
@@ -49,10 +49,11 @@ export const PokemonController = {
 			query.generation = generation;
 		}
 		if (search) {
-			if (Number.isNaN(search)) {
-				query.name = { $regex: search, $options: 'i' };
-			} else {
+			const isNumber = /^\d+$/.test(search);
+			if (isNumber) {
 				query.number = Number(search);
+			} else {
+				query.name = { $regex: search, $options: 'i' };
 			}
 		}
 		if (types.length > 0) {
@@ -63,10 +64,10 @@ export const PokemonController = {
 		// eslint-disable-next-line unicorn/no-array-callback-reference
 		const totalItems = await Pokemon.find(query).countDocuments();
 		// eslint-disable-next-line unicorn/no-array-method-this-argument, unicorn/no-array-callback-reference
-		const pokemons = await Pokemon.find(query, 'displayName number types sprite')
+		const pokemons = await Pokemon.find(query, '-_id number display_name types sprite')
 			.sort('number')
-			.skip((page - 1) * pageSize)
-			.limit(pageSize);
+			.skip((page - 1) * page_size)
+			.limit(page_size);
 
 		return response.header(TOTAL_ITEMS_HEADER, String(totalItems)).json(pokemons);
 	},
