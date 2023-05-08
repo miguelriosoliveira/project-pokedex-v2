@@ -322,4 +322,9 @@ describe('PokemonsController', () => {
 			]);
 		});
 	});
+
+	describe('#getOne', () => {
+		it.todo('should fail when number is invalid');
+		it.todo('should return a pokemon details by its number');
+	});
 });
