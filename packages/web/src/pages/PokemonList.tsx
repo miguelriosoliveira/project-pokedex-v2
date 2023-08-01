@@ -107,17 +107,17 @@ export function PokemonList() {
 	return (
 		<div className="grid h-full gap-2">
 			<Button
-				className="flex items-center gap-2 !text-black justify-self-start bg-zinc-300"
+				className="flex items-center gap-2 justify-self-start bg-zinc-300 !text-black"
 				onClick={() => navigate(-1)}
 			>
 				<FiArrowLeft size={20} />
 				BACK
 			</Button>
 
-			<div className="grid gap-2 lg:gap-3 lg:grid-cols-[1fr_2fr]">
+			<div className="grid gap-2 lg:grid-cols-[1fr_2fr] lg:gap-3">
 				<form onSubmit={handleSubmit} className="flex gap-1 lg:flex-col">
-					<div className="flex items-center flex-1 gap-4 px-3 py-4 transition-colors border rounded bg-gray-100/95 border-black/25 hover:border-black/90">
-						<FiSearch size={20} className="text-gray-500 stroke-[3px]" />
+					<div className="flex flex-1 items-center gap-4 rounded border border-black/25 bg-gray-100/95 px-3 py-4 transition-colors hover:border-black/90">
+						<FiSearch size={20} className="stroke-[3px] text-gray-500" />
 						<input
 							placeholder="Name or Number"
 							value={search}
@@ -126,7 +126,7 @@ export function PokemonList() {
 						/>
 					</div>
 
-					<p className="flex flex-col items-center justify-center p-1 rounded bg-gray-100/75">
+					<p className="flex flex-col items-center justify-center rounded bg-gray-100/75 p-1">
 						<span>Total pokémon found </span>
 						<strong>{totalPokemons}</strong>
 					</p>
@@ -146,7 +146,7 @@ export function PokemonList() {
 			</div>
 
 			<div
-				className="grid grid-cols-3 gap-2 overflow-y-auto lg:gap-3 lg:grid-cols-4"
+				className="grid grid-cols-3 gap-2 overflow-y-auto lg:grid-cols-4 lg:gap-3"
 				onScroll={handleScroll}
 			>
 				{pokemonList.map(pokemon => (

@@ -34,7 +34,7 @@ export function TypeButton({ children: type, className, ...props }: Props) {
 		<Button
 			key={type}
 			className={classnames(
-				'uppercase text-xs !font-bold border-2 border-gray-500',
+				'border-2 border-gray-500 text-xs !font-bold uppercase',
 				TYPES_STYLE_MAP[type],
 				className,
 			)}

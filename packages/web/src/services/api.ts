@@ -1,4 +1,6 @@
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
+
+import { logger } from '../utils';
 
 const TYPES = [
 	'bug',
@@ -65,8 +67,17 @@ const apiBase = axios.create({ baseURL: BACKEND_URL });
 
 export const api = {
 	async getGenerations() {
-		const { data } = await apiBase.get<Generation[]>('/generations');
-		return data;
+		let genList: Generation[];
+		try {
+			const { data } = await apiBase.get<Generation[]>('/generations');
+			genList = data;
+		} catch (error) {
+			logger.error(error, 'Failed getting generations');
+			throw new Response('Our servers are in maintenance time, please check back later!', {
+				status: HttpStatusCode.InternalServerError,
+			});
+		}
+		return genList;
 	},
 
 	async getTypes() {

@@ -39,13 +39,13 @@ export function PokemonCard({ pokemon, className, ...props }: PokemonCardProps) 
 		<button
 			type="button"
 			className={classNames(
-				'text-white transition bg-white border-2 border-black rounded-lg cursor-pointer hover:brightness-105 hover:border-zinc-500',
+				'cursor-pointer rounded-lg border-2 border-black bg-white text-white transition hover:border-zinc-500 hover:brightness-105',
 				className,
 			)}
 			onClick={() => navigate(routes.pokemonDetails(pokemon.number))}
 			{...props}
 		>
-			<p className="p-1 font-bold bg-black rounded-t-md">
+			<p className="rounded-t-md bg-black p-1 font-bold">
 				{pokemon.displayName} #{pokemon.number}
 			</p>
 
@@ -53,7 +53,7 @@ export function PokemonCard({ pokemon, className, ...props }: PokemonCardProps) 
 
 			<div
 				className={classNames(
-					'border-t border-black grid grid-flow-col lg:gap-2 py-1 justify-center rounded-b-md',
+					'grid grid-flow-col justify-center rounded-b-md border-t border-black py-1 lg:gap-2',
 					TYPES_STYLE_MAP[pokemon.types[0]],
 				)}
 			>
@@ -61,7 +61,7 @@ export function PokemonCard({ pokemon, className, ...props }: PokemonCardProps) 
 					<p
 						key={type}
 						className={classNames(
-							'text-white uppercase font-bold text-xs p-2 rounded',
+							'rounded p-2 text-xs font-bold uppercase text-white',
 							TYPES_STYLE_MAP[type],
 						)}
 					>

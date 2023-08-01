@@ -38,15 +38,15 @@ export function PokemonDetails() {
 	return (
 		<div className="grid gap-4 font-medium">
 			<Button
-				className="flex items-center gap-2 !text-black justify-self-start bg-zinc-300"
+				className="flex items-center gap-2 justify-self-start bg-zinc-300 !text-black"
 				onClick={() => navigate(-1)}
 			>
 				<FiArrowLeft size={20} />
 				BACK
 			</Button>
 
-			<div className="grid gap-2 justify-items-center lg:flex lg:gap-6">
-				<div className="max-w-xs bg-white border-2 border-black rounded-full">
+			<div className="grid justify-items-center gap-2 lg:flex lg:gap-6">
+				<div className="max-w-xs rounded-full border-2 border-black bg-white">
 					<Sprite className="scale-110" name={pokemon.name} imgSrc={pokemon.sprite} />
 				</div>
 
@@ -58,7 +58,7 @@ export function PokemonDetails() {
 						<p className="drop-shadow">{pokemon.description}</p>
 					</div>
 
-					<div className="grid gap-4 p-3 rounded-md bg-gray-100/90">
+					<div className="grid gap-4 rounded-md bg-gray-100/90 p-3">
 						<TypesCard title="TYPES" types={pokemon.types} />
 						<TypesCard
 							title={
