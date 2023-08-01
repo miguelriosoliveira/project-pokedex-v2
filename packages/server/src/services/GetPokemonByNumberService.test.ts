@@ -4,7 +4,7 @@ import { createPokemon } from '../utils/tests/pokemon';
 import { GetPokemonByNumberService } from './GetPokemonByNumberService';
 
 describe('GetPokemonByNumberService', () => {
-	it('should find pokemon by number', async () => {
+	it('should find pokémon by number', async () => {
 		// Arrange
 		const pokemonsRepository = new PokemonsRepositoryInMemory();
 		pokemonsRepository.pokemons = [createPokemon({ name: 'mewtwo', number: 150 })];
@@ -17,7 +17,7 @@ describe('GetPokemonByNumberService', () => {
 		expect(pokemon.name).toBe('mewtwo');
 	});
 
-	it('should not find pokemon by number', async () => {
+	it('should not find pokémon by number', async () => {
 		// Arrange
 		const pokemonsRepository = new PokemonsRepositoryInMemory();
 		pokemonsRepository.pokemons = [createPokemon({ name: 'mewtwo', number: 150 })];
