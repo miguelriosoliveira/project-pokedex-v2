@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import { ErrorElement } from './components';
 import { routes } from './config';
-import { Home, PokemonDetails, PokemonList } from './pages';
+import { Home, PokemonDetails, PokemonList, homeLoader, pokemonListLoader } from './pages';
 import { api } from './services';
 
 export function Router() {
@@ -13,19 +13,22 @@ export function Router() {
 				router={createBrowserRouter([
 					{
 						path: routes.home(),
-						element: <Home />,
-						loader: api.getGenerations,
 						errorElement: <ErrorElement />,
 						children: [
 							{
+								path: routes.home(),
+								element: <Home />,
+								loader: homeLoader,
+							},
+							{
 								path: routes.search(),
 								element: <PokemonList />,
-								// loader: pokemonListLoader,
+								loader: pokemonListLoader,
 							},
 							{
 								path: routes.pokemonList(),
 								element: <PokemonList />,
-								// loader: pokemonListLoader,
+								loader: pokemonListLoader,
 							},
 							{
 								path: routes.pokemonDetails(),
@@ -33,6 +36,12 @@ export function Router() {
 								// loader: pokemonDetailsLoader,
 							},
 						],
+					},
+					{
+						path: routes.search(),
+						element: <PokemonList />,
+						loader: api.getTypes,
+						errorElement: <ErrorElement />,
 					},
 				])}
 			/>

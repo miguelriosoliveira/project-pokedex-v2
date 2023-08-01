@@ -1,11 +1,19 @@
 import classnames from 'classnames';
-import { ChangeEvent, FormEvent, UIEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, UIEvent, useCallback, useState } from 'react';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
-import { useNavigate, useParams } from 'react-router-dom';
+import { LoaderFunctionArgs, useLoaderData, useNavigate, useParams } from 'react-router-dom';
 
 import { Button, PokemonCard, TypeButton } from '../components';
 import { Pokemon, Type, api } from '../services/api';
 import { logger } from '../utils';
+
+export async function pokemonListLoader({
+	params: { generationName: generation },
+}: LoaderFunctionArgs) {
+	const types = await api.getTypes();
+	const pokemons = await api.getPokemonList({ generation });
+	return { types, pokemons };
+}
 
 interface LoadPokemonListParams {
 	search_: string;
@@ -19,24 +27,14 @@ export function PokemonList() {
 
 	const { generationName: generation } = useParams();
 	const navigate = useNavigate();
+	const { types, pokemons } = useLoaderData() as Awaited<ReturnType<typeof pokemonListLoader>>;
 
-	const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+	const [pokemonList, setPokemonList] = useState<Pokemon[]>(pokemons.items);
 	const [search, setSearch] = useState('');
-	const [types, setTypes] = useState<Type[]>([]);
 	const [selectedTypes, setSelectedTypes] = useState<Type[]>([]);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(true);
-	const [totalPokemons, setTotalPokemons] = useState(0);
-
-	// TODO: Move it to SSR
-	const loadTypes = useCallback(async () => {
-		try {
-			const response = await api.getTypes();
-			setTypes(response);
-		} catch (error) {
-			logger.error(error);
-		}
-	}, []);
+	const [totalPokemons, setTotalPokemons] = useState(pokemons.total);
 
 	const loadPokemonList = useCallback(
 		async ({ search_, types_, page_ = 1, reset = false } = {} as LoadPokemonListParams) => {
@@ -60,12 +58,6 @@ export function PokemonList() {
 		},
 		[generation],
 	);
-
-	// TODO: Move it to SSR
-	useEffect(() => {
-		loadTypes();
-		loadPokemonList();
-	}, [loadPokemonList, loadTypes]);
 
 	function handleSubmit(event: FormEvent) {
 		event.preventDefault();

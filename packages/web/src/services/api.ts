@@ -85,7 +85,7 @@ export const api = {
 		return data;
 	},
 
-	async getPokemonList({ generation, search, types, page = 1 }: GetPokemonListParams) {
+	async getPokemonList({ generation, search, types, page = 1 }: GetPokemonListParams = {}) {
 		const { data, headers } = await apiBase.get<Pokemon[]>('/pokemon', {
 			params: { generation, search, types, page },
 		});
