@@ -1,34 +1,21 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { FaCaretRight } from 'react-icons/fa';
 import { FiArrowLeft } from 'react-icons/fi';
 import { GoAlert } from 'react-icons/go';
-import { useNavigate, useParams } from 'react-router-dom';
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from 'react-router-dom';
 
 import { Button, PokemonCard, Sprite, TypesCard } from '../components';
-import { PokemonDetails as PokemonData, api } from '../services';
-import { logger } from '../utils';
+import { api } from '../services';
+
+export async function pokemonDetailsLoader({ params: { pokemonId } }: LoaderFunctionArgs) {
+	return api.getPokemon(Number(pokemonId));
+}
 
 export function PokemonDetails() {
 	const navigate = useNavigate();
-	const { pokemonId: id } = useParams();
-	const pokemonId = Number(id);
-	const [pokemon, setPokemon] = useState<PokemonData | null>(null);
+	const pokemon = useLoaderData() as Awaited<ReturnType<typeof pokemonDetailsLoader>>;
 
-	// TODO: Move it to SSR
-	useEffect(() => {
-		const loadPokemon = async () => {
-			try {
-				const pokemonDetails = await api.getPokemon(pokemonId);
-				setPokemon(pokemonDetails);
-			} catch (error) {
-				logger.error(error, 'Failed getting pokemon details');
-			}
-		};
-
-		loadPokemon();
-	}, [pokemonId]);
-
-	if (Number.isNaN(pokemonId) || !pokemon) {
+	if (!pokemon) {
 		return null;
 	}
 
