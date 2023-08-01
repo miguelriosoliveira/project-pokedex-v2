@@ -65,35 +65,64 @@ const { VITE_BACKEND_URL: BACKEND_URL } = import.meta.env;
 
 const apiBase = axios.create({ baseURL: BACKEND_URL });
 
+function throwResponse(error: unknown, errorMessage: string) {
+	logger.error(error, errorMessage);
+	throw new Response('Our servers are in maintenance time, please check back later!', {
+		status: HttpStatusCode.InternalServerError,
+	});
+}
+
+interface RequestProps {
+	route: string;
+	params?: object;
+	errorMessage: string;
+}
+
+async function request<T>({ route, errorMessage }: RequestProps) {
+	try {
+		const { data } = await apiBase.get<T>(route);
+		return data;
+	} catch (error) {
+		throw throwResponse(error, errorMessage);
+	}
+}
+
+async function requestPaginated<T>({ route, params, errorMessage }: RequestProps) {
+	try {
+		const { data, headers } = await apiBase.get<T>(route, { params });
+		return { items: data, total: Number(headers['x-total-items']) };
+	} catch (error) {
+		throw throwResponse(error, errorMessage);
+	}
+}
+
 export const api = {
 	async getGenerations() {
-		let genList: Generation[];
-		try {
-			const { data } = await apiBase.get<Generation[]>('/generations');
-			genList = data;
-		} catch (error) {
-			logger.error(error, 'Failed getting generations');
-			throw new Response('Our servers are in maintenance time, please check back later!', {
-				status: HttpStatusCode.InternalServerError,
-			});
-		}
-		return genList;
+		return request<Generation[]>({
+			route: '/generations',
+			errorMessage: 'Failed getting generations',
+		});
 	},
 
 	async getTypes() {
-		const { data } = await apiBase.get<Type[]>('/types');
-		return data;
+		return request<Type[]>({
+			route: '/types',
+			errorMessage: 'Failed getting types',
+		});
 	},
 
 	async getPokemonList({ generation, search, types, page = 1 }: GetPokemonListParams = {}) {
-		const { data, headers } = await apiBase.get<Pokemon[]>('/pokemon', {
+		return requestPaginated<Pokemon[]>({
+			route: 'pokemon',
 			params: { generation, search, types, page },
+			errorMessage: 'Failed getting Pokémon list',
 		});
-		return { items: data, total: Number(headers['x-total-items']) };
 	},
 
 	async getPokemon(id: number) {
-		const { data } = await apiBase.get<PokemonDetails>(`/pokemon/${id}`);
-		return data;
+		return request<PokemonDetails>({
+			route: `/pokemon/${id}`,
+			errorMessage: `Failed getting Pokémon ${id} details`,
+		});
 	},
 };
