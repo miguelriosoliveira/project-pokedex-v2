@@ -12,6 +12,7 @@ import {
 
 import { DEFAULT_PAGE_SIZE, STARTERS_BY_GENERATION } from '../config/constants';
 import { db } from '../config/database';
+import { ENV } from '../config/env';
 import {
 	Generation as GenerationModel,
 	GenerationSchema,
@@ -21,7 +22,6 @@ import {
 	TypeSchema,
 } from '../models';
 import { createFakeEvolutionChain, createRange, getIdFromUrl, Replace } from '../utils';
-import { ENV } from '../config/env';
 
 const P = new MainClient();
 
@@ -34,9 +34,10 @@ async function getGenerations() {
 }
 
 async function mapGenerationsToDb(apiGenerationsData: Generation[]): Promise<GenerationSchema[]> {
-	return apiGenerationsData.map(({ name, id }) => ({
+	return apiGenerationsData.map(({ name, id, main_region: { name: region } }) => ({
 		name,
 		number: id,
+		region,
 		starters: STARTERS_BY_GENERATION[name],
 	}));
 }

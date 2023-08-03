@@ -26,6 +26,7 @@ const TYPES = [
 export type Type = (typeof TYPES)[number];
 export interface Generation {
 	name: string;
+	region: string;
 	displayName: string;
 	starters: Array<{
 		name: string;

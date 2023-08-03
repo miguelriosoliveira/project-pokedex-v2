@@ -2,8 +2,8 @@ import 'dotenv/config';
 import { AddressInfo } from 'node:net';
 
 import { app } from './app';
-import { ENV } from './config/env';
 import { db } from './config/database';
+import { ENV } from './config/env';
 import { logger } from './utils';
 
 const server = app.listen(ENV.PORT, async () => {

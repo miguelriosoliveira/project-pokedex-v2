@@ -1,12 +1,12 @@
 import { StatusCodes } from 'http-status-codes';
+import { Mongoose } from 'mongoose';
 import supertest from 'supertest';
 
 import { app } from '../app';
+import { TOTAL_ITEMS_HEADER } from '../config/constants';
 import { db } from '../config/database';
 import { Pokemon } from '../models';
 import { createFakeDb } from '../utils/tests';
-import { TOTAL_ITEMS_HEADER } from '../config/constants';
-import { Mongoose } from 'mongoose';
 
 const request = supertest(app);
 let dbInstance: Mongoose;
