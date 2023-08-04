@@ -31,7 +31,7 @@ export function PokemonList() {
 	const [search, setSearch] = useState('');
 	const [selectedTypes, setSelectedTypes] = useState<Type[]>([]);
 	const [page, setPage] = useState(1);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [totalPokemons, setTotalPokemons] = useState(pokemons.total);
 
 	const loadPokemonList = useCallback(
@@ -95,9 +95,9 @@ export function PokemonList() {
 	}
 
 	return (
-		<div className="grid h-full gap-2">
+		<div className="h-full flex flex-col gap-2">
 			<Button
-				className="flex items-center gap-2 justify-self-start bg-zinc-300 !text-black"
+				className="self-start flex items-center gap-2 justify-self-start bg-zinc-300 !text-black"
 				onClick={() => navigate(-1)}
 			>
 				<FiArrowLeft size={20} />
@@ -136,7 +136,7 @@ export function PokemonList() {
 			</div>
 
 			<div
-				className="grid grid-cols-3 gap-2 overflow-y-auto lg:grid-cols-4 lg:gap-3"
+				className="grid grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-3 overflow-y-auto rounded-lg"
 				onScroll={handleScroll}
 			>
 				{pokemonList.map(pokemon => (

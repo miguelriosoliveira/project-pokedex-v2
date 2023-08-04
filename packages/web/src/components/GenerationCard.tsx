@@ -17,7 +17,7 @@ export function GenerationCard({ generation }: Props) {
 		<button
 			key={generation.name}
 			type="button"
-			className="cursor-pointer rounded-lg border border-black bg-gradient-to-r from-green-400 via-red-400 to-blue-400 p-1 transition-colors hover:border-zinc-500 hover:brightness-105 lg:p-2"
+			className="cursor-pointer rounded-lg border border-black bg-gradient-to-r from-green-400 via-red-400 to-blue-400 p-1 transition-colors hover:border-zinc-500 hover:brightness-105 lg:p-2 shadow-md shadow-black/70"
 			onClick={() => navigate(routes.pokemonList(generation.name))}
 		>
 			<div className="flex flex-col items-center rounded-lg border border-black bg-white">

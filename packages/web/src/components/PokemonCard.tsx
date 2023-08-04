@@ -39,7 +39,7 @@ export function PokemonCard({ pokemon, className, ...props }: PokemonCardProps) 
 		<button
 			type="button"
 			className={classNames(
-				'cursor-pointer rounded-lg border-2 border-black bg-white text-white transition hover:border-zinc-500 hover:brightness-105',
+				'cursor-pointer rounded-lg border-2 border-black bg-white text-white transition hover:border-zinc-500 hover:brightness-105 shadow-md shadow-black/70',
 				className,
 			)}
 			onClick={() => navigate(routes.pokemonDetails(pokemon.number))}

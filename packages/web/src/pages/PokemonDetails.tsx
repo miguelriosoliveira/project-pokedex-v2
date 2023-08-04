@@ -33,7 +33,7 @@ export function PokemonDetails() {
 			</Button>
 
 			<div className="grid justify-items-center gap-2 lg:flex lg:gap-6">
-				<div className="max-w-xs rounded-full border-2 border-black bg-white">
+				<div className="max-w-xs rounded-full border-2 border-black bg-white shadow-md shadow-black/70">
 					<Sprite className="scale-110" name={pokemon.name} imgSrc={pokemon.sprite} />
 				</div>
 
