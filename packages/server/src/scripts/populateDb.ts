@@ -10,7 +10,7 @@ import {
 	Type,
 } from 'pokenode-ts';
 
-import { DEFAULT_PAGE_SIZE, STARTERS_BY_GENERATION } from '../config/constants';
+import { DEFAULT_PAGE_SIZE } from '../config/constants';
 import { db } from '../config/database';
 import { ENV } from '../config/env';
 import {
@@ -21,24 +21,59 @@ import {
 	Type as TypeModel,
 	TypeSchema,
 } from '../models';
-import { createFakeEvolutionChain, createRange, getIdFromUrl, Replace } from '../utils';
+import { Replace, createFakeEvolutionChain, createRange, getIdFromUrl } from '../utils';
 
 const P = new MainClient();
 
 // ======================================= GENERATIONS DATA =======================================
 
+type StarterIds = [number, number, number];
+
 async function getGenerations() {
 	const { results: generationsList } = await P.game.listGenerations();
 	console.log(`Getting ${generationsList.length} generations from API...`);
-	return Promise.all(generationsList.map(g => P.game.getGenerationByName(g.name)));
+	const generations = await Promise.all(
+		generationsList.map(g => P.game.getGenerationByName(g.name)),
+	);
+
+	console.log('Getting generation starters...');
+	const startersRaw = generations.map(g =>
+		g.pokemon_species
+			.map(({ name, url }) => ({ name, number: Number(url.split('/').at(-2)) }))
+			.sort((a, b) => a.number - b.number)
+			.slice(0, 8),
+	);
+	const startersData = await Promise.all(
+		startersRaw.map(genStarters =>
+			Promise.all(genStarters.map(species => P.pokemon.getPokemonSpeciesByName(species.name))),
+		),
+	);
+	const starters = startersData.map(
+		genSpecies =>
+			genSpecies
+				.filter(species =>
+					species.pokedex_numbers.some(pokedex_number =>
+						[1, 4, 7].includes(pokedex_number.entry_number),
+					),
+				)
+				.map(species => species.id) as StarterIds,
+	);
+
+	return generations.map((gen, i) => ({ ...gen, starters: starters[i] }));
 }
 
-async function mapGenerationsToDb(apiGenerationsData: Generation[]): Promise<GenerationSchema[]> {
-	return apiGenerationsData.map(({ name, id, main_region: { name: region } }) => ({
+interface GenerationData extends Generation {
+	starters: StarterIds;
+}
+
+async function mapGenerationsToDb(
+	apiGenerationsData: Array<GenerationData>,
+): Promise<GenerationSchema[]> {
+	return apiGenerationsData.map(({ name, id, main_region, starters }) => ({
 		name,
 		number: id,
-		region,
-		starters: STARTERS_BY_GENERATION[name],
+		region: main_region.name,
+		starters,
 	}));
 }
 

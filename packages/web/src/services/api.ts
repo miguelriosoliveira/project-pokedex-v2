@@ -27,7 +27,7 @@ export type Type = (typeof TYPES)[number];
 export interface Generation {
 	name: string;
 	region: string;
-	displayName: string;
+	display_name: string;
 	starters: Array<{
 		name: string;
 		number: number;
@@ -36,7 +36,7 @@ export interface Generation {
 }
 
 export interface Pokemon {
-	displayName: string;
+	display_name: string;
 	sprite: string;
 	number: number;
 	types: Type[];
@@ -49,7 +49,7 @@ export interface PokemonDetails {
 	description: string;
 	sprite: string;
 	weaknesses: Type[];
-	evolutionChain: {
+	evolution_chain: {
 		common: Pokemon[];
 		variant: Pokemon[];
 	};

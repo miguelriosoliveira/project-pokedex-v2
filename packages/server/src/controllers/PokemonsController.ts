@@ -127,7 +127,7 @@ export const PokemonController = {
 			types: pokemon.types,
 			description: pokemon.description,
 			sprite: pokemon.sprite,
-			evolutionChain: {
+			evolution_chain: {
 				common: commonEvolutionChain,
 				variant: variantEvolutionChain,
 			},

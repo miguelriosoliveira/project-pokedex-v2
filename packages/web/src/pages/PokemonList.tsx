@@ -7,11 +7,9 @@ import { Button, PokemonCard, TypeButton } from '../components';
 import { Pokemon, Type, api } from '../services/api';
 import { logger } from '../utils';
 
-export async function pokemonListLoader({
-	params: { generationName: generation },
-}: LoaderFunctionArgs) {
+export async function pokemonListLoader({ params: { generationName } }: LoaderFunctionArgs) {
 	const types = await api.getTypes();
-	const pokemons = await api.getPokemonList({ generation });
+	const pokemons = await api.getPokemonList({ generation: generationName });
 	return { types, pokemons };
 }
 
@@ -22,9 +20,9 @@ interface LoadPokemonListParams {
 	reset?: boolean;
 }
 
-export function PokemonList() {
-	let typingTimeout: ReturnType<typeof setTimeout>;
+let typingTimeout: ReturnType<typeof setTimeout>;
 
+export function PokemonList() {
 	const { generationName: generation } = useParams();
 	const navigate = useNavigate();
 	const { types, pokemons } = useLoaderData() as Awaited<ReturnType<typeof pokemonListLoader>>;
@@ -114,7 +112,7 @@ export function PokemonList() {
 							placeholder="Name or Number"
 							value={search}
 							onChange={onChangeSearch}
-							className="w-full bg-transparent"
+							className="w-full bg-transparent outline-none"
 						/>
 					</div>
 

@@ -17,7 +17,7 @@ export const GenerationController = {
 				return {
 					name,
 					region,
-					displayName: GENERATION_NAMES[name].arabic,
+					display_name: GENERATION_NAMES[name].arabic,
 					starters: starters.slice(iniPos, iniPos + 3),
 				};
 			}),

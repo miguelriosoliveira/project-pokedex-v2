@@ -46,10 +46,10 @@ export function PokemonCard({ pokemon, className, ...props }: PokemonCardProps) 
 			{...props}
 		>
 			<p className="rounded-t-md bg-black p-1 font-bold">
-				{pokemon.displayName} #{pokemon.number}
+				{pokemon.display_name} #{pokemon.number}
 			</p>
 
-			<Sprite name={pokemon.displayName} imgSrc={pokemon.sprite} />
+			<Sprite name={pokemon.display_name} imgSrc={pokemon.sprite} />
 
 			<div
 				className={classNames(

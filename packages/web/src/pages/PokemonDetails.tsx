@@ -19,7 +19,7 @@ export function PokemonDetails() {
 		return null;
 	}
 
-	const { common: commonEvolutions, variant: variantEvolutions } = pokemon.evolutionChain;
+	const { common: commonEvolutions, variant: variantEvolutions } = pokemon.evolution_chain;
 	const warningSign = <GoAlert size={20} />;
 
 	return (
@@ -68,7 +68,7 @@ export function PokemonDetails() {
 					<div className="flex items-center gap-1">
 						{commonEvolutions.map((poke, index) => {
 							return (
-								<Fragment key={poke.displayName}>
+								<Fragment key={poke.display_name}>
 									<PokemonCard key={poke.number} pokemon={poke} className="max-w-[250px]" />
 									{index === commonEvolutions.length - 1 &&
 									variantEvolutions.length === 0 ? null : (

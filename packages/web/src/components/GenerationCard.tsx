@@ -22,7 +22,7 @@ export function GenerationCard({ generation }: Props) {
 		>
 			<div className="flex flex-col items-center rounded-lg border border-black bg-white">
 				<p className="w-full rounded-t-md bg-black font-bold text-white capitalize text-sm p-1">
-					{generation.displayName} ({generation.region})
+					{generation.display_name} ({generation.region})
 				</p>
 				<div className="grid grid-flow-col gap-2 p-2">
 					{generation.starters.map((starter, index, array) => (

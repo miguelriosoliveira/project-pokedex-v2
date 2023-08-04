@@ -24,16 +24,4 @@ export const GENERATION_NAMES = {
 	[GENERATIONS.GEN9]: { roman: 'Generation IX', arabic: 'Generation 9' },
 };
 
-export const STARTERS_BY_GENERATION: { [key: string]: [number, number, number] } = {
-	[GENERATIONS.GEN1]: [1, 4, 7],
-	[GENERATIONS.GEN2]: [152, 155, 158],
-	[GENERATIONS.GEN3]: [252, 255, 258],
-	[GENERATIONS.GEN4]: [387, 390, 393],
-	[GENERATIONS.GEN5]: [495, 498, 501],
-	[GENERATIONS.GEN6]: [650, 653, 656],
-	[GENERATIONS.GEN7]: [722, 725, 728],
-	[GENERATIONS.GEN8]: [810, 813, 816],
-	[GENERATIONS.GEN9]: [906, 909, 912],
-};
-
 export const DEFAULT_PAGE_SIZE = 20;

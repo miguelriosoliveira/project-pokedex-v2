@@ -8,9 +8,10 @@
 		"db:populate": "tsx src/scripts/populateDb.ts",
 		"build": "tsup src",
 		"start": "node dist/server.js",
-		"lint": "eslint src --fix --ext .ts,.tsx",
+		"lint": "eslint src --fix --ext .ts",
 		"test": "vitest",
 		"test:cov": "vitest run --coverage",
+		"test:cov:staged": "vitest related --run --coverage",
 		"prepare": "husky install"
 	},
 	"dependencies": {
