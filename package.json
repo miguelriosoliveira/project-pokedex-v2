@@ -10,9 +10,9 @@
 		]
 	},
 	"scripts": {
-		"server": "cd packages/server && yarn dev",
-		"web": "cd packages/web && yarn dev",
-		"dev": "concurrently \"yarn:server\" \"yarn:web\"",
+		"server": "cd packages/server && pnpm dev",
+		"web": "cd packages/web && pnpm dev",
+		"dev": "concurrently \"pnpm:server\" \"pnpm:web\"",
 		"prepare": "husky install"
 	},
 	"devDependencies": {
