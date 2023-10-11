@@ -11,8 +11,7 @@
 		"lint": "eslint src --fix --ext .ts",
 		"test": "vitest",
 		"test:cov": "vitest run --coverage",
-		"test:cov:staged": "vitest related --run --coverage",
-		"prepare": "husky install"
+		"test:cov:staged": "vitest related --run --coverage"
 	},
 	"dependencies": {
 		"axios": "^1.5.1",
