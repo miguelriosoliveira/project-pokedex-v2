@@ -10,8 +10,8 @@
 		"lint": "eslint --ext .ts,.tsx src --fix"
 	},
 	"dependencies": {
-		"@sentry/browser": "^7.76.0",
-		"@sentry/react": "^7.76.0",
+		"@sentry/browser": "^7.77.0",
+		"@sentry/react": "^7.77.0",
 		"axios": "^1.6.0",
 		"classnames": "^2.3.2",
 		"pino": "^8.16.1",
