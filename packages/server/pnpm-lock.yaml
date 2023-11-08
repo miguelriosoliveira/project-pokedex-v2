@@ -50,19 +50,19 @@ dependencies:
 
 devDependencies:
   '@types/cors':
-    specifier: ^2.8.15
+    specifier: ^2.8.16
     version: 2.8.16
   '@types/express':
-    specifier: ^4.17.20
+    specifier: ^4.17.21
     version: 4.17.21
   '@types/morgan':
-    specifier: ^1.9.8
+    specifier: ^1.9.9
     version: 1.9.9
   '@types/node':
-    specifier: ^20.8.10
+    specifier: ^20.9.0
     version: 20.9.0
   '@types/supertest':
-    specifier: ^2.0.15
+    specifier: ^2.0.16
     version: 2.0.16
   '@vitest/coverage-v8':
     specifier: ^0.34.6
