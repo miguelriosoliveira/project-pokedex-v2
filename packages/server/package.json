@@ -33,7 +33,7 @@
 		"@types/cors": "^2.8.17",
 		"@types/express": "^4.17.21",
 		"@types/morgan": "^1.9.9",
-		"@types/node": "^20.10.4",
+		"@types/node": "^20.10.5",
 		"@types/supertest": "^2.0.16",
 		"@vitest/coverage-v8": "^1.0.4",
 		"husky": "^8.0.3",
@@ -41,7 +41,7 @@
 		"tsup": "^8.0.1",
 		"tsx": "^4.6.2",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.9",
+		"vite": "^5.0.10",
 		"vitest": "^1.0.4"
 	}
 }
