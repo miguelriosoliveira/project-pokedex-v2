@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { AddressInfo } from 'node:net';
 
 import { app } from './app';
