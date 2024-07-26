@@ -10,26 +10,26 @@
 		"lint": "eslint --ext .ts,.tsx src --fix"
 	},
 	"dependencies": {
-		"@sentry/browser": "^8.17.0",
-		"@sentry/react": "^8.17.0",
+		"@sentry/browser": "^8.20.0",
+		"@sentry/react": "^8.20.0",
 		"axios": "^1.7.2",
 		"classnames": "^2.5.1",
-		"pino": "^9.3.1",
-		"pino-pretty": "^11.2.1",
+		"pino": "^9.3.2",
+		"pino-pretty": "^11.2.2",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-icons": "^5.2.1",
-		"react-router-dom": "^6.24.1"
+		"react-router-dom": "^6.25.1"
 	},
 	"devDependencies": {
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react": "^4.3.1",
 		"autoprefixer": "^10.4.19",
-		"postcss": "^8.4.39",
-		"tailwindcss": "^3.4.5",
-		"typescript": "^5.5.3",
+		"postcss": "^8.4.40",
+		"tailwindcss": "^3.4.7",
+		"typescript": "^5.5.4",
 		"unplugin-fonts": "^1.1.1",
-		"vite": "^5.3.4"
+		"vite": "^5.3.5"
 	}
 }
