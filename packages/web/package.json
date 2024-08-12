@@ -10,8 +10,8 @@
 		"lint": "eslint --ext .ts,.tsx src --fix"
 	},
 	"dependencies": {
-		"@sentry/browser": "^8.24.0",
-		"@sentry/react": "^8.24.0",
+		"@sentry/browser": "^8.25.0",
+		"@sentry/react": "^8.25.0",
 		"axios": "^1.7.3",
 		"classnames": "^2.5.1",
 		"pino": "^9.3.2",
@@ -27,7 +27,7 @@
 		"@vitejs/plugin-react": "^4.3.1",
 		"autoprefixer": "^10.4.20",
 		"postcss": "^8.4.41",
-		"tailwindcss": "^3.4.8",
+		"tailwindcss": "^3.4.9",
 		"typescript": "^5.5.4",
 		"unplugin-fonts": "^1.1.1",
 		"vite": "^5.4.0"
