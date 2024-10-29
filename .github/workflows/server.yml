@@ -5,14 +5,15 @@ on:
     branches:
       - main
     paths:
-      - "packages/server/**"
-      - ".github/workflows/server.yml"
+      - 'packages/server/**'
+      - '.github/workflows/server.yml'
 jobs:
   deploy:
     name: Deploy to Fly.io (server)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy packages/server --remote-only
         env:
