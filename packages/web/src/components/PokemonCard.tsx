@@ -2,31 +2,11 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 import { routes } from '../config';
-import { Pokemon, Type } from '../services';
+import { Pokemon } from '../services';
 
 import { ButtonProps } from './Button';
 import { Sprite } from './Sprite';
-
-const TYPES_STYLE_MAP: { [type in Type]: string } = {
-	bug: 'bg-type--bug',
-	dark: 'bg-type--dark',
-	dragon: 'bg-type--dragon',
-	electric: 'bg-type--electric text-gray-800',
-	fairy: 'bg-type--fairy text-gray-800',
-	fighting: 'bg-type--fighting',
-	fire: 'bg-type--fire',
-	flying: 'bg-type--flying text-gray-800',
-	ghost: 'bg-type--ghost',
-	grass: 'bg-type--grass text-gray-800',
-	ground: 'bg-type--ground text-gray-800',
-	ice: 'bg-type--ice text-gray-800',
-	normal: 'bg-type--normal text-gray-800',
-	poison: 'bg-type--poison',
-	psychic: 'bg-type--psychic',
-	rock: 'bg-type--rock',
-	steel: 'bg-type--steel text-gray-800',
-	water: 'bg-type--water',
-};
+import { TYPES_STYLE_MAP } from './typesStyleMap';
 
 interface PokemonCardProps extends ButtonProps {
 	pokemon: Pokemon;
