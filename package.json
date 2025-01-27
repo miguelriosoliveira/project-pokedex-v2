@@ -16,24 +16,24 @@
 		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.18.0",
-		"@typescript-eslint/eslint-plugin": "^8.20.0",
-		"@typescript-eslint/parser": "^8.20.0",
+		"@eslint/js": "^9.19.0",
+		"@typescript-eslint/eslint-plugin": "^8.21.0",
+		"@typescript-eslint/parser": "^8.21.0",
 		"concurrently": "^9.1.2",
-		"eslint": "^9.18.0",
+		"eslint": "^9.19.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-import": "^2.31.0",
 		"eslint-plugin-jsx-a11y": "^6.10.2",
-		"eslint-plugin-prettier": "^5.2.2",
+		"eslint-plugin-prettier": "^5.2.3",
 		"eslint-plugin-react": "^7.37.4",
 		"eslint-plugin-react-hooks": "^5.1.0",
 		"eslint-plugin-unicorn": "^56.0.1",
 		"globals": "^15.14.0",
 		"husky": "^9.1.7",
-		"lint-staged": "^15.4.1",
+		"lint-staged": "^15.4.3",
 		"prettier": "^3.4.2",
 		"typescript": "^5.7.3",
-		"typescript-eslint": "^8.20.0"
+		"typescript-eslint": "^8.21.0"
 	}
 }
