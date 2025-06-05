@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=lts-alpine
+ARG NODE_VERSION=lts-bullseye
 FROM node:${NODE_VERSION} as base
 
 LABEL fly_launch_runtime="Node.js"
