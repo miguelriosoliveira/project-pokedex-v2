@@ -10,7 +10,7 @@
 		"lint": "eslint --ext .ts,.tsx src --fix"
 	},
 	"dependencies": {
-		"@sentry/react": "^9.24.0",
+		"@sentry/react": "^9.27.0",
 		"axios": "^1.9.0",
 		"classnames": "^2.5.1",
 		"pino": "^9.7.0",
@@ -18,13 +18,13 @@
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"react-icons": "^5.5.0",
-		"react-router-dom": "^7.6.1"
+		"react-router-dom": "^7.6.2"
 	},
 	"devDependencies": {
 		"@tailwindcss/vite": "^4.1.8",
-		"@types/react": "^19.1.6",
-		"@types/react-dom": "^19.1.5",
-		"@vitejs/plugin-react": "^4.5.0",
+		"@types/react": "^19.1.7",
+		"@types/react-dom": "^19.1.6",
+		"@vitejs/plugin-react": "^4.5.2",
 		"postcss": "^8.5.4",
 		"tailwindcss": "^4.1.8",
 		"typescript": "^5.8.3",
