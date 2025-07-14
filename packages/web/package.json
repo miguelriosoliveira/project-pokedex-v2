@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"license": "MIT",
 	"type": "module",
-	"packageManager": "pnpm@10.12.4",
+	"packageManager": "pnpm@10.13.1",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
@@ -11,7 +11,7 @@
 		"lint": "eslint --ext .ts,.tsx src --fix"
 	},
 	"dependencies": {
-		"@sentry/react": "^9.35.0",
+		"@sentry/react": "^9.38.0",
 		"axios": "^1.10.0",
 		"classnames": "^2.5.1",
 		"pino": "^9.7.0",
@@ -30,6 +30,6 @@
 		"tailwindcss": "^4.1.11",
 		"typescript": "^5.8.3",
 		"unplugin-fonts": "^1.3.1",
-		"vite": "^7.0.2"
+		"vite": "^7.0.4"
 	}
 }
