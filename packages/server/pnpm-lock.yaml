@@ -30,14 +30,14 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1
       mongoose:
-        specifier: ^9.1.3
-        version: 9.1.3
+        specifier: ^9.1.4
+        version: 9.1.4
       morgan:
         specifier: ^1.10.1
         version: 1.10.1
       pino:
-        specifier: ^10.1.1
-        version: 10.1.1
+        specifier: ^10.2.0
+        version: 10.2.0
       pino-pretty:
         specifier: ^13.1.3
         version: 13.1.3
@@ -58,14 +58,14 @@ importers:
         specifier: ^1.9.10
         version: 1.9.10
       '@types/node':
-        specifier: ^25.0.8
-        version: 25.0.8
+        specifier: ^25.0.9
+        version: 25.0.9
       '@types/supertest':
         specifier: ^6.0.3
         version: 6.0.3
       '@vitest/coverage-v8':
         specifier: ^4.0.17
-        version: 4.0.17(vitest@4.0.17(@types/node@25.0.8)(tsx@4.21.0))
+        version: 4.0.17(vitest@4.0.17(@types/node@25.0.9)(tsx@4.21.0))
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -83,10 +83,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^7.3.1
-        version: 7.3.1(@types/node@25.0.8)(tsx@4.21.0)
+        version: 7.3.1(@types/node@25.0.9)(tsx@4.21.0)
       vitest:
         specifier: ^4.0.17
-        version: 4.0.17(@types/node@25.0.8)(tsx@4.21.0)
+        version: 4.0.17(@types/node@25.0.9)(tsx@4.21.0)
 
 packages:
 
@@ -472,8 +472,8 @@ packages:
   '@types/morgan@1.9.10':
     resolution: {integrity: sha512-sS4A1zheMvsADRVfT0lYbJ4S9lmsey8Zo2F7cnbYjWHP67Q0AwMYuuzLlkIM2N8gAbb9cubhIVFwcIN2XyYCkA==}
 
-  '@types/node@25.0.8':
-    resolution: {integrity: sha512-powIePYMmC3ibL0UJ2i2s0WIbq6cg6UyVFQxSCpaPxxzAaziRfimGivjdF943sSGV6RADVbk0Nvlm5P/FB44Zg==}
+  '@types/node@25.0.9':
+    resolution: {integrity: sha512-/rpCXHlCWeqClNBwUhDcusJxXYDjZTyE8v5oTO7WbL8eij2nKhUeU89/6xgjU7N4/Vh3He0BtyhJdQbDyhiXAw==}
 
   '@types/qs@6.14.0':
     resolution: {integrity: sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==}
@@ -606,8 +606,8 @@ packages:
     resolution: {integrity: sha512-oP5VkATKlNwcgvxi0vM0p/D3n2C3EReYVX+DNYs5TjZFn/oQt2j+4sVJtSMr18pdRr8wjTcBl6LoV+FUwzPmNA==}
     engines: {node: '>=18'}
 
-  bson@7.0.0:
-    resolution: {integrity: sha512-Kwc6Wh4lQ5OmkqqKhYGKIuELXl+EPYSCObVE6bWsp1T/cGkOCBN0I8wF/T44BiuhHyNi1mmKVPXk60d41xZ7kw==}
+  bson@7.1.1:
+    resolution: {integrity: sha512-TtJgBB+QyOlWjrbM+8bRgH84VM/xrDjyBFgSgGrfZF4xvt6gbEDtcswm27Tn9F9TWsjQybxT8b8VpCP/oJK4Dw==}
     engines: {node: '>=20.19.0'}
 
   buffer-crc32@0.2.13:
@@ -1072,8 +1072,8 @@ packages:
       socks:
         optional: true
 
-  mongoose@9.1.3:
-    resolution: {integrity: sha512-vIKt/qjdgXt0C/75g8/ROLY+o5rrVsjqwmo1C9qpGYIpJQI9KLZjuBXJTyL+8RXH2cGFumADCd7PIE3mry3ibw==}
+  mongoose@9.1.4:
+    resolution: {integrity: sha512-V8JIyoWKWW+R2COlOsh6gaYw9TvczSiP/cN3Yuk1pv7ws5VNFAy5GPrK8jfz9tVYovmqdWOJRurMjL4ilYn9wA==}
     engines: {node: '>=20.19.0'}
 
   morgan@1.10.1:
@@ -1189,8 +1189,8 @@ packages:
   pino-std-serializers@7.1.0:
     resolution: {integrity: sha512-BndPH67/JxGExRgiX1dX0w1FvZck5Wa4aal9198SrRhZjH3GxKQUKIBnYJTdj2HDN3UQAS06HlfcSbQj2OHmaw==}
 
-  pino@10.1.1:
-    resolution: {integrity: sha512-3qqVfpJtRQUCAOs4rTOEwLH6mwJJ/CSAlbis8fKOiMzTtXh0HN/VLsn3UWVTJ7U8DsWmxeNon2IpGb+wORXH4g==}
+  pino@10.2.0:
+    resolution: {integrity: sha512-NFnZqUliT+OHkRXVSf8vdOr13N1wv31hRryVjqbreVh/SDCNaI6mnRDDq89HVRCbem1SAl7yj04OANeqP0nT6A==}
     hasBin: true
 
   pirates@4.0.7:
@@ -1485,8 +1485,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ufo@1.6.2:
-    resolution: {integrity: sha512-heMioaxBcG9+Znsda5Q8sQbWnLJSl98AFDXTO80wELWEzX3hordXsTdxrIfMQoO9IY1MEnoGoPjpoKpMj+Yx0Q==}
+  ufo@1.6.3:
+    resolution: {integrity: sha512-yDJTmhydvl5lJzBmy/hyOAA0d+aqCBuwl818haVdYCRrWV84o7YyeVm4QlVHStqNrrJSTb6jKuFAVqAFsr+K3Q==}
 
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
@@ -1811,7 +1811,7 @@ snapshots:
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
 
   '@types/chai@5.2.3':
     dependencies:
@@ -1820,13 +1820,13 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
 
   '@types/cookiejar@2.1.5': {}
 
   '@types/cors@2.8.19':
     dependencies:
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
 
   '@types/deep-eql@4.0.2': {}
 
@@ -1834,7 +1834,7 @@ snapshots:
 
   '@types/express-serve-static-core@5.1.1':
     dependencies:
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 1.2.1
@@ -1851,9 +1851,9 @@ snapshots:
 
   '@types/morgan@1.9.10':
     dependencies:
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
 
-  '@types/node@25.0.8':
+  '@types/node@25.0.9':
     dependencies:
       undici-types: 7.16.0
 
@@ -1863,18 +1863,18 @@ snapshots:
 
   '@types/send@1.2.1':
     dependencies:
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
 
   '@types/serve-static@2.2.0':
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
 
   '@types/superagent@8.1.9':
     dependencies:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
       form-data: 4.0.5
 
   '@types/supertest@6.0.3':
@@ -1888,7 +1888,7 @@ snapshots:
     dependencies:
       '@types/webidl-conversions': 7.0.3
 
-  '@vitest/coverage-v8@4.0.17(vitest@4.0.17(@types/node@25.0.8)(tsx@4.21.0))':
+  '@vitest/coverage-v8@4.0.17(vitest@4.0.17(@types/node@25.0.9)(tsx@4.21.0))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.17
@@ -1900,7 +1900,7 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.17(@types/node@25.0.8)(tsx@4.21.0)
+      vitest: 4.0.17(@types/node@25.0.9)(tsx@4.21.0)
 
   '@vitest/expect@4.0.17':
     dependencies:
@@ -1911,13 +1911,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.17(vite@7.3.1(@types/node@25.0.8)(tsx@4.21.0))':
+  '@vitest/mocker@4.0.17(vite@7.3.1(@types/node@25.0.9)(tsx@4.21.0))':
     dependencies:
       '@vitest/spy': 4.0.17
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@25.0.8)(tsx@4.21.0)
+      vite: 7.3.1(@types/node@25.0.9)(tsx@4.21.0)
 
   '@vitest/pretty-format@4.0.17':
     dependencies:
@@ -2009,7 +2009,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  bson@7.0.0: {}
+  bson@7.1.1: {}
 
   buffer-crc32@0.2.13: {}
 
@@ -2433,7 +2433,7 @@ snapshots:
       acorn: 8.15.0
       pathe: 2.0.3
       pkg-types: 1.3.1
-      ufo: 1.6.2
+      ufo: 1.6.3
 
   mongodb-connection-string-url@7.0.0:
     dependencies:
@@ -2485,10 +2485,10 @@ snapshots:
   mongodb@7.0.0:
     dependencies:
       '@mongodb-js/saslprep': 1.4.4
-      bson: 7.0.0
+      bson: 7.1.1
       mongodb-connection-string-url: 7.0.0
 
-  mongoose@9.1.3:
+  mongoose@9.1.4:
     dependencies:
       kareem: 3.0.0
       mongodb: 7.0.0
@@ -2609,7 +2609,7 @@ snapshots:
 
   pino-std-serializers@7.1.0: {}
 
-  pino@10.1.1:
+  pino@10.2.0:
     dependencies:
       '@pinojs/redact': 0.4.0
       atomic-sleep: 1.0.0
@@ -2968,7 +2968,7 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  ufo@1.6.2: {}
+  ufo@1.6.3: {}
 
   undici-types@7.16.0: {}
 
@@ -2976,7 +2976,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite@7.3.1(@types/node@25.0.8)(tsx@4.21.0):
+  vite@7.3.1(@types/node@25.0.9)(tsx@4.21.0):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -2985,14 +2985,14 @@ snapshots:
       rollup: 4.55.1
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
       fsevents: 2.3.3
       tsx: 4.21.0
 
-  vitest@4.0.17(@types/node@25.0.8)(tsx@4.21.0):
+  vitest@4.0.17(@types/node@25.0.9)(tsx@4.21.0):
     dependencies:
       '@vitest/expect': 4.0.17
-      '@vitest/mocker': 4.0.17(vite@7.3.1(@types/node@25.0.8)(tsx@4.21.0))
+      '@vitest/mocker': 4.0.17(vite@7.3.1(@types/node@25.0.9)(tsx@4.21.0))
       '@vitest/pretty-format': 4.0.17
       '@vitest/runner': 4.0.17
       '@vitest/snapshot': 4.0.17
@@ -3009,10 +3009,10 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@25.0.8)(tsx@4.21.0)
+      vite: 7.3.1(@types/node@25.0.9)(tsx@4.21.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 25.0.8
+      '@types/node': 25.0.9
     transitivePeerDependencies:
       - jiti
       - less
