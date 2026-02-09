@@ -4,7 +4,7 @@
 	"author": "Miguel Rios <miguelriosoliveira@gmail.com>",
 	"license": "MIT",
 	"private": true,
-	"packageManager": "pnpm@10.28.2",
+	"packageManager": "pnpm@10.29.2",
 	"workspaces": {
 		"packages": [
 			"packages/*"
@@ -17,11 +17,11 @@
 		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.2",
+		"@eslint/js": "^10.0.1",
 		"@typescript-eslint/eslint-plugin": "^8.54.0",
 		"@typescript-eslint/parser": "^8.54.0",
 		"concurrently": "^9.2.1",
-		"eslint": "^9.39.2",
+		"eslint": "^10.0.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-import": "^2.32.0",
