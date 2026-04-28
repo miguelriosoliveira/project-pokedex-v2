@@ -30,8 +30,8 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1
       mongoose:
-        specifier: ^9.5.0
-        version: 9.5.0
+        specifier: ^9.6.0
+        version: 9.6.0
       morgan:
         specifier: ^1.10.1
         version: 1.10.1
@@ -746,8 +746,8 @@ packages:
   bare-path@3.0.0:
     resolution: {integrity: sha512-tyfW2cQcB5NN8Saijrhqn0Zh7AnFNsnczRcuWODH0eYAXBsJ5gVxAUuNr7tsHSC6IZ77cA0SitzT+s47kot8Mw==}
 
-  bare-stream@2.13.0:
-    resolution: {integrity: sha512-3zAJRZMDFGjdn+RVnNpF9kuELw+0Fl3lpndM4NcEOhb9zwtSo/deETfuIwMSE5BXanA0FrN1qVjffGwAg2Y7EA==}
+  bare-stream@2.13.1:
+    resolution: {integrity: sha512-Vp0cnjYyrEC4whYTymQ+YZi6pBpfiICZO3cfRG8sy67ZNWe951urv1x4eW1BKNngw3U+3fPYb5JQvHbCtxH7Ow==}
     peerDependencies:
       bare-abort-controller: '*'
       bare-buffer: '*'
@@ -1291,33 +1291,6 @@ packages:
     resolution: {integrity: sha512-nUlKovSJZBh7q5hPsewFRam9H66D08Ne18nyknkNalfXMPtK1Og3kOcuqQhcX88x/pghSZPIJHrLbxNFW3OWiw==}
     engines: {node: '>=20.19.0'}
 
-  mongodb@7.1.1:
-    resolution: {integrity: sha512-067DXiMjcpYQl6bGjWQoTUEE9UoRViTtKFcoqX7z08I+iDZv/emH1g8XEFiO3qiDfXAheT5ozl1VffDTKhIW/w==}
-    engines: {node: '>=20.19.0'}
-    peerDependencies:
-      '@aws-sdk/credential-providers': ^3.806.0
-      '@mongodb-js/zstd': ^7.0.0
-      gcp-metadata: ^7.0.1
-      kerberos: ^7.0.0
-      mongodb-client-encryption: '>=7.0.0 <7.1.0'
-      snappy: ^7.3.2
-      socks: ^2.8.6
-    peerDependenciesMeta:
-      '@aws-sdk/credential-providers':
-        optional: true
-      '@mongodb-js/zstd':
-        optional: true
-      gcp-metadata:
-        optional: true
-      kerberos:
-        optional: true
-      mongodb-client-encryption:
-        optional: true
-      snappy:
-        optional: true
-      socks:
-        optional: true
-
   mongodb@7.2.0:
     resolution: {integrity: sha512-F/2+BMZtLVhY30ioZp0dAmZ+IRZMBqI+nrv6t5+9/1AIwCa8sMRC3jBf81lpxMhnZgqq8CoUD503Z1oZWq1/sw==}
     engines: {node: '>=20.19.0'}
@@ -1345,8 +1318,8 @@ packages:
       socks:
         optional: true
 
-  mongoose@9.5.0:
-    resolution: {integrity: sha512-B4blGFkFL1s0G24URuMvx0qTlx+gRVLmfO7WcSz8NcmW/XHEJ3G69capdyW1iRsGKiycp1tkwKHnxHbnwjwmPw==}
+  mongoose@9.6.0:
+    resolution: {integrity: sha512-Xs7aN4fk4uHhDYltjQFqPQ+Z45eJscuIaw3EtP+NAmXLEm7z3xeJSgerLwyszALJNY9TvE0PMxCjQH9kCVTe5g==}
     engines: {node: '>=20.19.0'}
 
   morgan@1.10.1:
@@ -2370,7 +2343,7 @@ snapshots:
     dependencies:
       bare-events: 2.8.2
       bare-path: 3.0.0
-      bare-stream: 2.13.0(bare-events@2.8.2)
+      bare-stream: 2.13.1(bare-events@2.8.2)
       bare-url: 2.4.2
       fast-fifo: 1.3.2
     transitivePeerDependencies:
@@ -2383,7 +2356,7 @@ snapshots:
     dependencies:
       bare-os: 3.9.0
 
-  bare-stream@2.13.0(bare-events@2.8.2):
+  bare-stream@2.13.1(bare-events@2.8.2):
     dependencies:
       streamx: 2.25.0
       teex: 1.0.1
@@ -2942,22 +2915,16 @@ snapshots:
       - socks
       - supports-color
 
-  mongodb@7.1.1:
-    dependencies:
-      '@mongodb-js/saslprep': 1.4.9
-      bson: 7.2.0
-      mongodb-connection-string-url: 7.0.1
-
   mongodb@7.2.0:
     dependencies:
       '@mongodb-js/saslprep': 1.4.9
       bson: 7.2.0
       mongodb-connection-string-url: 7.0.1
 
-  mongoose@9.5.0:
+  mongoose@9.6.0:
     dependencies:
       kareem: 3.3.0
-      mongodb: 7.1.1
+      mongodb: 7.2.0
       mpath: 0.9.0
       mquery: 6.0.0
       ms: 2.1.3
