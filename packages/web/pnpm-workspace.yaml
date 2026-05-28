@@ -1,2 +1,10 @@
+minimumReleaseAgeExclude:
+  - '@sentry-internal/browser-utils@10.55.0'
+  - '@sentry-internal/feedback@10.55.0'
+  - '@sentry-internal/replay-canvas@10.55.0'
+  - '@sentry-internal/replay@10.55.0'
+  - '@sentry/browser@10.55.0'
+  - '@sentry/core@10.55.0'
+  - '@sentry/react@10.55.0'
 onlyBuiltDependencies:
   - esbuild
