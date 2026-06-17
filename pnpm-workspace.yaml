@@ -3,3 +3,5 @@ packages:
 allowBuilds:
   esbuild: true
   mongodb-memory-server: true
+minimumReleaseAgeExclude:
+  - eslint-plugin-unicorn@67.0.0
