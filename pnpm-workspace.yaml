@@ -3,4 +3,5 @@ allowBuilds:
   mongodb-memory-server: true
 minimumReleaseAgeStrict: true
 packages:
-  - 'packages/*'
+  - 'server'
+  - 'web'

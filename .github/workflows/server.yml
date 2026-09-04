@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'packages/server/**'
+      - 'server/**'
       - '.github/workflows/server.yml'
 jobs:
   deploy:
@@ -14,6 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy packages/server --remote-only
+      - run: flyctl deploy server --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
