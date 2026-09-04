@@ -4,7 +4,7 @@
 	"author": "Miguel Rios <miguelriosoliveira@gmail.com>",
 	"license": "MIT",
 	"private": true,
-	"packageManager": "pnpm@11.7.0",
+	"packageManager": "pnpm@11.25.0",
 	"workspaces": {
 		"packages": [
 			"packages/*"
@@ -14,13 +14,14 @@
 		"server": "pnpm --filter @project-pokedex/server dev",
 		"web": "pnpm --filter @project-pokedex/web dev",
 		"dev": "pnpm -r --parallel dev",
+		"lint": "pnpm -r --parallel lint",
 		"prepare": "husky"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"@typescript-eslint/eslint-plugin": "^8.61.1",
-		"@typescript-eslint/parser": "^8.61.1",
-		"eslint": "^10.5.0",
+		"@typescript-eslint/eslint-plugin": "^8.69.0",
+		"@typescript-eslint/parser": "^8.69.0",
+		"eslint": "^10.9.1",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-import": "^2.32.0",
@@ -28,12 +29,12 @@
 		"eslint-plugin-prettier": "^5.5.6",
 		"eslint-plugin-react": "^7.37.5",
 		"eslint-plugin-react-hooks": "^7.1.1",
-		"eslint-plugin-unicorn": "^67.0.0",
-		"globals": "^17.6.0",
+		"eslint-plugin-unicorn": "^74.0.0",
+		"globals": "^17.12.0",
 		"husky": "^9.1.7",
-		"lint-staged": "^17.0.7",
-		"prettier": "^3.8.4",
-		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.61.1"
+		"lint-staged": "^17.4.1",
+		"prettier": "^3.9.6",
+		"typescript": "^7.0.2",
+		"typescript-eslint": "^8.69.0"
 	}
 }
