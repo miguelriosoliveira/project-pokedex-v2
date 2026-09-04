@@ -1,0 +1,24 @@
+.git/
+.github/
+
+**/node_modules/
+**/dist/
+**/coverage/
+
+# Server image only needs workspace manifests + server source
+web/**
+!web/package.json
+
+**/.env
+**/.env.*
+!**/.env.example
+
+server/.dockerignore
+server/Dockerfile
+server/fly.toml
+server/docker-compose.yml
+server/README.md
+server/vitest.config.ts
+server/.lintstagedrc.json
+server/src/**/*.test.ts
+server/src/utils/tests/

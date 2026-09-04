@@ -2,48 +2,49 @@
 
 # Adjust NODE_VERSION as desired
 ARG NODE_VERSION=lts-bullseye
-FROM node:${NODE_VERSION} as base
+FROM node:${NODE_VERSION} AS base
 
 LABEL fly_launch_runtime="Node.js"
 
 # Node.js app lives here
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV="production"
-
-# Install pnpm
-ARG PNPM_VERSION=latest
+# Install pnpm (must match packageManager in the root package.json)
+ARG PNPM_VERSION=12.3.1
 RUN npm install -g pnpm@$PNPM_VERSION
 
 
 # Throw-away build stage to reduce size of final image
-FROM base as build
+FROM base AS build
 
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
     apt-get install -y build-essential pkg-config python-is-python3
 
-# Install node modules
-COPY --link package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile --prod=false
+# Workspace manifests first so dependency installs stay cached
+COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --link server/package.json ./server/
+COPY --link web/package.json ./web/
+RUN pnpm install --frozen-lockfile --filter @project-pokedex/server
 
-# Copy application code
-COPY --link . .
+# Application source (web/ is excluded via .dockerignore)
+COPY --link server ./server
 
 # Build application
-RUN pnpm run build
+RUN pnpm --filter @project-pokedex/server run build
 
-# Remove development dependencies
-RUN pnpm prune --prod
+# Isolated production copy of the server package (no workspace / devDependencies)
+RUN pnpm --filter @project-pokedex/server deploy --prod --ignore-scripts /app/deploy
 
 
 # Final stage for app image
 FROM base
 
+ENV NODE_ENV="production"
+
 # Copy built application
-COPY --from=build /app /app
+COPY --from=build /app/deploy /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "pnpm", "run", "start" ]
+CMD [ "node", "dist/server.js" ]

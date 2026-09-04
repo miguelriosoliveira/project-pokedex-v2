@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - 'server/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - '.dockerignore'
       - '.github/workflows/server.yml'
 jobs:
   deploy:
@@ -14,6 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy server --remote-only
+      - run: flyctl deploy . --config server/fly.toml --dockerfile server/Dockerfile --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
