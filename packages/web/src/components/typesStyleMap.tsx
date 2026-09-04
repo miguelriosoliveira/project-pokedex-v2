@@ -1,4 +1,4 @@
-import { Type } from '../services';
+import type { Type } from '../services';
 
 export const TYPES_STYLE_MAP: {
 	[type in Type]: string;

@@ -1,12 +1,11 @@
-/* eslint-disable no-console */
 import {
-	ChainLink,
-	EvolutionChain,
-	Generation,
+	type ChainLink,
+	type EvolutionChain,
+	type Generation,
 	MainClient,
-	Pokemon,
-	PokemonSpecies,
-	Type,
+	type Pokemon,
+	type PokemonSpecies,
+	type Type,
 } from 'pokenode-ts';
 
 import { DEFAULT_PAGE_SIZE } from '../config/constants';
@@ -14,13 +13,13 @@ import { db } from '../config/database';
 import { ENV } from '../config/env';
 import {
 	Generation as GenerationModel,
-	GenerationSchema,
+	type GenerationSchema,
 	Pokemon as PokemonModel,
-	PokemonSchema,
+	type PokemonSchema,
 	Type as TypeModel,
-	TypeSchema,
+	type TypeSchema,
 } from '../models';
-import { Replace, createFakeEvolutionChain, createRange, getIdFromUrl } from '../utils';
+import { createFakeEvolutionChain, createRange, getIdFromUrl, type Replace } from '../utils';
 
 const P = new MainClient();
 

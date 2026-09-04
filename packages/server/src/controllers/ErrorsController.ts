@@ -1,11 +1,10 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 import { AppError } from '../errors';
 
 export const ErrorController = {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	handle(error: Error, request: Request, response: Response, next: NextFunction) {
+	handle(error: Error, _request: Request, response: Response, _next: NextFunction) {
 		if (error instanceof AppError) {
 			return response.status(error.code).json({ error: error.message });
 		}

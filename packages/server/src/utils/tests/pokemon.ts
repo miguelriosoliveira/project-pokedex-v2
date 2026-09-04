@@ -1,4 +1,4 @@
-import { PokemonSchema } from '../../models';
+import type { PokemonSchema } from '../../models';
 
 export function createPokemon(data: Partial<PokemonSchema> = {}): PokemonSchema {
 	return {

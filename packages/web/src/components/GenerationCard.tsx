@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { routes } from '../config';
-import { Generation } from '../services';
+import type { Generation } from '../services';
 
 import { Sprite } from './Sprite';
 

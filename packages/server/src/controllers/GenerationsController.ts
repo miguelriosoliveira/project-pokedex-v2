@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import { GENERATION_NAMES } from '../config/constants';
 import { Generation, Pokemon } from '../models';
 
 export const GenerationController = {
-	async getAll(request: Request, response: Response) {
+	async getAll(_request: Request, response: Response) {
 		const genList = await Generation.find({}, 'name region starters').sort('number');
 		const starters = await Pokemon.find(
 			{ number: { $in: genList.flatMap(gen => gen.starters) } },

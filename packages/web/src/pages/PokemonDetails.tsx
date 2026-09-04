@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { FaCaretRight } from 'react-icons/fa';
 import { FiArrowLeft } from 'react-icons/fi';
 import { GoAlert } from 'react-icons/go';
-import { LoaderFunctionArgs, useLoaderData, useNavigate } from 'react-router-dom';
+import { type LoaderFunctionArgs, useLoaderData, useNavigate } from 'react-router-dom';
 
 import { Button, PokemonCard, Sprite, TypesCard } from '../components';
 import { api } from '../services';

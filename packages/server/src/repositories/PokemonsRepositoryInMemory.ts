@@ -1,6 +1,6 @@
-import { PokemonSchema } from '../models';
+import type { PokemonSchema } from '../models';
 
-import { PokemonsRepository } from './PokemonsRepository';
+import type { PokemonsRepository } from './PokemonsRepository';
 
 export class PokemonsRepositoryInMemory implements PokemonsRepository {
 	pokemons: PokemonSchema[] = [];

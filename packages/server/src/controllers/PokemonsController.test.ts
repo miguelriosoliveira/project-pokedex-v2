@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { Mongoose } from 'mongoose';
+import type { Mongoose } from 'mongoose';
 import supertest from 'supertest';
 
 import { app } from '../app';

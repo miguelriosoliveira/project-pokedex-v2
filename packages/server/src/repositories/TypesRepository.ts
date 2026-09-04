@@ -1,4 +1,4 @@
-import { TypeSchema } from '../models';
+import type { TypeSchema } from '../models';
 
 export abstract class TypesRepository {
 	abstract findMany(): Promise<TypeSchema[]>;

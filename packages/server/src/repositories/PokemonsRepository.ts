@@ -1,4 +1,4 @@
-import { PokemonSchema } from '../models';
+import type { PokemonSchema } from '../models';
 
 export abstract class PokemonsRepository {
 	abstract findByNumber(number: number): Promise<PokemonSchema | undefined>;

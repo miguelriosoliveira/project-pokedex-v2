@@ -24,6 +24,6 @@ describe('GetPokemonByNumberService', () => {
 		const getPokemonByNumberService = new GetPokemonByNumberService(pokemonsRepository);
 
 		// Act + Assert
-		expect(() => getPokemonByNumberService.execute(-1)).rejects.toThrow('Pokémon #-1 not found!');
+		await expect(getPokemonByNumberService.execute(-1)).rejects.toThrow('Pokémon #-1 not found!');
 	});
 });

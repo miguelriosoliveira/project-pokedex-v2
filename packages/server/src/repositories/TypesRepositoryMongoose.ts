@@ -1,6 +1,6 @@
 import { Type } from '../models';
 
-import { TypesRepository } from './TypesRepository';
+import type { TypesRepository } from './TypesRepository';
 
 export class TypesRepositoryMongoose implements TypesRepository {
 	async findMany() {

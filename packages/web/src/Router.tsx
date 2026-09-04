@@ -1,13 +1,13 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { App } from './App';
 import { ErrorElement } from './components';
 import { routes } from './config';
 import {
 	Home,
+	homeLoader,
 	PokemonDetails,
 	PokemonList,
-	homeLoader,
 	pokemonDetailsLoader,
 	pokemonListLoader,
 } from './pages';

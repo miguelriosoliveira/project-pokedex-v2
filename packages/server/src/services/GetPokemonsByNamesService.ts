@@ -1,4 +1,4 @@
-import { PokemonsRepository } from '../repositories';
+import type { PokemonsRepository } from '../repositories';
 
 export class GetPokemonsByNamesService {
 	constructor(private pokemonsRepository: PokemonsRepository) {}

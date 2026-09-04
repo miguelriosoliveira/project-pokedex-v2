@@ -1,4 +1,4 @@
-import { AddressInfo } from 'node:net';
+import type { AddressInfo } from 'node:net';
 
 import { app } from './app';
 import { db } from './config/database';

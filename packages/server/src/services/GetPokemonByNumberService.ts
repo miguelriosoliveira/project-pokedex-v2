@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 
 import { AppError } from '../errors';
-import { PokemonsRepository } from '../repositories';
+import type { PokemonsRepository } from '../repositories';
 
 export class GetPokemonByNumberService {
 	constructor(private pokemonsRepository: PokemonsRepository) {}

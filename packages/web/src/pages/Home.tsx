@@ -2,7 +2,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 
 import { Button, GenerationCard } from '../components';
 import { routes } from '../config';
-import { Generation, api } from '../services';
+import { api, type Generation } from '../services';
 
 export async function homeLoader() {
 	return api.getGenerations();

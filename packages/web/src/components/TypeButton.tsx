@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 
-import { Type } from '../services';
+import type { Type } from '../services';
 
-import { Button, ButtonProps } from './Button';
+import { Button, type ButtonProps } from './Button';
 import { TYPES_STYLE_MAP } from './typesStyleMap';
 
 interface Props extends ButtonProps {

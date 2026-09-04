@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 import { routes } from '../config';
-import { Pokemon } from '../services';
+import type { Pokemon } from '../services';
 
-import { ButtonProps } from './Button';
+import type { ButtonProps } from './Button';
 import { Sprite } from './Sprite';
 import { TYPES_STYLE_MAP } from './typesStyleMap';
 

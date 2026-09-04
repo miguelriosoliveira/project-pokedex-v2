@@ -1,4 +1,4 @@
-import { TypesRepository } from '../repositories';
+import type { TypesRepository } from '../repositories';
 
 export class GetAllTypesService {
 	constructor(private typesRepository: TypesRepository) {}

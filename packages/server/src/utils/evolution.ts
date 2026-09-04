@@ -1,4 +1,4 @@
-import { EvolutionChain } from 'pokenode-ts';
+import type { EvolutionChain } from 'pokenode-ts';
 
 interface Props {
 	name: string;

@@ -1,4 +1,4 @@
-import { TypeSchema } from '../../models';
+import type { TypeSchema } from '../../models';
 
 export function createType(data: Partial<TypeSchema> = {}): TypeSchema {
 	return {

@@ -1,8 +1,8 @@
 import { Joi, Segments } from 'celebrate';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import { DEFAULT_PAGE_SIZE, GENERATIONS, TOTAL_ITEMS_HEADER } from '../config/constants';
-import { Pokemon, PokemonSchema } from '../models';
+import { Pokemon, type PokemonSchema } from '../models';
 import { PokemonsRepositoryMongoose, TypesRepositoryMongoose } from '../repositories';
 import {
 	GetPokemonByNumberService,
@@ -61,9 +61,7 @@ export const PokemonController = {
 		}
 
 		// do query
-		// eslint-disable-next-line unicorn/no-array-callback-reference
 		const totalItems = await Pokemon.find(query).countDocuments();
-		// eslint-disable-next-line unicorn/no-array-method-this-argument, unicorn/no-array-callback-reference
 		const pokemons = await Pokemon.find(query, '-_id number display_name types sprite')
 			.sort('number')
 			.skip((page - 1) * page_size)
@@ -98,9 +96,8 @@ export const PokemonController = {
 				(intersec, chain) => intersec.filter(form => chain.includes(form)),
 				[],
 			);
-			const difference = pokemon.evolution_chain.reduce(
-				(diff, chain) => [...diff, ...chain.filter(form => !intersection.includes(form))],
-				[],
+			const difference = pokemon.evolution_chain.flatMap(chain =>
+				chain.filter(form => !intersection.includes(form)),
 			);
 
 			// evolutionChain.common = await Pokemon.find(

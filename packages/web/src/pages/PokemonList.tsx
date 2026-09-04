@@ -1,10 +1,10 @@
 import classnames from 'classnames';
-import { ChangeEvent, FormEvent, UIEvent, useCallback, useState } from 'react';
+import { type ChangeEvent, type FormEvent, type UIEvent, useCallback, useState } from 'react';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
-import { LoaderFunctionArgs, useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import { type LoaderFunctionArgs, useLoaderData, useNavigate, useParams } from 'react-router-dom';
 
 import { Button, PokemonCard, TypeButton } from '../components';
-import { Pokemon, Type, api } from '../services/api';
+import { api, type Pokemon, type Type } from '../services/api';
 import { logger } from '../utils';
 
 export async function pokemonListLoader({ params: { generationName } }: LoaderFunctionArgs) {

@@ -1,6 +1,6 @@
-import { TypeSchema } from '../models';
+import type { TypeSchema } from '../models';
 
-import { TypesRepository } from './TypesRepository';
+import type { TypesRepository } from './TypesRepository';
 
 export class TypesRepositoryInMemory implements TypesRepository {
 	types: TypeSchema[] = [];

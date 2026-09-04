@@ -1,6 +1,6 @@
 import { Pokemon } from '../models';
 
-import { PokemonsRepository } from './PokemonsRepository';
+import type { PokemonsRepository } from './PokemonsRepository';
 
 export class PokemonsRepositoryMongoose implements PokemonsRepository {
 	async findByNumber(number: number) {
