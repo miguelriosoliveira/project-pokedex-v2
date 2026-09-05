@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=lts-bullseye
+# renovate: datasource=docker depName=node versioning=node
+ARG NODE_VERSION=24
 FROM node:${NODE_VERSION} AS base
 
 LABEL fly_launch_runtime="Node.js"
@@ -10,6 +10,7 @@ LABEL fly_launch_runtime="Node.js"
 WORKDIR /app
 
 # Install pnpm (must match packageManager in the root package.json)
+# renovate: datasource=npm depName=pnpm
 ARG PNPM_VERSION=12.3.1
 RUN npm install -g pnpm@$PNPM_VERSION
 

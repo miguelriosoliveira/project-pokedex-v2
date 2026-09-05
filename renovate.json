@@ -1,0 +1,14 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:recommended",
+		":preserveSemverRanges",
+		"customManagers:dockerfileVersions",
+		"workarounds:nodeDockerVersioning",
+		"group:all",
+		"schedule:weekly"
+	],
+	"enabledManagers": ["npm", "github-actions", "dockerfile", "docker-compose", "custom.regex"],
+	"separateMajorMinor": false,
+	"labels": ["dependencies"]
+}

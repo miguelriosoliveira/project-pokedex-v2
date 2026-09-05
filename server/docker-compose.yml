@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mongodb:
-    image: mongo
+    image: mongo:8
     container_name: pokedex-mongo
     restart: unless-stopped
     ports:
