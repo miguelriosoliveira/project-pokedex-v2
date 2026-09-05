@@ -112,6 +112,9 @@ importers:
       '@biomejs/biome':
         specifier: ^2.5.12
         version: 2.5.12
+      '@miguelriosoliveira/shared-configs':
+        specifier: github:miguelriosoliveira/shared-configs
+        version: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5f6853e7eb751bb03856c993e3f6f870ec7c17b4
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -693,6 +696,10 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5f6853e7eb751bb03856c993e3f6f870ec7c17b4':
+    resolution: {gitHosted: true, integrity: sha512-8krqbr4uVY/jBqXKXDqwYeMSzbETZBuzE6cMqZM8Ysc+W8s4PoFbpGxpPDi3LL3/30KM9Z5+r16aFFpSTOUavw==, tarball: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5f6853e7eb751bb03856c993e3f6f870ec7c17b4}
+    version: 0.1.0
 
   '@mongodb-js/saslprep@1.5.0':
     resolution: {integrity: sha512-Hk1SKJCMcCos38+vqDnZzlIo4XRj9yCGzYkjB4LcqpeXRIYfia1UWTz+VrueLxoU+uSRJzgkufxoRZg8gi52YA==}
@@ -3072,6 +3079,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
+
+  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5f6853e7eb751bb03856c993e3f6f870ec7c17b4': {}
 
   '@mongodb-js/saslprep@1.5.0':
     dependencies:
