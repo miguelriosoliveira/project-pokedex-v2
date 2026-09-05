@@ -1,18 +1,10 @@
 # syntax = docker/dockerfile:1
 
-# renovate: datasource=docker depName=node versioning=node
-ARG NODE_VERSION=24
-FROM node:${NODE_VERSION} AS base
+FROM node:24 AS base
 
 LABEL fly_launch_runtime="Node.js"
 
-# Node.js app lives here
 WORKDIR /app
-
-# Install pnpm (must match packageManager in the root package.json)
-# renovate: datasource=npm depName=pnpm
-ARG PNPM_VERSION=12.3.1
-RUN npm install -g pnpm@$PNPM_VERSION
 
 
 # Throw-away build stage to reduce size of final image
@@ -26,6 +18,7 @@ RUN apt-get update -qq && \
 COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --link server/package.json ./server/
 COPY --link web/package.json ./web/
+RUN corepack enable
 RUN pnpm install --frozen-lockfile --filter @project-pokedex/server
 
 # Application source (web/ is excluded via .dockerignore)

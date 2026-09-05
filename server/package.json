@@ -2,6 +2,9 @@
 	"name": "@project-pokedex/server",
 	"version": "1.0.0",
 	"license": "MIT",
+	"engines": {
+		"node": "24.x"
+	},
 	"scripts": {
 		"predev": "docker compose up -d",
 		"dev": "tsx watch --env-file .env src/server.ts",
