@@ -114,7 +114,7 @@ importers:
         version: 2.5.12
       '@miguelriosoliveira/shared-configs':
         specifier: github:miguelriosoliveira/shared-configs
-        version: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/a757451824ae87405f806f6f0bcd52e45b3f0c59
+        version: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -697,8 +697,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/a757451824ae87405f806f6f0bcd52e45b3f0c59':
-    resolution: {gitHosted: true, integrity: sha512-Q2pSbTIcbK9eiMOoRGuIrGUNo4XCHOIBOVhctCDWKGkbwQfV3rvam2oxIjuE1SBIbX1CLCwpd1HNvC8vQ1MCIw==, tarball: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/a757451824ae87405f806f6f0bcd52e45b3f0c59}
+  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251':
+    resolution: {gitHosted: true, integrity: sha512-dVUwurQnLpNxN6kbpBp28Y2sQydDOWqFHfTjdMqFd5W+/6XEufVDlGYcJWEkVSV01ExnNwT/k50pDaU9G6XmnA==, tarball: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251}
     version: 0.1.0
 
   '@mongodb-js/saslprep@1.5.0':
@@ -3080,7 +3080,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/a757451824ae87405f806f6f0bcd52e45b3f0c59': {}
+  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251': {}
 
   '@mongodb-js/saslprep@1.5.0':
     dependencies:
