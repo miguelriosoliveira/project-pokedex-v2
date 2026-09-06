@@ -95,7 +95,7 @@ export function PokemonList() {
 	}
 
 	return (
-		<div className="h-full flex flex-col gap-2">
+		<div className="flex h-full min-h-0 flex-col gap-2 overflow-hidden">
 			<Button
 				className="self-start flex items-center gap-2 justify-self-start bg-zinc-300 !text-black"
 				onClick={() => navigate(-1)}
@@ -135,13 +135,12 @@ export function PokemonList() {
 				</div>
 			</div>
 
-			<div
-				className="grid grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-3 overflow-y-auto rounded-lg"
-				onScroll={handleScroll}
-			>
-				{pokemonList.map(pokemon => (
-					<PokemonCard key={pokemon.number} pokemon={pokemon} />
-				))}
+			<div className="min-h-0 flex-1 overflow-y-auto" onScroll={handleScroll}>
+				<div className="grid grid-cols-3 gap-2 lg:grid-cols-4 lg:gap-3">
+					{pokemonList.map(pokemon => (
+						<PokemonCard key={pokemon.number} pokemon={pokemon} />
+					))}
+				</div>
 			</div>
 		</div>
 	);
