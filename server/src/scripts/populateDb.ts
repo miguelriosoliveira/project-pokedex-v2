@@ -19,7 +19,13 @@ import {
 	Type as TypeModel,
 	type TypeSchema,
 } from '../models';
-import { createFakeEvolutionChain, createRange, getIdFromUrl, type Replace } from '../utils';
+import {
+	createFakeEvolutionChain,
+	createRange,
+	getIdFromUrl,
+	type Replace,
+	replaceDocuments,
+} from '../utils';
 
 const P = new MainClient();
 
@@ -77,11 +83,8 @@ async function mapGenerationsToDb(
 }
 
 async function saveGenerations(generations: GenerationSchema[]) {
-	console.log('Truncating Generation table...');
-	await GenerationModel.deleteMany();
-
-	console.log(`Saving ${generations.length} generations...`);
-	await GenerationModel.insertMany(generations);
+	console.log(`Refreshing ${generations.length} generations...`);
+	await replaceDocuments(GenerationModel, 'name', generations);
 	console.log('Generations saved!');
 }
 
@@ -91,9 +94,7 @@ async function getTypes() {
 	const { results: typesList } = await P.pokemon.listTypes();
 	console.log(`Getting ${typesList.length} types from API...`);
 	return Promise.all(
-		typesList
-			.filter(t => !IGNORED_TYPES.has(t.name))
-			.map(t => P.pokemon.getTypeByName(t.name)),
+		typesList.filter(t => !IGNORED_TYPES.has(t.name)).map(t => P.pokemon.getTypeByName(t.name)),
 	);
 }
 
@@ -113,11 +114,8 @@ async function mapTypesToDb(apiTypesData: Type[]): Promise<TypeSchema[]> {
 }
 
 async function saveTypes(types: TypeSchema[]) {
-	console.log('Truncating Type table...');
-	await TypeModel.deleteMany();
-
-	console.log(`Saving ${types.length} types...`);
-	await TypeModel.insertMany(types);
+	console.log(`Refreshing ${types.length} types...`);
+	await replaceDocuments(TypeModel, 'name', types);
 	console.log('Types saved!');
 }
 
@@ -202,11 +200,8 @@ async function mapPokemonsToDb(apiPokemonData: ApiPokemonData[]): Promise<Pokemo
 }
 
 async function savePokemons(pokemons: PokemonSchema[]) {
-	console.log('Truncating Pokemon table...');
-	await PokemonModel.deleteMany();
-
-	console.log(`Saving ${pokemons.length} pokemons...`);
-	await PokemonModel.insertMany(pokemons);
+	console.log(`Refreshing ${pokemons.length} pokemons...`);
+	await replaceDocuments(PokemonModel, 'number', pokemons);
 	console.log('Pokemons saved!');
 }
 
@@ -226,6 +221,16 @@ async function populateDb() {
 	await Promise.all([saveGenerations(generations), saveTypes(types), savePokemons(pokemons)]);
 }
 
-db.connect(ENV.MONGO_URL)
-	.then(() => populateDb())
-	.then(() => db.disconnect());
+async function main() {
+	await db.connect(ENV.MONGO_URL);
+	try {
+		await populateDb();
+	} finally {
+		await db.disconnect();
+	}
+}
+
+main().catch(error => {
+	console.error(error);
+	process.exit(1);
+});
