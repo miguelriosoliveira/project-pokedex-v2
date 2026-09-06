@@ -1,3 +1,4 @@
+import { IGNORED_TYPES } from '../config/constants';
 import type { TypesRepository } from '../repositories';
 
 export class GetAllTypesService {
@@ -5,6 +6,6 @@ export class GetAllTypesService {
 
 	public async execute() {
 		const types = await this.typesRepository.findMany();
-		return types;
+		return types.filter(type => !IGNORED_TYPES.has(type.name));
 	}
 }

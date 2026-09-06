@@ -8,7 +8,7 @@ import {
 	type Type,
 } from 'pokenode-ts';
 
-import { DEFAULT_PAGE_SIZE } from '../config/constants';
+import { DEFAULT_PAGE_SIZE, IGNORED_TYPES } from '../config/constants';
 import { db } from '../config/database';
 import { ENV } from '../config/env';
 import {
@@ -91,7 +91,7 @@ async function getTypes() {
 	console.log(`Getting ${typesList.length} types from API...`);
 	return Promise.all(
 		typesList
-			.filter(t => !['unknown', 'shadow'].includes(t.name))
+			.filter(t => !IGNORED_TYPES.has(t.name))
 			.map(t => P.pokemon.getTypeByName(t.name)),
 	);
 }

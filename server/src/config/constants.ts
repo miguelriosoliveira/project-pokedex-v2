@@ -25,3 +25,5 @@ export const GENERATION_NAMES = {
 };
 
 export const DEFAULT_PAGE_SIZE = 20;
+
+export const IGNORED_TYPES = new Set(['unknown', 'shadow', 'stellar']);
