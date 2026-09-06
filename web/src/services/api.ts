@@ -1,5 +1,6 @@
 import axios, { HttpStatusCode } from 'axios';
 
+import { ENV } from '../config';
 import { logger } from '../utils';
 
 const TYPES = [
@@ -62,9 +63,7 @@ interface GetPokemonListParams {
 	page?: number;
 }
 
-const { VITE_BACKEND_URL: BACKEND_URL } = import.meta.env;
-
-const apiBase = axios.create({ baseURL: BACKEND_URL });
+const apiBase = axios.create({ baseURL: ENV.VITE_BACKEND_URL });
 
 function throwResponse(error: unknown, errorMessage: string) {
 	logger.error(error, errorMessage);
@@ -79,9 +78,16 @@ interface RequestProps {
 	errorMessage: string;
 }
 
+function isHtmlResponse(data: unknown, contentType: string) {
+	return typeof data === 'string' || contentType.includes('text/html');
+}
+
 async function request<T>({ route, errorMessage }: RequestProps) {
 	try {
-		const { data } = await apiBase.get<T>(route);
+		const { data, headers } = await apiBase.get<T>(route);
+		if (isHtmlResponse(data, String(headers['content-type'] ?? ''))) {
+			throw new Error('Unexpected HTML response from API');
+		}
 		return data;
 	} catch (error) {
 		throw throwResponse(error, errorMessage);

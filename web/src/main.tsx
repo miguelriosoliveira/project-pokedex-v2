@@ -2,14 +2,13 @@ import * as Sentry from '@sentry/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import { ENV } from './config';
 import { Router } from './Router';
 
 import './index.css';
 
-const { VITE_SENTRY_DSN: SENTRY_DSN } = import.meta.env;
-
 Sentry.init({
-	dsn: SENTRY_DSN,
+	dsn: ENV.VITE_SENTRY_DSN,
 	integrations: [Sentry.browserTracingIntegration()],
 	tracesSampleRate: 1,
 });
