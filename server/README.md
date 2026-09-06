@@ -1,3 +1,3 @@
-# Pokédex API made using Node.js
+# Pokédex API
 
-API made for [this frontend](https://project-pokedex-ts-frontend.vercel.app).
+Express API for [Project Pokédex](https://github.com/miguelriosoliveira/project-pokedex-v2). Setup, scripts, and deploy notes live in the [root README](../README.md).
