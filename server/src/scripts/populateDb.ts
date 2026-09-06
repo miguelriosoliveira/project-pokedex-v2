@@ -23,6 +23,7 @@ import {
 	createFakeEvolutionChain,
 	createRange,
 	getIdFromUrl,
+	mapSeries,
 	type Replace,
 	replaceDocuments,
 } from '../utils';
@@ -165,9 +166,12 @@ async function getPokemonsPage(offset = 0): Promise<ApiPokemonData[]> {
 
 async function getPokemons() {
 	const { count: total } = await P.pokemon.listPokemonSpecies();
-	console.log(`Getting ${total} Pokémon from API...`);
-	const range = createRange(total, DEFAULT_PAGE_SIZE);
-	const results = await Promise.all(range.map(offset => getPokemonsPage(offset)));
+	const offsets = createRange(total, DEFAULT_PAGE_SIZE);
+	console.log(`Getting ${total} Pokémon from API (${offsets.length} pages)...`);
+	const results = await mapSeries(offsets, async (offset, index) => {
+		console.log(`Pokémon page ${index + 1}/${offsets.length} (offset ${offset})...`);
+		return getPokemonsPage(offset);
+	});
 	return results.flat();
 }
 
@@ -208,11 +212,9 @@ async function savePokemons(pokemons: PokemonSchema[]) {
 // ======================================== SAVING ALL DATA ========================================
 
 async function populateDb() {
-	const [apiGenerationsData, apiTypesData, apiPokemonData] = await Promise.all([
-		getGenerations(),
-		getTypes(),
-		getPokemons(),
-	]);
+	const apiTypesData = await getTypes();
+	const apiGenerationsData = await getGenerations();
+	const apiPokemonData = await getPokemons();
 	const [generations, types, pokemons] = await Promise.all([
 		mapGenerationsToDb(apiGenerationsData),
 		mapTypesToDb(apiTypesData),
