@@ -370,6 +370,49 @@ describe('PokemonsController', () => {
 			expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
 		});
 
-		it.todo('should return a pokemon details by its number');
+		it('should return both branches of a split evolution chain', async () => {
+			const evolutionChain = [
+				['charcadet', 'armarouge'],
+				['charcadet', 'ceruledge'],
+			];
+			await Pokemon.insertMany([
+				{
+					number: 935,
+					name: 'charcadet',
+					display_name: 'Charcadet',
+					types: ['fire'],
+					sprite: 'path/to/charcadet/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+				{
+					number: 936,
+					name: 'armarouge',
+					display_name: 'Armarouge',
+					types: ['fire', 'psychic'],
+					sprite: 'path/to/armarouge/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+				{
+					number: 937,
+					name: 'ceruledge',
+					display_name: 'Ceruledge',
+					types: ['fire', 'ghost'],
+					sprite: 'path/to/ceruledge/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+			]);
+
+			const response = await request.get('/pokemon/935');
+
+			expect(response.statusCode).toBe(StatusCodes.OK);
+			expect(
+				response.body.evolution_chain.common.map((pokemon: { name: string }) => pokemon.name),
+			).toEqual(['charcadet']);
+			expect(
+				response.body.evolution_chain.variant
+					.map((pokemon: { name: string }) => pokemon.name)
+					.sort(),
+			).toEqual(['armarouge', 'ceruledge']);
+		});
 	});
 });

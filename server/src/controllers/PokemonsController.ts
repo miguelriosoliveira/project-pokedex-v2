@@ -2,14 +2,14 @@ import type { Request, Response } from 'express';
 import { z } from 'zod';
 
 import { DEFAULT_PAGE_SIZE, TOTAL_ITEMS_HEADER } from '../config/constants';
-import { Pokemon, type PokemonSchema } from '../models';
+import { Pokemon } from '../models';
 import { PokemonsRepositoryMongoose, TypesRepositoryMongoose } from '../repositories';
 import {
 	GetPokemonByNumberService,
 	GetPokemonsByNamesService,
 	GetTypesByNamesService,
 } from '../services';
-import { parseRequest } from '../utils';
+import { parseRequest, splitEvolutionBranches } from '../utils';
 
 const queryStringList = z
 	.union([z.string(), z.array(z.string())])
@@ -80,35 +80,11 @@ export const PokemonController = {
 		const getTypesByNamesService = new GetTypesByNamesService(typesRepository);
 		const types = await getTypesByNamesService.execute(pokemon.types);
 
-		let commonEvolutionChain: PokemonSchema[] = [];
-		let variantEvolutionChain: PokemonSchema[] = [];
-
-		if (pokemon.evolution_chain.length > 1) {
-			const intersection = pokemon.evolution_chain.reduce(
-				(intersec, chain) => intersec.filter(form => chain.includes(form)),
-				[],
-			);
-			const difference = pokemon.evolution_chain.flatMap(chain =>
-				chain.filter(form => !intersection.includes(form)),
-			);
-
-			// evolutionChain.common = await Pokemon.find(
-			// 	{ name: { $in: intersection } },
-			// 	'displayName number types',
-			// ).sort('number');
-
-			// evolutionChain.variant = await Pokemon.find(
-			// 	{ name: { $in: difference } },
-			// 	'displayName number types',
-			// ).sort('number');
-			[commonEvolutionChain, variantEvolutionChain] = await Promise.all([
-				getPokemonsByNamesService.execute(intersection),
-				getPokemonsByNamesService.execute(difference),
-			]);
-		} else {
-			commonEvolutionChain = await getPokemonsByNamesService.execute(pokemon.evolution_chain[0]);
-			// commonEvolutionChain = [...commonEvolutionChain, ...evolutionChainPokemons];
-		}
+		const { common, variants } = splitEvolutionBranches(pokemon.evolution_chain);
+		const [commonEvolutionChain, variantEvolutionChain] = await Promise.all([
+			getPokemonsByNamesService.execute(common),
+			getPokemonsByNamesService.execute(variants),
+		]);
 
 		return response.json({
 			number: pokemon.number,

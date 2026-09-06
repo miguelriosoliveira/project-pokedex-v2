@@ -82,7 +82,7 @@ export function PokemonDetails() {
 					{variantEvolutions.length > 0 && (
 						<div className="flex flex-col gap-2">
 							<div className="flex gap-2">
-								{variantEvolutions.slice(0, Math.floor(variantEvolutions.length / 2)).map(poke => (
+								{variantEvolutions.slice(0, Math.ceil(variantEvolutions.length / 2)).map(poke => (
 									<PokemonCard key={poke.number} pokemon={poke} />
 								))}
 							</div>
