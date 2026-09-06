@@ -1,7 +1,7 @@
-import { Joi, Segments } from 'celebrate';
 import type { Request, Response } from 'express';
+import { z } from 'zod';
 
-import { DEFAULT_PAGE_SIZE, GENERATIONS, TOTAL_ITEMS_HEADER } from '../config/constants';
+import { DEFAULT_PAGE_SIZE, TOTAL_ITEMS_HEADER } from '../config/constants';
 import { Pokemon, type PokemonSchema } from '../models';
 import { PokemonsRepositoryMongoose, TypesRepositoryMongoose } from '../repositories';
 import {
@@ -9,14 +9,23 @@ import {
 	GetPokemonsByNamesService,
 	GetTypesByNamesService,
 } from '../services';
+import { parseRequest } from '../utils';
 
-interface GetAllRequestQuery {
-	generation: string;
-	search: string;
-	types: string[];
-	page: number;
-	page_size: number;
-}
+const queryStringList = z
+	.union([z.string(), z.array(z.string())])
+	.transform(value => (typeof value === 'string' ? [value] : value));
+
+const getAllQuerySchema = z.object({
+	generation: z.string().optional(),
+	search: z.string().optional().default(''),
+	types: queryStringList.optional().default([]),
+	page: z.coerce.number().min(1).optional().default(1),
+	page_size: z.coerce.number().min(1).optional().default(DEFAULT_PAGE_SIZE),
+});
+
+const getOneParamsSchema = z.object({
+	number: z.coerce.number().min(1),
+});
 
 interface Query {
 	generation?: string;
@@ -25,23 +34,12 @@ interface Query {
 	types?: { $in: string[] };
 }
 
-interface GetOneParams {
-	number: number;
-}
-
 export const PokemonController = {
-	getAllSchema: {
-		[Segments.QUERY]: {
-			generation: Joi.string().valid(...Object.values(GENERATIONS)),
-			search: Joi.string().allow('').default(''),
-			types: Joi.array().default([]),
-			page: Joi.number().min(1).default(1),
-			page_size: Joi.number().min(1).default(DEFAULT_PAGE_SIZE),
-		},
-	},
-
-	async getAll(request: Request<null, null, null, GetAllRequestQuery>, response: Response) {
-		const { generation, search, types, page, page_size } = request.query;
+	async getAll(request: Request, response: Response) {
+		const { generation, search, types, page, page_size } = parseRequest(
+			getAllQuerySchema,
+			request.query,
+		);
 		const query = {} as Query;
 
 		// checks needed for query construction
@@ -70,14 +68,8 @@ export const PokemonController = {
 		return response.header(TOTAL_ITEMS_HEADER, String(totalItems)).json(pokemons);
 	},
 
-	getOneSchema: {
-		[Segments.PARAMS]: {
-			number: Joi.number().min(1).required(),
-		},
-	},
-
-	async getOne(request: Request<GetOneParams>, response: Response) {
-		const { number } = request.params;
+	async getOne(request: Request, response: Response) {
+		const { number } = parseRequest(getOneParamsSchema, request.params);
 
 		const pokemonsRepository = new PokemonsRepositoryMongoose();
 		const getPokemonByNumberService = new GetPokemonByNumberService(pokemonsRepository);

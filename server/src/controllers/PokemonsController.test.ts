@@ -76,6 +76,40 @@ describe('PokemonsController', () => {
 			]);
 		});
 
+		it('should return a page of pokemons of a generation that is not in the hardcoded list', async () => {
+			await Pokemon.insertMany([
+				{
+					number: 1000,
+					name: 'foo',
+					display_name: 'Foo',
+					types: ['normal'],
+					sprite: 'path/to/foo/sprite.png',
+					generation: 'generation-x',
+				},
+				{
+					number: 1,
+					name: 'bulbasaur',
+					display_name: 'Bulbasaur',
+					types: ['grass', 'poison'],
+					sprite: 'path/to/bulbasaur/sprite.png',
+					generation: 'generation-i',
+				},
+			]);
+
+			const response = await request.get('/pokemon').query({ generation: 'generation-x' });
+
+			expect(response.statusCode).toBe(StatusCodes.OK);
+			expect(response.headers[TOTAL_ITEMS_HEADER]).toBe('1');
+			expect(response.body).toStrictEqual([
+				{
+					number: 1000,
+					display_name: 'Foo',
+					types: ['normal'],
+					sprite: 'path/to/foo/sprite.png',
+				},
+			]);
+		});
+
 		it('should return a page of pokemons of a generation', async () => {
 			// Arrange
 			await Pokemon.insertMany([
@@ -321,10 +355,21 @@ describe('PokemonsController', () => {
 				},
 			]);
 		});
+
+		it('should fail when page is invalid', async () => {
+			const response = await request.get('/pokemon').query({ page: 0 });
+
+			expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
+		});
 	});
 
 	describe('#getOne', () => {
-		it.todo('should fail when number is invalid');
+		it('should fail when number is invalid', async () => {
+			const response = await request.get('/pokemon/0');
+
+			expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
+		});
+
 		it.todo('should return a pokemon details by its number');
 	});
 });

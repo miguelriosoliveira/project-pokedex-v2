@@ -1,23 +1,22 @@
 import type { Request, Response } from 'express';
 
-import { GENERATION_NAMES } from '../config/constants';
 import { Generation, Pokemon } from '../models';
 
 export const GenerationController = {
 	async getAll(_request: Request, response: Response) {
-		const genList = await Generation.find({}, 'name region starters').sort('number');
+		const genList = await Generation.find({}, 'name region display_name starters').sort('number');
 		const starters = await Pokemon.find(
 			{ number: { $in: genList.flatMap(gen => gen.starters) } },
-			'name number sprite',
+			'-_id name number sprite',
 		).sort('number');
 
 		return response.json(
-			genList.map(({ name, region }, index) => {
+			genList.map(({ name, region, display_name }, index) => {
 				const iniPos = index * 3;
 				return {
 					name,
 					region,
-					display_name: GENERATION_NAMES[name].arabic,
+					display_name,
 					starters: starters.slice(iniPos, iniPos + 3),
 				};
 			}),

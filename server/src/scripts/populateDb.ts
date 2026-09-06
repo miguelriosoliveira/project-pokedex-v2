@@ -71,6 +71,7 @@ async function mapGenerationsToDb(
 		name,
 		number: id,
 		region: main_region.name,
+		display_name: `Generation ${id}`,
 		starters,
 	}));
 }

@@ -1,4 +1,3 @@
-import { errors } from 'celebrate';
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
@@ -13,5 +12,4 @@ app.set('query parser', 'extended');
 app.use(cors({ exposedHeaders: TOTAL_ITEMS_HEADER }));
 app.use(morgan('dev'));
 app.use(routes);
-app.use(errors());
 app.use(ErrorController.handle);
