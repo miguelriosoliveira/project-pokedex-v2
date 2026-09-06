@@ -97,6 +97,52 @@ describe('PokemonDetails', () => {
 		expect(screen.getByText('NO DAMAGE FROM')).toBeInTheDocument();
 	});
 
+	it('lays out many one-step evolutions without or labels', async () => {
+		const names = [
+			'Vaporeon',
+			'Jolteon',
+			'Flareon',
+			'Espeon',
+			'Umbreon',
+			'Leafeon',
+			'Glaceon',
+			'Sylveon',
+		];
+
+		renderDetails({
+			name: 'Eevee',
+			number: 133,
+			types: ['normal'],
+			description: 'desc',
+			sprite: 'eevee.png',
+			matchups: emptyMatchups,
+			evolution_chain: {
+				common: [
+					{
+						display_name: 'Eevee',
+						number: 133,
+						sprite: 'eevee.png',
+						types: ['normal'],
+					},
+				],
+				variant: names.map((display_name, index) => [
+					{
+						display_name,
+						number: 134 + index,
+						sprite: `${display_name.toLowerCase()}.png`,
+						types: ['normal'],
+					},
+				]),
+			},
+		});
+
+		expect(await screen.findByText(/Vaporeon/i)).toBeInTheDocument();
+		for (const name of names) {
+			expect(screen.getByText(new RegExp(name, 'i'))).toBeInTheDocument();
+		}
+		expect(screen.queryByText(/^or$/i)).not.toBeInTheDocument();
+	});
+
 	it('shows every branched evolution', async () => {
 		renderDetails(threeVariants);
 

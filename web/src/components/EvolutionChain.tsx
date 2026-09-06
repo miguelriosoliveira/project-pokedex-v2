@@ -57,7 +57,7 @@ export function EvolutionChain({ common, variants }: Props) {
 						<ul
 							className={
 								compactGrid
-									? 'grid grid-cols-2 items-center gap-x-3 gap-y-2'
+									? 'grid grid-cols-3 items-center gap-x-3 gap-y-2'
 									: 'flex flex-col justify-center gap-2'
 							}
 						>
@@ -66,7 +66,7 @@ export function EvolutionChain({ common, variants }: Props) {
 									key={branch.map(poke => poke.number).join('-')}
 									className="flex flex-col items-center gap-1"
 								>
-									{index > 0 && (
+									{!compactGrid && index > 0 && (
 										<span className="text-xs font-bold uppercase tracking-wide text-zinc-700">
 											or
 										</span>
