@@ -48,4 +48,17 @@ describe('GetPokemonsByNamesService', () => {
 		expect(pokemons).toContainEqual(expect.objectContaining({ name: 'pikachu' }));
 		expect(pokemons).toContainEqual(expect.objectContaining({ name: 'charmander' }));
 	});
+
+	it('should keep the requested name order', async () => {
+		const pokemonsRepository = new PokemonsRepositoryInMemory();
+		pokemonsRepository.pokemons = [
+			createPokemon({ name: 'beautifly' }),
+			createPokemon({ name: 'silcoon' }),
+		];
+		const getPokemonsByNamesService = new GetPokemonsByNamesService(pokemonsRepository);
+
+		const pokemons = await getPokemonsByNamesService.execute(['silcoon', 'beautifly']);
+
+		expect(pokemons.map(pokemon => pokemon.name)).toEqual(['silcoon', 'beautifly']);
+	});
 });

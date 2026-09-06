@@ -15,11 +15,15 @@ export function TypesCard({ title, types }: Props) {
 			<h3 className="font-medium">{title}</h3>
 
 			<div className="grid grid-cols-4 gap-2 lg:grid-cols-6">
-				{types.map(type => (
-					<TypeButton key={type} className="!border-0 !font-normal">
-						{type}
-					</TypeButton>
-				))}
+				{types.length === 0 ? (
+					<p className="col-span-full text-sm text-zinc-600">None</p>
+				) : (
+					types.map(type => (
+						<TypeButton key={type} className="border-0! font-normal!">
+							{type}
+						</TypeButton>
+					))
+				)}
 			</div>
 		</div>
 	);

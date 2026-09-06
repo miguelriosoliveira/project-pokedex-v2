@@ -2,7 +2,7 @@ import type { EvolutionChain } from 'pokenode-ts';
 
 export function splitEvolutionBranches(chains: string[][]): {
 	common: string[];
-	variants: string[];
+	variants: string[][];
 } {
 	if (chains.length === 0) {
 		return { common: [], variants: [] };
@@ -15,9 +15,7 @@ export function splitEvolutionBranches(chains: string[][]): {
 	const common = chains.reduce((intersection, chain) =>
 		intersection.filter(name => chain.includes(name)),
 	);
-	const variants = [
-		...new Set(chains.flatMap(chain => chain.filter(name => !common.includes(name)))),
-	];
+	const variants = chains.map(chain => chain.filter(name => !common.includes(name)));
 
 	return { common, variants };
 }

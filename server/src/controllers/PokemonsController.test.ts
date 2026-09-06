@@ -409,10 +409,74 @@ describe('PokemonsController', () => {
 				response.body.evolution_chain.common.map((pokemon: { name: string }) => pokemon.name),
 			).toEqual(['charcadet']);
 			expect(
-				response.body.evolution_chain.variant
-					.map((pokemon: { name: string }) => pokemon.name)
-					.sort(),
-			).toEqual(['armarouge', 'ceruledge']);
+				response.body.evolution_chain.variant.map((branch: Array<{ name: string }>) =>
+					branch.map(pokemon => pokemon.name),
+				),
+			).toEqual([['armarouge'], ['ceruledge']]);
+		});
+
+		it('should keep each branched evolution path together', async () => {
+			const evolutionChain = [
+				['wurmple', 'silcoon', 'beautifly'],
+				['wurmple', 'cascoon', 'dustox'],
+			];
+			await Pokemon.insertMany([
+				{
+					number: 265,
+					name: 'wurmple',
+					display_name: 'Wurmple',
+					types: ['bug'],
+					sprite: 'path/to/wurmple/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+				{
+					number: 266,
+					name: 'silcoon',
+					display_name: 'Silcoon',
+					types: ['bug'],
+					sprite: 'path/to/silcoon/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+				{
+					number: 267,
+					name: 'beautifly',
+					display_name: 'Beautifly',
+					types: ['bug', 'flying'],
+					sprite: 'path/to/beautifly/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+				{
+					number: 268,
+					name: 'cascoon',
+					display_name: 'Cascoon',
+					types: ['bug'],
+					sprite: 'path/to/cascoon/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+				{
+					number: 269,
+					name: 'dustox',
+					display_name: 'Dustox',
+					types: ['bug', 'poison'],
+					sprite: 'path/to/dustox/sprite.png',
+					evolution_chain: evolutionChain,
+				},
+			]);
+
+			const response = await request.get('/pokemon/265');
+
+			expect(response.statusCode).toBe(StatusCodes.OK);
+			expect(
+				response.body.evolution_chain.common.map((pokemon: { name: string }) => pokemon.name),
+			).toEqual(['wurmple']);
+			expect(
+				response.body.evolution_chain.variant.map((branch: Array<{ name: string }>) =>
+					branch.map(pokemon => pokemon.name),
+				),
+			).toEqual([
+				['silcoon', 'beautifly'],
+				['cascoon', 'dustox'],
+			]);
 		});
 	});
 });

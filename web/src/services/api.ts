@@ -43,16 +43,25 @@ export interface Pokemon {
 	types: Type[];
 }
 
+export interface TypeMatchups {
+	double_damage_from: Type[];
+	half_damage_from: Type[];
+	no_damage_from: Type[];
+	double_damage_to: Type[];
+	half_damage_to: Type[];
+	no_damage_to: Type[];
+}
+
 export interface PokemonDetails {
 	name: string;
 	number: number;
 	types: Type[];
 	description: string;
 	sprite: string;
-	weaknesses: Type[];
+	matchups: TypeMatchups;
 	evolution_chain: {
 		common: Pokemon[];
-		variant: Pokemon[];
+		variant: Pokemon[][];
 	};
 }
 

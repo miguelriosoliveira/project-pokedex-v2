@@ -9,7 +9,7 @@ import {
 	GetPokemonsByNamesService,
 	GetTypesByNamesService,
 } from '../services';
-import { parseRequest, splitEvolutionBranches } from '../utils';
+import { getTypeMatchups, parseRequest, splitEvolutionBranches } from '../utils';
 
 const queryStringList = z
 	.union([z.string(), z.array(z.string())])
@@ -81,9 +81,9 @@ export const PokemonController = {
 		const types = await getTypesByNamesService.execute(pokemon.types);
 
 		const { common, variants } = splitEvolutionBranches(pokemon.evolution_chain);
-		const [commonEvolutionChain, variantEvolutionChain] = await Promise.all([
+		const [commonEvolutionChain, ...variantEvolutionChain] = await Promise.all([
 			getPokemonsByNamesService.execute(common),
-			getPokemonsByNamesService.execute(variants),
+			...variants.map(branch => getPokemonsByNamesService.execute(branch)),
 		]);
 
 		return response.json({
@@ -96,15 +96,7 @@ export const PokemonController = {
 				common: commonEvolutionChain,
 				variant: variantEvolutionChain,
 			},
-			weaknesses: [
-				...new Set(
-					types.flatMap(type => [
-						...type.double_damage_from,
-						...type.half_damage_to,
-						...type.no_damage_to,
-					]),
-				),
-			].sort(),
+			matchups: getTypeMatchups(types),
 		});
 	},
 };

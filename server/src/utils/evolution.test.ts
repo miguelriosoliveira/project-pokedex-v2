@@ -16,7 +16,22 @@ describe('splitEvolutionBranches', () => {
 			]),
 		).toEqual({
 			common: ['charcadet'],
-			variants: ['armarouge', 'ceruledge'],
+			variants: [['armarouge'], ['ceruledge']],
+		});
+	});
+
+	it('keeps each branched path in order', () => {
+		expect(
+			splitEvolutionBranches([
+				['wurmple', 'silcoon', 'beautifly'],
+				['wurmple', 'cascoon', 'dustox'],
+			]),
+		).toEqual({
+			common: ['wurmple'],
+			variants: [
+				['silcoon', 'beautifly'],
+				['cascoon', 'dustox'],
+			],
 		});
 	});
 });
