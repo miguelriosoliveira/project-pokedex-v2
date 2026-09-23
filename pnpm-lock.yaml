@@ -171,7 +171,7 @@ importers:
         version: 2.5.12
       '@miguelriosoliveira/shared-configs':
         specifier: github:miguelriosoliveira/shared-configs
-        version: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251
+        version: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5416b2788245796c94c12c9bc6a87b97b61ad627
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -259,7 +259,7 @@ importers:
         version: 8.2.2(@types/node@26.4.1)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       vitest:
         specifier: ^5.0.0
-        version: 5.0.0(@types/node@26.4.1)(@vitest/coverage-v8@5.0.0)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 5.0.0(@types/node@26.4.1)(@vitest/coverage-v8@5.0.0)(jsdom@30.0.1(@noble/hashes@1.8.0))(vite@8.2.2(@types/node@26.4.1)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
 
   web:
     dependencies:
@@ -814,8 +814,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251':
-    resolution: {gitHosted: true, integrity: sha512-dVUwurQnLpNxN6kbpBp28Y2sQydDOWqFHfTjdMqFd5W+/6XEufVDlGYcJWEkVSV01ExnNwT/k50pDaU9G6XmnA==, tarball: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251}
+  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5416b2788245796c94c12c9bc6a87b97b61ad627':
+    resolution: {gitHosted: true, integrity: sha512-9x8meEyWQVhCHRdcb96XAwfhOtHc/nncQXVUibdcQgj3U6ffYa65Seq1jUlxS8Wp/nkbnTvZB1v0M5FlcKkOPw==, tarball: https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5416b2788245796c94c12c9bc6a87b97b61ad627}
     version: 0.1.0
 
   '@mongodb-js/saslprep@1.5.0':
@@ -3408,7 +3408,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/71e61bb90c505bcac5411999090cf734cb239251': {}
+  '@miguelriosoliveira/shared-configs@https://codeload.github.com/miguelriosoliveira/shared-configs/tar.gz/5416b2788245796c94c12c9bc6a87b97b61ad627': {}
 
   '@mongodb-js/saslprep@1.5.0':
     dependencies:
@@ -5516,28 +5516,6 @@ snapshots:
       '@types/node': 26.4.1
       '@vitest/coverage-v8': 5.0.0(vitest@5.0.0)
       jsdom: 30.0.1(@noble/hashes@1.8.0)
-    transitivePeerDependencies:
-      - msw
-
-  vitest@5.0.0(@types/node@26.4.1)(@vitest/coverage-v8@5.0.0)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)):
-    dependencies:
-      '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.0(vite@8.2.2(@types/node@26.4.1)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
-      chai: 6.2.2
-      es-module-lexer: 2.3.2
-      expect-type: 1.4.0
-      magic-string: 1.2.3
-      obug: 2.1.4
-      picomatch: 4.0.7
-      std-env: 4.2.0
-      tinybench: 6.1.4
-      tinyexec: 1.3.0
-      tinyglobby: 0.2.17
-      vite: 8.2.2(@types/node@26.4.1)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
-      why-is-node-running: 2.3.0
-    optionalDependencies:
-      '@types/node': 26.4.1
-      '@vitest/coverage-v8': 5.0.0(vitest@5.0.0)
     transitivePeerDependencies:
       - msw
 
