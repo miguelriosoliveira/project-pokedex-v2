@@ -30,11 +30,7 @@ describe('TypesController', () => {
 		});
 
 		it('should not return the stellar type', async () => {
-			await Type.insertMany([
-				{ name: 'water' },
-				{ name: 'stellar' },
-				{ name: 'fire' },
-			]);
+			await Type.insertMany([{ name: 'water' }, { name: 'stellar' }, { name: 'fire' }]);
 
 			const response = await request.get('/types');
 			expect(response.statusCode).toBe(StatusCodes.OK);
