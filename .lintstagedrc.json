@@ -1,3 +1,5 @@
 {
-	"*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+	"*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true",
+	"server/src/**/*": "pnpm --filter @project-pokedex/server run test:staged",
+	"web/src/**/*": "pnpm --filter @project-pokedex/web run test:staged"
 }
