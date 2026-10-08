@@ -264,7 +264,7 @@ importers:
   web:
     dependencies:
       '@sentry/react':
-        specifier: ^11.4.0
+        specifier: ^11.5.0
         version: 11.5.0(react-router@7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
       axios:
         specifier: ^1.20.0
