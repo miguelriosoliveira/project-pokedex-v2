@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1
 
-FROM node:24.22.0 AS base
+FROM node:24.22.1 AS base
 
 LABEL fly_launch_runtime="Node.js"
 
