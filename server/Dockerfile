@@ -19,7 +19,7 @@ COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --link server/package.json ./server/
 COPY --link web/package.json ./web/
 # Node 26+ images no longer ship Corepack
-RUN npm install -g corepack@0.36.0 && corepack enable
+RUN npm install -g corepack@0.36.0 --ignore-scripts && corepack enable
 RUN pnpm install --frozen-lockfile --filter @project-pokedex/server
 
 # Application source (web/ is excluded via .dockerignore)
