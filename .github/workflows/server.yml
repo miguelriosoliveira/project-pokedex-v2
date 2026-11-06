@@ -12,8 +12,23 @@ on:
       - '.dockerignore'
       - '.github/workflows/server.yml'
 jobs:
+  test:
+    name: Test server
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26.13.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --filter @project-pokedex/server...
+      - run: pnpm --filter @project-pokedex/server exec vitest run
+
   deploy:
     name: Deploy to Fly.io (server)
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
