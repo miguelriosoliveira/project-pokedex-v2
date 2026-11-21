@@ -6,7 +6,7 @@
 	"private": true,
 	"packageManager": "pnpm@12.21.0",
 	"engines": {
-		"node": "26.13.1"
+		"node": ">=26.13.1"
 	},
 	"scripts": {
 		"server": "pnpm --filter @project-pokedex/server dev",
