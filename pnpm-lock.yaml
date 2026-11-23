@@ -209,8 +209,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       mongodb-memory-server:
-        specifier: ^11.3.0
-        version: 11.3.0(bare-buffer@3.7.3)
+        specifier: ^11.4.0
+        version: 11.4.0(bare-buffer@3.7.3)
       mongoose:
         specifier: ^9.12.3
         version: 9.12.3
@@ -2040,12 +2040,12 @@ packages:
     resolution: {integrity: sha512-5I/pX3C2gPEz1EDdYMdZwBx1b/jE/f+J+KItSUJ02uQZ66bbe7kHKjv2uqCHJWaMCagem3dyfWqoAcv+XYZ6aw==}
     engines: {node: '>=20.19.0'}
 
-  mongodb-memory-server-core@11.3.0:
-    resolution: {integrity: sha512-QBu/RsRpBfcNd5CrBDfCzqcaFPaYpivUzGYUy9YgVc3up78ff0gIHQVD9PLmBLOOxFX6BM9hU6YT0HocZH+s1g==}
+  mongodb-memory-server-core@11.4.0:
+    resolution: {integrity: sha512-I4pmBybIQeTzeIfVO/CGyrgqVMZM/rBeYSvVgJTcYD9W+AUj4G8vNHvTPyX89/qI1ip1GiQoaqZxySylRbBHxQ==}
     engines: {node: '>=20.19.0'}
 
-  mongodb-memory-server@11.3.0:
-    resolution: {integrity: sha512-8ZCDrraqKqmAikoeKuEq+16jeWdVKwjtEAuMxxeQctHiGSGYt17W9LmoRzV1Nwnz7owyxwDKMhow4IVkNYYRKw==}
+  mongodb-memory-server@11.4.0:
+    resolution: {integrity: sha512-yi/NFqse40EcRkCLMp+jPiPvGdDwFSRHQdIT7SfA/JPdg5avl7Gj36/0CCMp8NoVfr2bOMi5dwGQI0aeSdR4AQ==}
     engines: {node: '>=20.19.0'}
 
   mongodb@7.5.0:
@@ -4174,7 +4174,7 @@ snapshots:
       '@types/whatwg-url': 13.0.0
       whatwg-url: 15.1.0
 
-  mongodb-memory-server-core@11.3.0(bare-buffer@3.7.3):
+  mongodb-memory-server-core@11.4.0(bare-buffer@3.7.3):
     dependencies:
       async-mutex: 0.5.0
       camelcase: 6.3.0
@@ -4201,9 +4201,9 @@ snapshots:
       - socks
       - supports-color
 
-  mongodb-memory-server@11.3.0(bare-buffer@3.7.3):
+  mongodb-memory-server@11.4.0(bare-buffer@3.7.3):
     dependencies:
-      mongodb-memory-server-core: 11.3.0(bare-buffer@3.7.3)
+      mongodb-memory-server-core: 11.4.0(bare-buffer@3.7.3)
       tslib: 2.9.1
     transitivePeerDependencies:
       - '@aws-sdk/credential-providers'
